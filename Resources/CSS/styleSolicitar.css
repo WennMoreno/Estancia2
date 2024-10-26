@@ -1,0 +1,106 @@
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 130vh;
+}
+
+.container {
+    width: 400px;
+    background-color: #ffffff;
+    border: 2px solid #000;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    background-color:  #800080;
+    padding: 10px;
+    text-align: center;
+    color: white;
+}
+
+header .logo {
+    width: 30px;
+    vertical-align: middle;
+}
+
+h1 {
+    font-size: 18px;
+}
+
+.formulario {
+    padding: 20px;
+    background-color: #ffb522;
+}
+
+.formulario label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.formulario input[type="text"],
+.formulario input[type="number"],
+.formulario select,
+.formulario input[type="date"],
+.formulario input[type="time"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 2px solid #ff6600;
+    border-radius: 5px;
+    background-color: #e6b8b7;
+}
+
+.formulario input[type="radio"] {
+    margin-left: 10px;
+}
+
+.fecha-horario {
+    margin-top: 15px;
+}
+
+.fecha-horario label {
+    display: inline-block;
+    width: 45%;
+}
+
+.fecha-horario input {
+    width: 45%;
+}
+
+.formulario .botones {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.btn-solicitar, .btn-regresar {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-solicitar {
+    background-color: #ff1a1a;
+    color: white;
+}
+
+.btn-regresar {
+    background-color: #e6e6e6;
+    color: black;
+}

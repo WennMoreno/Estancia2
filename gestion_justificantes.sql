@@ -5,15 +5,15 @@ USE gestion_justificantes;
 /* CREACIÓN DE LAS TABLAS */
 CREATE TABLE `administrador` (
   `idAdmin` int(4) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `nombreAdmin` varchar(50) NOT NULL,
-  `apellidoAdmin` varchar(50) NOT NULL,
+  `nombreAdmin` varchar(25) NOT NULL,
+  `apellidoAdmin` varchar(30) NOT NULL,
   `passAd` varchar(25) NOT NULL
 );
 
 CREATE TABLE `alumno` (
   `idAlumno` int(4) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `nombreAlu` varchar(50) NOT NULL,
-  `apellidoAlu` varchar(60) NOT NULL,
+  `nombreAlu` varchar(25) NOT NULL,
+  `apellidoAlu` varchar(30) NOT NULL,
   `feNac` date NOT NULL,
   `matricula` varchar(25) NOT NULL,
   `contrasena` varchar(15) NOT NULL,
@@ -22,8 +22,8 @@ CREATE TABLE `alumno` (
 
 CREATE TABLE `profesor` (
   `idProf` int(2) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `nombreProf` varchar(50) NOT NULL,
-  `apellidoProf` varchar(50) NOT NULL,
+  `nombreProf` varchar(25) NOT NULL,
+  `apellidoProf` varchar(30) NOT NULL,
   `passwordProf` varchar(25) NOT NULL,
   `correoElectronico` varchar(50) NOT NULL
 );
@@ -43,21 +43,21 @@ CREATE TABLE `motivo` (
 
 CREATE TABLE `justificante` (
   `idJusti` INT PRIMARY KEY AUTO_INCREMENT,
-  `nombre` VARCHAR(100) NOT NULL,
-  `matricula` VARCHAR(25) NOT NULL,  -- Cambié la longitud de matricula a 25
   `cuatrimestre` INT NOT NULL,
-  `grupo` VARCHAR(10) NOT NULL,
-  `carrera` VARCHAR(100) NOT NULL,
-  `periodo` VARCHAR(100) NOT NULL,
-  `motivo` VARCHAR(100) NOT NULL,
+  `grupo` VARCHAR(5) NOT NULL,
+  `carrera` VARCHAR(10) NOT NULL,
+  `periodo` VARCHAR(25) NOT NULL,
+  `motivo` VARCHAR(30) NOT NULL,
   `fecha` DATE NOT NULL,
   `horaInicio` TIME NULL,
   `horaFin` TIME NULL,
   `ausenteTodoDia` BOOLEAN NOT NULL,
   `motivoExtra` VARCHAR(200) NULL,
-  `estado` VARCHAR(50) DEFAULT 'Pendiente',
+  `estado` VARCHAR(30) DEFAULT 'Pendiente',
   `idEvi` INT,
-  FOREIGN KEY (`idEvi`) REFERENCES `evidencia`(`idEvi`)
+  `idAlumno` INT,
+  FOREIGN KEY (`idEvi`) REFERENCES `evidencia`(`idEvi`),
+  FOREIGN KEY (`idAlumno`) REFERENCES `alumno`(`idAlumno`)
 );
 
 CREATE TABLE `justificante_profesor` (
@@ -72,8 +72,8 @@ CREATE TABLE `justificante_profesor` (
 CREATE TABLE pdf_generado (
     idPdf INT AUTO_INCREMENT PRIMARY KEY,          -- ID del archivo PDF generado
     idJusti INT NOT NULL,                          -- Referencia al justificante
-    nombrePdf VARCHAR(255) NOT NULL,               -- Nombre del archivo PDF generado
-    rutaPdf VARCHAR(255) NOT NULL,                 -- Ruta de almacenamiento del archivo
+    nombrePdf VARCHAR(200) NOT NULL,               -- Nombre del archivo PDF generado
+    rutaPdf VARCHAR(200) NOT NULL,                 -- Ruta de almacenamiento del archivo
     fechaGeneracion DATETIME NOT NULL,             -- Fecha y hora de generación del PDF
     FOREIGN KEY (idJusti) REFERENCES justificante(idJusti) -- Llave foránea hacia la tabla justificante
 );

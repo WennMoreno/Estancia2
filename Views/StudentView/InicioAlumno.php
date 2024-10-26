@@ -1,47 +1,50 @@
+<?php
+session_start();  // Siempre inicia la sesión al comienzo
+
+// Ahora puedes acceder a las variables de sesión
+if (isset($_SESSION['nombre'])) {
+    $nombre = $_SESSION['nombre'];
+    $apellido = $_SESSION['apellido'];
+    $matricula = $_SESSION['identificador'];
+} else {
+    // Si la sesión no está iniciada, puedes redirigir al login
+    header('Location: login.php');
+    exit;
+}
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../Resources/CSS/styleUsers.css">
-    <title>Inicio</title>
+    <title>Dashboard Alumno</title>
+    <link rel="stylesheet" href="../../Resources/CSS/styleDashAlu.css">
 </head>
 <body>
-    <?php 
-        session_start();//para que la sesión del usuario no se rompa
-
-        $user = $_SESSION['identificador'];
-        //si existe una sesión iniciada
-        if(isset($user)){
-    ?>
-    
-    <p><img src="../Resources/img/logo.png" align="left" width=50></a>
-    <p align="right"><a href="">Mi cuenta</a>   
-    <a href="../CerrarSesion.php">Cerrar Sesion</a></p>
-    <br> 
-    
-    <hr>
-
-    <div >
-        <div class="informacion">
-           <p><?php
-                echo "<h1> Usuario:" . $user . "</h1>"; 
-            ?></p>
-
-            <p align="center"><img src="../Resources/img/user.png" class="imagen-usuario" width=50 height=50></p>
+    <header>
+        <div class="logo">
+            <img src="../../Resources/img/logo.png" alt="Logo">
         </div>
-
-        <div class="opcion" >
-            <p align="center"> <a href="SoliJusti.php"><button type="submit">SOLICITAR JUSTIFICANTES</button></p> 
-            <br>
-            <p align="center"> <a href="ConsultarJustificantes.php"><button type="submit">CONSULTAR JUSTIFICANTES</button></p> 
-        </div>
+        <nav>
+            <a href="#">Mi cuenta</a>
+            <a href="../CerrarSesion.php">Cerrar Sesión</a>
+        </nav>
+    </header>
+    <div class="main-container">
+        <aside class="sidebar">
+            <div class="profile-picture">
+                <img src="../../Resources/img/user.png" alt="Usuario">
+            </div>
+            <div class="profile-info">
+                <p>Usuario: <?php echo $nombre . $apellido?></p>
+                <p>Matrícula: <?php echo $matricula ?></p>
+            </div>
+        </aside>
+        <section class="content"> 
+            <button class="btn-action"> <a href="SoliJusti.php"> Solicitar Justificantes</button>
+            <button class="btn-action"y>Consultar Justificantes</button>
+        </section>
     </div>
-
-    <?php
-        }else{
-            header("Location: ../login.php");
-        }   
-    ?>
 </body>
 </html>
