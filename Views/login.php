@@ -24,7 +24,7 @@
         
         <hr>
         <button type="submit" class="btn-login">Iniciar Sesión</button>
-        <a href="../Controller/GestionAlumno" class="create-account">Crear cuenta</a>
+        <a href="StudentView/Registrarse.php" class="create-account">Crear cuenta</a>
     </form>
 </body>
 </html>

@@ -4,25 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio</title>
+    <link rel="stylesheet" href="../../Resources/CSS/styleDashAdmin.css">
 </head>
 <body>
     <?php 
-    session_start();//para que la sesión del usuario no se rompa
+    session_start(); //para que la sesión del usuario no se rompa
 
-    $user = $_SESSION['identificador'];
+    if (isset($_SESSION['identificador'])) {
+        $user = $_SESSION['identificador'];
+    ?>
+        <header>
+        <div class="logo">
+            <img src="../../Resources/img/logo.png" alt="Logo">
+        </div>
+        <nav>
+            
+            <a href="../CerrarSesion.php " class="cerrar">Cerrar Sesión</a>
+        </nav>
+    </header>
 
-    if(isset($_SESSION['identificador'])){
-        ?>
-        <center><h1>HOME ADMIN</h1></center>
-        <a href="../CerrarSesion.php">Cerrar Sesion</a>
-   <?php
-    }else{
+        <div >
+            <div >
+                <!--
+                <div >
+                    <p>Bienvenido, <?php echo htmlspecialchars($user); ?></p>
+                </div>
+                --->
+            </div>
+            <div class="content">
+                <div class="opcion">
+                    <p><a href="SoliAluRegu.php" class="btn-action">SOLICITUD DE JUSTIFICANTES</a></p> 
+                </div>
+                <div class="opcion">
+                    <p><a href="" class="btn-action">GENERAR JUSTIFICANTE DE DAE</a></p> 
+                </div>
+                <div class="opcion">
+                    <p><a href="SoliOtros.php" class="btn-action">GENERAR OTRO TIPO DE JUSTIFICANTES</a></p>
+                </div>
+                <div class="opcion">
+                    <p><a href="Gestiones.php" class="btn-action">GESTIONES</a></p>
+                </div>
+                
+            </div>
+        </div>
+    <?php
+    } else {
         header("Location: ../login.php");
-    } 
-?>
-
-    <div class="opcion" >
-        <p align="center"> <a href="SoliAluRegu.php"><button type="submit">JUSTIFICANTES DE ALUMNO REGULAR</button></p> 
-    </div>
+    }
+    ?>
 </body>
 </html>

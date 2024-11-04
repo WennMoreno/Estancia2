@@ -1,70 +1,55 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../Resources/CSS/styleUsers.css">
+    <link rel="stylesheet" href="../../Resources/CSS/styleConsuJustAlum.css">
     <title>Consultar Justificantes</title>
 </head>
 <body>
-    <?php
+    <div class="container">
+        <?php
+            // Iniciar sesión y verificar si el usuario está en sesión
+            session_start();
+            if (!isset($_SESSION['identificador'])) {
+                header("Location: ../login.php");
+                exit;
+            }
+            include '../../Model/Conexion.php';
+            include '../../Controller/GestionJustificantes.php';
+            //obtener el id del alumno que esta en la sesión
+            $modeloAlumno= new Alumno($conexion);
+            $idAlumno = $modeloAlumno->obtenerIdAlumnoPorMatricula($conexion);
+            // Incluir la conexión y el controlador
+        
 
-        include '../../Model/Conexion.php';
-        session_start();
+            // Crear la instancia del controlador y obtener los justificantes
+            $gestionJustificante = new gestionJustificante($conexion);
+            $justificantes = $gestionJustificante->mostrarJustiAlum($idAlumno);
+        ?>
 
-        // Verifica si el usuario está en sesión
-        if (!isset($_SESSION['identificador'])) {
-            header("Location: ../login.php");
-            exit;
-        }
 
-        // Obtener la matrícula del alumno
-        $matriculaAlumno = $_SESSION['identificador'] ?? null; // Evitar error si no está definido
-
-        if ($matriculaAlumno === null) {
-            echo "Error: No se encontró la matrícula en la sesión.";
-            exit;
-        }
-
-        function getJustificantesPorAlumno($matricula) {
-            global $conexion;
-
-            $sql = "SELECT * FROM justificante WHERE matricula = ?";
-            $stmt = $conexion->prepare($sql);
-            $stmt->bind_param("s", $matricula); // "s" indica que el parámetro es una cadena
-            $stmt->execute();
-            
-            $resultado = $stmt->get_result(); // Obtén el resultado
-            return $resultado->fetch_all(MYSQLI_ASSOC); // Usa fetch_all para mysqli
-        }
-
-        // Obtener justificantes
-        $justificantes = getJustificantesPorAlumno($matriculaAlumno);
-    ?>
-
-    <h1>Justificantes de <?php echo $_SESSION['identificador']; ?></h1>
-
-    <?php if (!empty($justificantes)) : ?>
-        <table class="table-danger">
-            <tr>
-                <th>Motivo</th>
-                <th>Fecha</th>
-                <th>Estado</th>
-            </tr>
+        <?php if (!empty($justificantes)) : ?>
             <?php foreach ($justificantes as $justificante): ?>
-            <tr>
-                <td><?php echo $justificante['motivo']; ?></td>
-                <td><?php echo $justificante['fecha']; ?></td>
-                <td><?php echo $justificante['estado']; ?></td>
-            </tr>
+                <div class="justificante-card">
+                    <div class="justificante-header">
+                        <div class="justificante-motivo"><?php echo htmlspecialchars($justificante['motivo']); ?></div>
+                        <div class="justificante-fecha"><?php echo htmlspecialchars($justificante['fecha']); ?></div>
+                    </div>
+                    <div class="justificante-estado 
+                        <?php 
+                            echo ($justificante['estado'] == 'pendiente') ? 'estado-pendiente' : 
+                                 (($justificante['estado'] == 'aprobado') ? 'estado-aprobado' : 'estado-rechazado'); 
+                        ?>">
+                        <?php echo htmlspecialchars($justificante['estado']); ?>
+                    </div>
+                </div>
             <?php endforeach; ?>
-        </table>
-    <?php else: ?>
-        <p>No hay justificantes para este alumno.</p>
-    <?php endif; ?>
+        <?php else: ?>
+            <p>No hay justificantes para este alumno.</p>
+        <?php endif; ?>
 
-    <p><a href="InicioAlumno.php">Volver</a></p>
+        <p><a href="InicioAlumno.php">Volver</a></p>
+    </div>
 </body>
 </html>

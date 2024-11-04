@@ -6,17 +6,38 @@ class Alumno {
         $this->conexion = $conexion;
     }
 
-    public function validarAlumno($usuario, $clave) {
+    public function validarAlumno($usuario) {
         $sql = "
-            SELECT 'alumno' AS tipo_usuario, matricula AS identificador, nombreAlu, apellidoAlu, contrasena
+            SELECT 'alumno' AS tipo_usuario, matricula AS identificador, nombreAlu, apellidoAlu
             FROM alumno 
-            WHERE matricula = ? AND contrasena = ?
+            WHERE matricula = ?
         ";
         $stmt = $this->conexion->prepare($sql);
-        $stmt->bind_param("ss", $usuario, $clave);
+        $stmt->bind_param("s", $usuario);
         $stmt->execute();
         return $stmt->get_result();
-    } 
+    }
+    
+
+    public function insertarAlumno($nombre, $apellido, $fechaNacimiento, $matricula, $contrasena, $confirmacionContrasena) {
+        $sql = "INSERT INTO alumno (nombreAlu, apellidoAlu, feNac, matricula, contrasena, confirmacionContra) 
+                VALUES (?, ?, ?, ?, ?, ?)";
+        
+        $stmt = $this->conexion->prepare($sql);
+        
+        if ($stmt === false) {
+            die("Error en la preparación de la declaración: " . $this->conexion->error);
+        }
+
+        // Encriptar la contraseña
+        $contrasenaEncrip = md5($contrasena);
+
+        // Vincula los parámetros
+        $stmt->bind_param("ssssss", $nombre, $apellido, $fechaNacimiento, $matricula, $contrasena, $contrasenaEncrip);
+
+        // Ejecuta la consulta
+        return $stmt->execute();
+    }
 
     function obtenerIdAlumnoPorMatricula($conexion) {
         // Verifica si la matrícula está definida en la sesión
@@ -53,6 +74,16 @@ class Alumno {
         } else {
             return null; // No hay matrícula en la sesión
         }
+    }
+    
+    //para la busqueda de "otros justificantes".
+    public function buscarAlumnos($busqueda) {
+        $query = "SELECT * FROM alumno WHERE CONCAT(nombreAlu, ' ', apellidoAlu) LIKE ?";
+        $stmt = $this->conexion->prepare($query);
+        $like = "%$busqueda%";
+        $stmt->bind_param("s", $like);
+        $stmt->execute();
+        return $stmt->get_result();
     }
 }
 ?>

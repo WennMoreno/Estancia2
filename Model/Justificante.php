@@ -34,6 +34,19 @@ class Justificante {
         $stmt->close();
     }
     
+    public function getJustificantesPorAlumno($id) {
+        $sql = "SELECT * FROM justificante WHERE idAlumno = ?";
+        $stmt = $this->conexion->prepare($sql);
+
+        if ($stmt) {
+            $stmt->bind_param("s", $id);
+            $stmt->execute();
+            $resultado = $stmt->get_result();
+            return $resultado->fetch_all(MYSQLI_ASSOC);
+        } else {
+            return [];
+        }
+    }
    
 }
 ?>

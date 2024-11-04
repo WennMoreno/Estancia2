@@ -1,0 +1,63 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+    color: #333;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+
+.justificante-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.justificante-card:hover {
+    transform: scale(1.02);
+}
+
+.justificante-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.justificante-motivo {
+    font-size: 18px;
+    font-weight: bold;
+    color: #1a73e8;
+}
+
+.justificante-fecha {
+    font-size: 14px;
+    color: #777;
+}
+
+.justificante-estado {
+    margin-top: 10px;
+    padding: 5px 10px;
+    display: inline-block;
+    font-size: 13px;
+    border-radius: 4px;
+    color: #fff;
+}
+
+.estado-pendiente { background-color: #ffa726; }
+.estado-aprobado { background-color: #66bb6a; }
+.estado-rechazado { background-color: #ef5350; }
+
+.volver {
+    display: inline-block;
+    margin-top: 20px;
+    text-decoration: none;
+    color: #1a73e8;
+    font-weight: bold;
+}

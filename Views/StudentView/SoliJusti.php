@@ -1,7 +1,9 @@
 <?php 
-    include '../../Model/Conexion.php';
-    include '../../Model/Profesor.php';
     include '../../Model/Motivo.php';
+    include '../../Controller/GestionJustificantes.php'; 
+
+
+    session_start();
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +30,7 @@
             <h1>Solicitar Justificante</h1>
         </header>
 
-        <form class="formulario" action="../../Controller/procesarJusti.php" method="POST" enctype="multipart/form-data">
+        <form class="formulario" action="" method="POST" enctype="multipart/form-data">
             <?php if(isset($_GET['error'])){ ?>
                 <p class="error"><?php echo $_GET['error'] ?></p>
             <?php } ?>
@@ -140,6 +142,16 @@
             </div>
 
         </form>
+
+        <?php
+            $gestionJustificante = new gestionJustificante($conexion);
+                    
+            //si se mando el formulario, se manda a llamar la función que incerta los justificantes
+            if ($_SERVER["REQUEST_METHOD"] === "POST") {
+                $gestionJustificante->procesarJusti(); // Llama a la función 
+            }
+        ?>
+
     </div>
 </body>
 </html>

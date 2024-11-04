@@ -1,0 +1,107 @@
+/* CSS Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff; /* Color beige */
+    margin: 0;
+    padding: 20px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #800080; /* Púrpura */
+    padding: 10px 20px;
+    border-bottom: 2px solid #000000;
+}
+
+header .logo img {
+    width: 50px;
+    height: 50px;
+}
+
+header nav a {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 22px;
+    margin-left: 20px;
+}
+
+.main-container {
+    display: flex;
+    height: calc(100vh - 72px); /* Altura del header ajustada */
+}
+
+.sidebar {
+    background-color: #ffa500; /* Naranja para el sidebar */
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-right: 2px solid #000000;
+}
+
+.profile-info p {
+    color: #000000;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.content {
+    background-color: #ffffff;
+    width: 70%;
+    max-width: 800px; /* Limitar el ancho máximo para centrar mejor */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Dos columnas iguales */
+    gap: 20px; /* Espacio entre los elementos */
+    align-items: center;
+    justify-items: center;
+    padding: 20px;
+    margin: 0 auto; /* Centrar el contenedor en la pantalla */
+}
+
+.opcion {
+    margin-bottom: 20px;
+}
+
+.btn-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #800080; /* Púrpura */
+    color: #ffffff;
+    padding: 20px;
+    border: none;
+    border-radius: 10px; /* Bordes redondeados */
+    font-size: 18px;
+    width: 300px; /* Ancho uniforme */
+    height: 100px; /* Altura uniforme */
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+}
+
+.btn-action a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.btn-action:hover {
+    background-color: #5a005a;
+}
+
+/* Botón de cierre de sesión */
+.cerrar {
+    color: #ffffff;
+    font-size: 22px;
+    text-decoration: none;
+}
