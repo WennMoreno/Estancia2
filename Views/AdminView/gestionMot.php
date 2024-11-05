@@ -1,57 +1,74 @@
 <?php
-    include_once '../../Controller/MotivoController.php';
-    
-    $controller = new MotivoController();
-    $motivos = $controller->obtenerMotivos();
-?>
+include_once '../../Controller/GestionMotivos.php';
 
+$controller = new MotivoController();
+$motivos = $controller->obtenerMotivos();
+
+// Manejar la eliminación de motivos
+if (isset($_GET['delete_id'])) {
+    $id = $_GET['delete_id'];
+    if ($controller->eliminarMotivo($id)) {
+        header("Location: gestionMot.php?mensaje=Motivo eliminado exitosamente");
+        exit();
+    } else {
+        echo "Error al eliminar el motivo.";
+    }
+}
+?>
+ 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Motivos</title>
+    <link rel="stylesheet" href="../../Resources/CSS/styleMotivo.css">
+    
 </head>
 <body>
-    <h1>Gestión de Motivos</h1>
-
-    <!-- Botón para agregar un nuevo motivo -->
-    <button onclick="location.href='../../Controller/agregarMotivo.php'">Agregar Nuevo Motivo</button>
+<header>
+        <div class="logo">
+            <img src="../../Resources/img/logo.png" alt="Logo">
+        </div>
+        <h1>Gestión de Motivos</h1>
+        <nav>
+            <a href="Gestiones.php " class="cerrar">Regresar</a>
+        </nav>
+    </header>
     
-    <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>Tipo</th>
-            <th>Descripción</th>
-            <th>Documento Solicitado</th>
-            <th>Actualizar</th> <!-- Columna para los botones de acciones -->
-            <th>Eliminar</th>
-        </tr>
-        <?php foreach ($motivos as $motivo): ?>
-            <tr>
-                <td><?php echo htmlspecialchars($motivo['idMotivo']); ?></td>
-                <td><?php echo htmlspecialchars($motivo['tipo']); ?></td>
-                <td><?php echo htmlspecialchars($motivo['descripcion']); ?></td>
-                <td><?php echo htmlspecialchars($motivo['docSolicitado']); ?></td>
-                <td>
-                    <!-- Botón para editar el motivo -->
-                    <button onclick="location.href='../../Controller/editarMotivo.php?id=<?php echo $motivo['idMotivo']; ?>'">Editar</button>
-                </td>
-                <td>
-                    <!-- Botón para eliminar el motivo -->
-                    <button onclick="eliminarMotivo(<?php echo $motivo['idMotivo']; ?>)">Eliminar</button>
-                </td>
-            </tr>
-        <?php endforeach; ?>
-    </table>
 
+    <button  class="btn-agregar" onclick="location.href='Addmot.php'">Agregar Nuevo Motivo</button>
+    <div class="table-container"> 
+        <table >
+            <tr>
+                <th>ID</th>
+                <th>Tipo</th>
+                <th>Descripción</th>
+                <th>Documento Solicitado</th>
+                <th>Actualizar</th>
+                <th>Eliminar</th>
+            </tr>
+            <?php foreach ($motivos as $motivo): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($motivo['idMotivo']); ?></td>
+                    <td><?php echo htmlspecialchars($motivo['tipo']); ?></td>
+                    <td><?php echo htmlspecialchars($motivo['descripcion']); ?></td>
+                    <td><?php echo htmlspecialchars($motivo['docSolicitado']); ?></td>
+                    <td>
+                        <button class="btn-editar"  onclick="location.href='Upmot.php?edit_id=<?php echo $motivo['idMotivo']; ?>'">Editar</button>
+                    </td>
+                    <td>
+                        <button class="btn-eliminar"  onclick="eliminarMotivo(<?php echo $motivo['idMotivo']; ?>)">Eliminar</button>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </div>
+    <script src="../../Controller/Js/ValidarM.js"></script> <!-- Incluir el archivo JS aquí -->
+
+    <!-- Pasar datos de PHP a JavaScript -->
     <script>
-        // Función de confirmación para eliminar un motivo
-        function eliminarMotivo(id) {
-            if (confirm('¿Está seguro de que desea eliminar este motivo?')) {
-                window.location.href = '../../Controller/eliminarMotivo.php?id=' + id; // El parámetro 'id' se mantiene
-            }
-        }
+        var motivos = <?php echo json_encode($motivos); ?>;
     </script>
 </body>
 </html>

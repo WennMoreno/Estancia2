@@ -61,7 +61,7 @@
         
                     //Instancio el modelo y mando a llamar la función
                     $modeloAlumno= new Alumno($this->conexion);
-                    $query=$modeloAlumno->validarAlumno($usuario);
+                    $query=$modeloAlumno->validarAlumnoRe($usuario);
         
                     if(mysqli_num_rows($query)>0){
                         header("location: ../../Views/StudentView/Registrarse.php?error=El Usuario ya existe");
@@ -96,9 +96,45 @@
             // Retornar el resultado
             return $result;
         }
-        
 
+    } 
 
+    include_once __DIR__ . '/../Model/Alumno.php'; // Incluye el modelo del alumno
+
+class AlumnoController {
+    private $alumnoModel;
+
+    public function __construct() {
+        $this->alumnoModel = new AlumnoModel(); // Instancia del modelo de alumno
     }
+
+    public function obtenerAlumnos() {
+        return $this->alumnoModel->obtenerAlumnos(); // Llama al método del modelo para obtener todos los alumnos
+    }
+
+    public function agregarAlumno($nombre, $apellido, $fechaNac, $matricula, $contrasena, $confirmacionContra) {
+        // Verificar si la contraseña y su confirmación coinciden
+        if ($contrasena !== $confirmacionContra) {
+            return false; // O manejar el error de otra manera
+        }
+        return $this->alumnoModel->agregarAlumno($nombre, $apellido, $fechaNac, $matricula, $contrasena);
+    }
+
+    public function obtenerAlumnoPorId($idAlumno) {
+        return $this->alumnoModel->obtenerAlumnoPorId($idAlumno); // Llama al método del modelo para obtener un alumno por ID
+    }
+
+    public function modificarAlumno($idAlumno, $nombre, $apellido, $feNac, $matricula, $contrasena, $confirmacionContra) {
+        // Verificar si la contraseña y su confirmación coinciden
+        if ($contrasena !== $confirmacionContra) {
+            return false; // O manejar el error de otra manera
+        }
+        return $this->alumnoModel->modificarAlumno($idAlumno, $nombre, $apellido, $feNac, $matricula, $contrasena); // Llama al método del modelo para modificar un alumno
+    }
+
+    public function eliminarAlumno($idAlumno) {
+        return $this->alumnoModel->eliminarAlumno($idAlumno); // Llama al método del modelo para eliminar un alumno
+    }
+}
 
 ?>

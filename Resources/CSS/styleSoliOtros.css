@@ -1,0 +1,112 @@
+/* CSS para el formulario de generación de justificantes de eventos */
+
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+h2 {
+    color: #333;
+    text-align: center;
+}
+
+form {
+    background-color:  #ffb522;
+    padding: 20px 30px;
+    width: 100%;
+    max-width: 600px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para los campos del formulario */
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"] {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+input:focus {
+    border-color: #0056b3;
+    outline: none;
+}
+
+/* Contenedor de los alumnos */
+#alumnos-container {
+    margin-top: 20px;
+}
+
+.alumno-entry {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    background-color: #f9f9f9;
+}
+
+/* Estilos para los botones */
+button[type="button"],
+button[type="submit"] {
+    background-color: #660066;
+    color: #fff;
+    padding: 10px 15px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+button[type="button"]:hover,
+button[type="submit"]:hover {
+    background-color: #004494;
+}
+
+button[type="button"] {
+    margin-left: 5px;
+    background-color: #fc010d;
+}
+
+button[type="button"]:hover {
+    background-color: #c9302c;
+}
+
+/* Ajustes de entrada para cada alumno */
+.alumno-entry input[type="text"],
+.alumno-entry input[type="number"] {
+    flex: 1 1 20%;
+    min-width: 120px;
+}
+
+.alumno-entry button {
+    margin-top: 0;
+    padding: 8px 10px;
+}
+
+h3 {
+    color: black;
+    border-bottom: 2px solid #0056b3;
+    padding-bottom: 5px;
+}

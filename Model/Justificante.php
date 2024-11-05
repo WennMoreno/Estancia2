@@ -10,7 +10,7 @@ class Justificante {
     }
 
     public function insertarJustificante($cuatrimestre, $grupo, $carrera, $periodo, $motivo, $fecha, $horaInicio, $horaFin, $ausenteTodoDia, $motivoExtra, $idEvi, $idAlumno) {
-        $sql = "INSERT INTO justificante (cuatrimestre, grupo, carrera, periodo, motivo, fecha, horaInicio, horaFin, ausenteTodoDia, motivoExtra, estado, idEvi, idAlumno)
+        $sql = "INSERT INTO justificante (cuatrimestre, grupo, carrera, periodoEscolar, motivo, fecha, horaInicio, horaFin, ausenteTodoDia, motivoExtra, estado, idEvi, idAlumno)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Pendiente', ?, ?)";
     
         $stmt = $this->conexion->prepare($sql);

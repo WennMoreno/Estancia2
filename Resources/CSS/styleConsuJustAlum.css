@@ -8,10 +8,11 @@ body {
     width: 80%;
     margin: 0 auto;
     padding-top: 20px;
+    
 }
 
 .justificante-card {
-    background: #fff;
+    background:  #ffa726; 
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     margin-bottom: 15px;

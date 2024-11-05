@@ -1,0 +1,82 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5dc; /* Color beige */
+    margin: 0;
+    padding: 20px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #800080; /* Púrpura */
+    padding: 10px 20px;
+    border-bottom: 2px solid #800080; /* Añadido para definir el borde */
+    color: #ffffff;
+}
+
+header .logo img {
+    width: 60px;
+    height: 60px;
+}
+
+header nav a {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 22px;
+    margin-left: 20px;
+}
+
+.btn-agregar,
+.btn-editar,
+.btn-eliminar {
+    padding: 12px 20px; /* Aumentar el tamaño del botón */
+    border-radius: 8px; /* Bordes redondeados */
+    font-size: 16px; /* Aumentar el tamaño del texto */
+    cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
+    border: none; /* Sin borde */
+}
+
+.btn-agregar {
+    margin-top: 40px;
+    background-color: purple;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.btn-editar {
+    background-color: darkorange;
+    color: white;
+}
+
+.btn-eliminar {
+    background-color: red;
+    color: white;
+}
+
+.table-container {
+    display: flex;
+    justify-content: center; /* Centrar horizontalmente */
+    margin: 20px 0; /* Espacio vertical alrededor de la tabla */
+}
+
+table {
+    width: 80%; /* Ajustar el ancho de la tabla */
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 2px solid purple;
+}
+
+th {
+    background-color: #e9c3d3;
+    color: black;
+    padding: 10px;
+}
+
+td {
+    padding: 10px;
+    background-color: white;
+}

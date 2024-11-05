@@ -46,7 +46,7 @@ CREATE TABLE `justificante` (
   `cuatrimestre` INT NOT NULL,
   `grupo` VARCHAR(5) NOT NULL,
   `carrera` VARCHAR(10) NOT NULL,
-  `periodo` VARCHAR(25) NOT NULL,
+  `periodoEscolar` VARCHAR(25) NOT NULL,
   `motivo` VARCHAR(30) NOT NULL,
   `fecha` DATE NOT NULL,
   `horaInicio` TIME NULL,
@@ -76,7 +76,25 @@ CREATE TABLE pdf_generado (
     rutaPdf VARCHAR(200) NOT NULL,                 -- Ruta de almacenamiento del archivo
     fechaGeneracion DATETIME NOT NULL,             -- Fecha y hora de generación del PDF
     FOREIGN KEY (idJusti) REFERENCES justificante(idJusti) -- Llave foránea hacia la tabla justificante
+); 
+
+CREATE TABLE justificante_evento (
+    idJustiEvento INT AUTO_INCREMENT PRIMARY KEY,
+    nombreEvento VARCHAR(100) NOT NULL,
+    fechaEvento DATE NOT NULL
 );
+
+CREATE TABLE justificante_evento_alumno (
+    idJustiEveAlumno INT AUTO_INCREMENT PRIMARY KEY,
+    nombreAlumno VARCHAR(50) NOT NULL,
+    matricula VARCHAR(20) NOT NULL,
+    grado INT,
+    grupo VARCHAR(10),
+    carrera VARCHAR(10),
+    idJustiEvento INT NOT NULL,
+    FOREIGN KEY (idJustiEvento) REFERENCES justificante_evento(idJustiEvento)
+);
+
 
 /** INSERCIONES DE LAS TABLAS */
 INSERT INTO `alumno` (`nombreAlu`, `apellidoAlu`, `feNac`, `matricula`, `contrasena`) VALUES
@@ -98,5 +116,3 @@ INSERT INTO `motivo` (`idMotivo`, `tipo`, `descripcion`, `docSolicitado`) VALUES
 (3, 'Problemas de Salud', 'El alumno tiene citas médicas o cita para análisis.', 'Recetas médicas, constancia, carnet, registro de cita y/o resultados de análisis (Todo en formato PDF).'),
 (4, 'Accidente', 'Aplica para lesiones o daños que limitan temporalmente la capacidad del alumno de cumplir con las actividades o responsabilidades académicas.', 'Fotografías tomadas al momento, receta, constancia del IMSS o ISSTE en (Todo en archivo PDF).'),
 (5, 'Trámite de carácter urgente', 'Trámite legal, gubernamental o personal, que el alumno no puede posponer', 'Documento proporcionado por la institución, fotografía de que asistió en el momento o documento de la cita (Todo en formato PDF).');
-
-select * from alumno;

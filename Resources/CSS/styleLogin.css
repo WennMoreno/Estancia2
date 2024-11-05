@@ -1,3 +1,14 @@
+.error-message {
+    color: red;
+    margin-bottom: 15px; /* Espacio debajo del mensaje */
+    font-weight: bold; /* Texto en negrita */
+    background-color: rgba(255, 0, 0, 0.1); /* Fondo ligeramente rojo */
+    padding: 10px; /* Espaciado interno */
+    border: 1px solid red; /* Borde rojo */
+    border-radius: 5px; /* Esquinas redondeadas */
+}
+
+
 * {
     margin: 0;
     padding: 0;

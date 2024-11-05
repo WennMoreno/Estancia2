@@ -228,6 +228,43 @@ class gestionJustificante {
         } else {
             echo "Error en la subida del archivo. Código de error: " . $_FILES['evidencia']['error'];
         }
+    } 
+
+    public function otrosJusti() {
+        // Recoger datos del formulario
+        $nombreEvento = $_POST['evento'];
+        $fechaEvento = $_POST['fecha'];
+        
+        // Inserción en la tabla justificante_evento
+        $sqlEvento = "INSERT INTO justificante_evento (nombreEvento, fechaEvento) VALUES (?, ?)";
+        $stmtEvento = $this->conexion->prepare($sqlEvento);
+        $stmtEvento->bind_param("ss", $nombreEvento, $fechaEvento);
+        
+        if ($stmtEvento->execute()) {
+            $idJustiEvento = $stmtEvento->insert_id; // Obtener el ID del evento insertado
+
+            // Insertar los datos de los alumnos en justificante_evento_alumno
+            if (!empty($_POST['nombreAlu'])) {
+                foreach ($_POST['nombreAlu'] as $index => $nombreAlu) {
+                    $matricula = $_POST['matricula'][$index];
+                    $grado = $_POST['grado'][$index];
+                    $grupo = $_POST['grupo'][$index];
+                    $carrera = $_POST['carrera'][$index];
+
+                    $sqlAlumno = "INSERT INTO justificante_evento_alumno (nombreAlumno, matricula, grado, grupo, carrera, idJustiEvento) 
+                                  VALUES (?, ?, ?, ?, ?, ?)";
+                    $stmtAlumno = $this->conexion->prepare($sqlAlumno);
+                    $stmtAlumno->bind_param("ssisss", $nombreAlu, $matricula, $grado, $grupo, $carrera, $idJustiEvento);
+                    $stmtAlumno->execute();
+                }
+            }
+
+            echo "Justificante de evento generado exitosamente.";
+        } else {
+            echo "Error al generar el justificante del evento: " . $stmtEvento->error;
+        }
+
+        $stmtEvento->close();
     }
 
 }

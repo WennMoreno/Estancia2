@@ -35,10 +35,10 @@
                     <p><a href="" class="btn-action">Reportes</a></p>
                 </div>
                 <div class="opcion">
-                    <p><a href="" class="btn-action">Alumnos</a></p> 
+                    <p><a href="GestionAlum.php" class="btn-action">Alumnos</a></p> 
                 </div>
                 <div class="opcion">
-                    <p><a href="" class="btn-action">Profesores</a></p> 
+                    <p><a href="GestionProf.php" class="btn-action">Profesores</a></p> 
                 </div>
                 <div class="opcion">
                     <p><a href="" class="btn-action">Justificantes</a></p>
