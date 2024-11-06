@@ -14,12 +14,12 @@
         
             <div class="input-group">
                 <i class="fa-solid fa-user"></i> 
-                <input type="text" name="Usuario" placeholder="Nombre de Usuario">
+                <input type="text" name="Usuario" placeholder="Nombre de Usuario" required>
             </div>
 
             <div class="input-group">
                 <i class="fa-solid fa-unlock"></i>
-                <input type="password" name="Contraseña" placeholder="Contraseña"> 
+                <input type="password" name="Contraseña" placeholder="Contraseña" required> 
             </div>
         
         <hr>
