@@ -63,8 +63,13 @@
             </div>
 
             <div>
-                <label>Período:</label>
-                <input type="text" name="peri" placeholder="Periodo">
+                <label for="peri">Período:</label>
+                <select name="peri" id="peri">
+                    <option value="" disabled selected>Selecciona el período actual</option>
+                    <option value="Invierno">Invierno 2025</option>
+                    <option value="Primavera">Primavera 2025</option> 
+                    <option value="Otoño">Otoño 2025</option>
+                </select>
             </div>
 
             <?php

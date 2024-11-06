@@ -17,17 +17,15 @@
             }
             include '../../Model/Conexion.php';
             include '../../Controller/GestionJustificantes.php';
-            //obtener el id del alumno que esta en la sesión
+            // Obtener el id del alumno que está en la sesión
             $modeloAlumno= new Alumno($conexion);
             $idAlumno = $modeloAlumno->obtenerIdAlumnoPorMatricula($conexion);
             // Incluir la conexión y el controlador
         
-
             // Crear la instancia del controlador y obtener los justificantes
             $gestionJustificante = new gestionJustificante($conexion);
             $justificantes = $gestionJustificante->mostrarJustiAlum($idAlumno);
         ?>
-
 
         <?php if (!empty($justificantes)) : ?>
             <?php foreach ($justificantes as $justificante): ?>
@@ -36,7 +34,7 @@
                         <div class="justificante-motivo"><?php echo htmlspecialchars($justificante['motivo']); ?></div>
                         <div class="justificante-fecha"><?php echo htmlspecialchars($justificante['fecha']); ?></div>
                     </div>
-                    <div class="justificante-estado 
+                    <div class="justificante-estado
                         <?php 
                             echo ($justificante['estado'] == 'pendiente') ? 'estado-pendiente' : 
                                  (($justificante['estado'] == 'aprobado') ? 'estado-aprobado' : 'estado-rechazado'); 

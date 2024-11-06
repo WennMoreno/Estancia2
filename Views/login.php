@@ -1,43 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="Resources/CSS/Style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" 
-    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" 
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>Inicio de Sesión</title>
+    <title>Iniciar Sesión</title>
+    <link rel="stylesheet" href="../Resources/CSS/styleLogin.css">
 </head>
 <body>
-    <form method="POST" action="../Controller/Validar.php">
-        <h1>Iniciar Sesión</h1>
-        <hr>
+    <div class="login-container">
+        <div class="login-box">
+        <h2>Iniciar Sesión</h2>
+            <form method="POST" action="../Controller/Validar.php">
 
-        <?php 
-            
-            if(isset($_GET['error'])){
-            ?>
-            <p class="error">
                 <?php
-                    echo $_GET['error'];
-                    echo "<hr>";
+                    // Verifica si hay un mensaje de error en la URL
+                    if (isset($_GET['error'])) {
+                        echo "<p style='color: red;'>" . htmlspecialchars($_GET['error']) . "</p>";
+                    }
                 ?>
-            </p>
-        <?php   }?>
-        
-        <i class="fa-solid fa-user"></i> 
-        <label>Usuario</label>
-        <input type="text" name="Usuario" placeholder="Nombre de Usuario" require>
+                <div class="input-group">
+                    <i class="fa-solid fa-user"></i> 
+                    <input type="text" name="Usuario" placeholder="Nombre de Usuario" required >
+                </div>
 
-        <i class="fa-solid fa-unlock"></i>
-        <label>Contraseña</label>
-        <input type="password" name="Contraseña" placeholder="Contraseña" require>
-        
-        <hr>
-        <button type="submit">Iniciar Sesión</button>
-        <a href="StudentView/Registrarse.php">Crear Cuenta</a>
-
-    </form>
+                <div class="input-group">
+                    <i class="fa-solid fa-unlock"></i>
+                    <input type="password" name="Contraseña" placeholder="Contraseña" required> 
+                </div>
+            
+                <hr>
+                <button type="submit" class="btn-login">Iniciar Sesión</button>
+                <a href="StudentView/Registrarse.php" class="create-account">Crear cuenta</a>
+            </form>
+        </div>
+    </div>
 </body>
-</html>
+</html> 

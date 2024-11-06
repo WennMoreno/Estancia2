@@ -1,4 +1,14 @@
-/* Estilos generales */
+.error-message {
+    color: red;
+    margin-bottom: 15px; /* Espacio debajo del mensaje */
+    font-weight: bold; /* Texto en negrita */
+    background-color: rgba(255, 0, 0, 0.1); /* Fondo ligeramente rojo */
+    padding: 10px; /* Espaciado interno */
+    border: 1px solid red; /* Borde rojo */
+    border-radius: 5px; /* Esquinas redondeadas */
+}
+
+
 * {
     margin: 0;
     padding: 0;
@@ -7,7 +17,7 @@
 
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #800080;
+    background-color: #800080; /* Color de fondo púrpura */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,7 +33,7 @@ body {
 }
 
 .login-box {
-    background-color: #ffffff;
+    background-color: #ffffff; /* Fondo blanco */
     border-radius: 20px;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -33,12 +43,21 @@ body {
 
 h2 {
     margin-bottom: 20px;
-    color: #800080;
+    color: #800080; /* Texto púrpura */
 }
 
 .input-group {
     margin-bottom: 15px;
     position: relative;
+}
+
+.input-group label {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
 }
 
 .input-group input {
@@ -55,7 +74,7 @@ input::placeholder {
 }
 
 .btn-login {
-    background-color: #ff0000;
+    background-color: #ff0000; /* Botón rojo */
     color: #ffffff;
     padding: 10px 20px;
     border: none;
@@ -80,4 +99,3 @@ input::placeholder {
 .create-account:hover {
     text-decoration: underline;
 }
-

@@ -39,37 +39,38 @@
                 <label><i class="fa-solid fa-users"></i>
                     Nombres 
                 </label>
-                <input type="text" placeholder="Ingrese Nombres" name="nombre">
+                <input type="text" placeholder="Ingrese Nombres" name="nombre" required>
                 
                 <label>
                     <i class="fa-solid fa-users"></i>
                     Apellidos 
                 </label>
-                <input type="text" placeholder="Ingrese Apellidos" name="ape">
+                <input type="text" placeholder="Ingrese Apellidos" name="ape" required>
 
                 <label>
                     <i class="fa-solid fa-users"></i>
-                    Fecha de Nacimiento(dd/mm/yyyy)
+                    Fecha de Nacimiento (dd/mm/yyyy)
                 </label>
-                <input type="text" placeholder="Ingrese Fecha de Nacimiento" name="feNac">
+                <input type="date" name="feNac" placeholder="Seleccione la Fecha de Nacimiento" required>
+
 
                 <label>
                     <i class="fa-solid fa-user"></i>
                     Matrícula
                 </label>
-                <input type="text" placeholder="Ingrese Usuario" name="matricula">
+                <input type="text" placeholder="Ingrese Usuario" name="matricula" required>
                 
                 <label>
                     <i class="fa-solid fa-key"></i>
                     Contraseña
                 </label>
-                <input type="password" placeholder="Ingrese Contraseña" name="clave">
+                <input type="password" placeholder="Ingrese Contraseña" name="clave" required>
                 
                 <label>
                     <i class="fa-solid fa-key"></i>
                     Confirmar Contraseña
                 </label>
-                <input type="password" placeholder="Confirmar Contraseña" name="Rclave">
+                <input type="password" placeholder="Confirmar Contraseña" name="Rclave" required>
 
                 <div class="botones">
                     <button type="submit" class="btn registrar">Registrarse</button>

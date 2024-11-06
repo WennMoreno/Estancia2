@@ -1,0 +1,57 @@
+/* Estilos básicos para la interfaz */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background-color: #1a73e8;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.email-list {
+    margin: 20px;
+}
+
+.email-container {
+    border: 1px solid #ddd;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.email-item {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.email-item:last-child {
+    border-bottom: none;
+}
+
+.email-subject {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.email-details {
+    font-size: 14px;
+    color: #555;
+}
+
+.view-details {
+    color: #1a73e8;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.view-details:hover {
+    text-decoration: underline;
+}
+
+.email-item:hover {
+    background-color: #f1f1f1;
+}

@@ -45,7 +45,7 @@ class gestionJustificante {
             echo "No se encontró un alumno con la matrícula proporcionada.";
         }
 
-        $rutaEstatica = "C:/wamp64/www/pruebasOfAll/proyEstancia2"; 
+        $rutaEstatica = "C:/wamp64/www/pruebasOfAllVerDul/proyEstancia2"; 
 
         if (isset($_FILES['evidencia']) && $_FILES['evidencia']['error'] == UPLOAD_ERR_OK) {
             // Manejar la subida de la evidencia

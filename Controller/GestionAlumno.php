@@ -49,15 +49,6 @@
                     header("location: ../Views/StudentView/Registrarse.php?error=No Coinciden las Contraseñas&$datosUsuario");
                     exit();
                 }else{                    
-                    // Convertir formato de la fecha de d/m/Y a Y-m-d
-                    $date = DateTime::createFromFormat('d/m/Y', $nac);
-        
-                    if ($date) { // Si la conversión es exitosa
-                        $nac = $date->format('Y-m-d');
-                    } else {
-                        header("location: ../Views/StudentView/Registrarse.php?error=Formato de Fecha Incorrecto");
-                        exit();
-                    }
         
                     //Instancio el modelo y mando a llamar la función
                     $modeloAlumno= new Alumno($this->conexion);
