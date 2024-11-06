@@ -17,6 +17,7 @@ class Alumno {
         $stmt->execute();
         return $stmt->get_result();
     } 
+    
     //registros nuevos
     public function validarAlumnoRe($usuario) {
         $sql = "

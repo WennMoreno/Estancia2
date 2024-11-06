@@ -1,4 +1,4 @@
-// Función para obtener el parámetro de error de la URL
+//Función para obtener el parámetro de error de la URL
 function getUrlParameter(name) {
     name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
     var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
@@ -17,3 +17,4 @@ window.onload = function() {
         document.querySelector('.login-box').insertBefore(errorDiv, document.querySelector('.input-group'));
     }
 };
+
