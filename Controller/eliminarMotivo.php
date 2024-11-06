@@ -12,6 +12,7 @@ if (isset($_GET['id'])) { // Cambiado de 'idMotivo' a 'id'
     $query = "DELETE FROM motivo WHERE idMotivo = ?";
     $stmt = $conexion->prepare($query);
 
+    
     if ($stmt) {
         $stmt->bind_param('i', $idMotivo); // 'i' para entero
         $stmt->execute();
