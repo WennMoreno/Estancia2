@@ -23,6 +23,9 @@ if (isset($_SESSION['identificador'])) {
 <body>
     <div class="header">
         <h1>Justificantes Pendientes</h1>
+        <nav>
+            <a href="../CerrarSesion.php">Cerrar Sesión</a>
+        </nav>
     </div>
 
     <div class="justificantes">
@@ -47,7 +50,7 @@ if (isset($_SESSION['identificador'])) {
                 echo "<div class='justificante-item'>";
                 echo "<p><strong>Justificante #" . htmlspecialchars($justificante['idJusti']) . "</strong></p>";
                 echo "<p>Motivo: " . htmlspecialchars($justificante['motivo']) . "</p>";
-                echo "<p><a href='detalleJustificante.php?idJusti=" . htmlspecialchars($justificante['idJusti']) . "'>Ver detalles</a></p>";
+                echo "<p><a href='detallesJust.php?idJusti=" . htmlspecialchars($justificante['idJusti']) . "'>Ver detalles</a></p>";
                 echo "</div>";
             }
         } else {

@@ -20,7 +20,6 @@ class Justificante {
             die("Error en la preparación de la declaración: " . $this->conexion->error);
         }
     
-        // La cadena de tipos debe tener 12 elementos para coincidir con los valores en el bind_param
         $stmt->bind_param("isssssssissi", $cuatrimestre, $grupo, $carrera, $periodo, $motivo, $fecha, $horaInicio, $horaFin, $ausenteTodoDia, $motivoExtra, $idEvi, $idAlumno);
     
         // Ejecutar la declaración

@@ -1,8 +1,6 @@
 <?php 
     include '../../Model/Motivo.php';
     include '../../Controller/GestionJustificantes.php'; 
-
-
     session_start();
 ?>
 
@@ -30,7 +28,7 @@
             <h1>Solicitar Justificante</h1>
         </header>
 
-        <form class="formulario" action="" method="POST" enctype="multipart/form-data">
+        <form class="formulario" action="" method="POST" enctype="multipart/form-data" >
             <?php if(isset($_GET['error'])){ ?>
                 <p class="error"><?php echo $_GET['error'] ?></p>
             <?php } ?>
@@ -63,13 +61,8 @@
             </div>
 
             <div>
-                <label for="peri">Período:</label>
-                <select name="peri" id="peri">
-                    <option value="" disabled selected>Selecciona el período actual</option>
-                    <option value="Invierno">Invierno 2025</option>
-                    <option value="Primavera">Primavera 2025</option> 
-                    <option value="Otoño">Otoño 2025</option>
-                </select>
+                <label>Período:</label>
+                <input type="text" name="peri" placeholder="Periodo">
             </div>
 
             <?php
@@ -89,7 +82,6 @@
                 } else {
                     echo '<option value="">No hay motivos disponibles</option>';
                 }
-                ?>
                 ?>
             </select>
 
@@ -152,7 +144,14 @@
             $gestionJustificante = new gestionJustificante($conexion);
                     
             //si se mando el formulario, se manda a llamar la función que incerta los justificantes
-            if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            if ($_SERVER["REQUEST_METHOD"] === "POST") { 
+
+                /* Muestra todo el contenido de $_POST para verificar los datos enviados
+                echo "vista";
+                echo "<pre>";
+                print_r($_POST);
+                echo "</pre>";*/
+    
                 $gestionJustificante->procesarJusti(); // Llama a la función 
             }
         ?>

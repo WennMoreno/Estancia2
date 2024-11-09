@@ -133,6 +133,12 @@
                     
             //si se mando el formulario, se manda a llamar la función que incerta los justificantes
             if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+                 //Muestra todo el contenido de $_POST para verificar los datos enviados
+                echo "vista";
+                echo "<pre>";
+                print_r($_POST);
+                echo "</pre>";
                 $gestionJustificante->procesarOtroJusti(); // Llama a la función 
             }
         ?>

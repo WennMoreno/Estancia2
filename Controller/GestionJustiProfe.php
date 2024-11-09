@@ -17,33 +17,14 @@ class gestionJustiProfe {
     // Mostrar los justificantes de un profesor
     public function mostrarJustificantesProfesor($idProf) {
         $justificantes = $this->justificanteProfesor->obtenerJustificantesPorProfesor($idProf);
-
+    
         if ($justificantes) {
-            echo '<div class="email-list">';
-        echo '<div class="email-container">';
-        
-        foreach ($justificantes as $justificante) {
-            echo '<div class="email-item">';
-            echo '<div class="email-subject">';
-            echo '<strong>Motivo:</strong> ' . $justificante['motivo'] . '</div>';
-            echo '<div class="email-details">';
-            echo '<p><strong>Cuatrimestre:</strong> ' . $justificante['cuatrimestre'] . '</p>';
-            echo '<p><strong>Grupo:</strong> ' . $justificante['grupo'] . '</p>';
-            echo '<p><strong>Fecha:</strong> ' . $justificante['fecha'] . '</p>';
-            echo '<p><strong>Estado:</strong> ' . $justificante['estado'] . '</p>';
-            echo '</div>';
-            echo '<a href="detalles.php?idJusti=' . $justificante['idJusti'] . '" class="view-details">Ver detalles</a>';
-            echo '</div>';
-        }
-
-        echo '</div>';
-        echo '</div>';
-            
+            return $justificantes;
         } else {
-            // Si no hay justificantes, se muestra un mensaje
-            $mensaje = "No tienes justificantes pendientes.";
+            return [];
         }
     }
+    
 
     public function mostrarDetallesJustificante($idJusti) {
         // Obtener los datos del justificante

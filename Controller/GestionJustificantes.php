@@ -19,11 +19,12 @@ class gestionJustificante {
     }
 
     public function procesarJusti(){
-        /* Mostrar los datos enviados y los archivos subidos
+        /*Mostrar los datos enviados y los archivos subidos*/
+        echo "Controlador";
         echo '<pre>';
         print_r($_POST); // Ver todos los datos del formulario
         print_r($_FILES); // Ver la información del archivo subido
-        echo '</pre>';*/
+        echo '</pre>';
 
         // Procesar datos del formulario
         $cuatrimestre = $_POST['Cuatri'];
@@ -124,11 +125,12 @@ class gestionJustificante {
     }
 
     public function procesarOtroJusti(){
-        /* Mostrar los datos enviados y los archivos subidos
-        echo '<pre>';
-        print_r($_POST); // Ver todos los datos del formulario
-        print_r($_FILES); // Ver la información del archivo subido
-        echo '</pre>';*/
+       /*Mostrar los datos enviados y los archivos subidos*/
+       echo "Controlador";
+       echo '<pre>';
+       print_r($_POST); // Ver todos los datos del formulario
+       print_r($_FILES); // Ver la información del archivo subido
+       echo '</pre>';
 
         // Procesar datos del formulario
         $cuatrimestre = $_POST['Cuatri'];
@@ -150,9 +152,7 @@ class gestionJustificante {
             echo "No se encontró un alumno con el nombre proporcionado.";
         }
 
-       
-
-        $rutaEstatica = "C:/wamp64/www/pruebasOfAll/proyEstancia2"; 
+        $rutaEstatica = "C:/wamp64/www/pruebasOfAllVerDul/proyEstancia2"; 
 
         if (isset($_FILES['evidencia']) && $_FILES['evidencia']['error'] == UPLOAD_ERR_OK) {
             // Manejar la subida de la evidencia
