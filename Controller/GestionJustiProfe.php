@@ -5,30 +5,24 @@ include '../../Model/Justi_Profe.php';
 
 class gestionJustiProfe {
     private $conexion;
-    private $justificanteProfesor;
 
-    public function __construct() {
-        // Usar la conexión directamente desde el archivo de conexión
-        global $conexion; // Usamos la conexión global definida
-        $this->conexion = $conexion; // Asignamos la conexión a la propiedad de la clase
-        $this->justificanteProfesor = new JustificanteProfesor($this->conexion);
+    public function __construct($conexion) {
+        $this->conexion = $conexion;
     }
 
     // Mostrar los justificantes de un profesor
-    public function mostrarJustificantesProfesor($idProf) {
-        $justificantes = $this->justificanteProfesor->obtenerJustificantesPorProfesor($idProf);
-    
-        if ($justificantes) {
-            return $justificantes;
-        } else {
-            return [];
-        }
+    public function mostrarJustificantesPorProfesor($idProf) {
+        $justificanteProfesor = new JustificanteProfesor($this->conexion);
+        return $justificanteProfesor->obtenerJustificantesPorProfesor($idProf);
     }
     
 
     public function mostrarDetallesJustificante($idJusti) {
-        // Obtener los datos del justificante
-        $justificante = $this->justificanteProfesor->obtenerJustificantePorId($idJusti);
+        // Crear una nueva instancia de JustificanteProfesor
+        $justificanteProfesor = new JustificanteProfesor($this->conexion);
+        
+        // Obtener los datos del justificante usando el método adecuado de la clase JustificanteProfesor
+        $justificante = $justificanteProfesor->obtenerJustificantePorId($idJusti);
     
         if ($justificante) {
             // Si se encuentra el justificante, mostrar los detalles directamente en el controlador
@@ -57,7 +51,7 @@ class gestionJustiProfe {
             echo "<h3>Detalles del Alumno</h3>";
             echo "<p><strong>Nombre:</strong> " . htmlspecialchars($justificante['nombreAlu']) . "</p>";
             echo "<p><strong>Matrícula:</strong> " . htmlspecialchars($justificante['matricula']) . "</p>";
-            echo "<p><strong>Carrera:</strong> " . htmlspecialchars($justificante['alumnoCarrera']) . "</p>";
+            
     
             // Si hay evidencia, mostrar el enlace para verla
             if ($justificante['evidenciaRuta']) {
@@ -66,17 +60,11 @@ class gestionJustiProfe {
                 echo "<p><strong>Evidencia:</strong> No disponible.</p>";
             }
     
-            // Formulario para generar el PDF o rechazar
-            echo "<form action='../../Static/fpdf/JustAlumRegu.php' method='POST'>";
-            echo "<input type='hidden' name='idJusti' value='" . htmlspecialchars($justificante['idJusti']) . "'>";
-            echo "<button type='submit'>Aceptar y Generar PDF</button>";
-            echo "</form>";
-    
-            // Botón de rechazo
-            echo "<button class='rechazar'>Rechazar</button>";
+        
         } else {
             echo "<p>No se encontró el justificante.</p>";
         }
+    
     }
     
 }

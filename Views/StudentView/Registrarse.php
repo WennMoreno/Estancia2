@@ -61,10 +61,16 @@
                 <input type="text" placeholder="Ingrese Usuario" name="matricula" required>
                 
                 <label>
+                    <i class="fa-solid fa-envelope"></i>
+                    Correo Electrónico
+                </label>
+                <input type="email" placeholder="Ingrese Correo Electrónico" name="correo" required>
+
+                <label>
                     <i class="fa-solid fa-key"></i>
                     Contraseña
                 </label>
-                <input type="password" placeholder="Ingrese Contraseña" name="clave" required>
+                <input type="text" placeholder="Ingrese Contraseña" name="clave" required>
                 
                 <label>
                     <i class="fa-solid fa-key"></i>

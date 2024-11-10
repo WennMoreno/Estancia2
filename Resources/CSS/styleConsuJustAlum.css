@@ -63,13 +63,15 @@ body {
 }
 
 .estado-aprobado {
-    color: #2f8f2f;
-    background-color: #e1f3e1;
+    color: white; /* Color del texto */
+    background-color: #28a745; /* Verde fuerte para "aprobado" */
+    border: 1px solid #218838; /* Borde verde oscuro */
 }
 
 .estado-rechazado {
-    color: #c42f2f;
-    background-color: #f8e1e1;
+    color: white; /* Color del texto */
+    background-color: #dc3545; /* Rojo fuerte para "rechazado" */
+    border: 1px solid #c82333; /* Borde rojo oscuro */
 }
 
 /* Enlace de navegación */
@@ -89,4 +91,10 @@ p {
     text-align: center;
     color: #555;
     font-style: italic;
+}
+
+.justificante-card .estado-aprobado {
+    color: white;
+    background-color: #28a745;
+    border: 1px solid #218838;
 }

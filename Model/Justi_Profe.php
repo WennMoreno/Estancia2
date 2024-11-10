@@ -24,33 +24,26 @@ class JustificanteProfesor {
         return $stmt;
     }
     
-    // Obtener todos los justificantes para un profesor
+    // Obtener todos los justificantes para un profesor junto con la evidencia pdf generada
     public function obtenerJustificantesPorProfesor($idProf) {
-        $sql = "
-            SELECT j.idJusti, j.cuatrimestre, j.grupo, j.carrera, j.periodoEscolar, j.motivo, j.fecha, j.estado
-            FROM justificante_profesor jp
-            INNER JOIN justificante j ON jp.idJusti = j.idJusti
-            WHERE jp.idProf = ?
-        ";
-
-        $stmt = $this->conexion->prepare($sql);
-        $stmt->bind_param("i", $idProf); // Vincula el ID del profesor
+        $query = "SELECT j.*, p.nombrePdf, p.rutaPdf 
+                  FROM justificante AS j
+                  LEFT JOIN pdf_generado AS p ON j.idJusti = p.idJusti
+                  JOIN justificante_profesor AS jp ON jp.idJusti = j.idJusti
+                  WHERE jp.idProf = ?";
+        $stmt = $this->conexion->prepare($query);
+        $stmt->bind_param("i", $idProf);
         $stmt->execute();
-        $resultado = $stmt->get_result();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+    
 
-        $justificantes = [];
-        while ($fila = $resultado->fetch_assoc()) {
-            $justificantes[] = $fila;
-        }
-
-        return $justificantes;
-    } 
-    //para el detalle del justificante
+    //para el detalle del justificante con informcaión del alumno 
     public function obtenerJustificantePorId($idJusti) {
         $sql = "
             SELECT j.idJusti, j.cuatrimestre, j.grupo, j.carrera, j.periodoEscolar, j.motivo, j.fecha, 
                    j.horaInicio, j.horaFin, j.ausenteTodoDia, j.motivoExtra, j.estado, 
-                   a.nombreAlu, a.matricula, a.carrera AS alumnoCarrera, e.ruta AS evidenciaRuta
+                   a.nombreAlu, a.matricula, e.ruta AS evidenciaRuta
             FROM justificante j
             JOIN alumno a ON j.idAlumno = a.idAlumno
             LEFT JOIN evidencia e ON j.idEvi = e.idEvi

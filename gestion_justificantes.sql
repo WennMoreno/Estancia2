@@ -15,7 +15,8 @@ CREATE TABLE `alumno` (
   `nombreAlu` varchar(25) NOT NULL,
   `apellidoAlu` varchar(30) NOT NULL,
   `feNac` date NOT NULL,
-  `matricula` varchar(25) NOT NULL,
+  `matricula` varchar(25) NOT NULL, 
+  `correoE` varchar(70) NOT NULL,
   `contrasena` varchar(15) NOT NULL,
   `confirmacionContra` varchar(15) NOT NULL
 );  
@@ -81,7 +82,8 @@ CREATE TABLE pdf_generado (
 CREATE TABLE justificante_evento (
     idJustiEvento INT AUTO_INCREMENT PRIMARY KEY,
     nombreEvento VARCHAR(100) NOT NULL,
-    fechaEvento DATE NOT NULL
+    fechaInicio DATE NOT NULL,
+    fechaFin DATE
 );
 
 CREATE TABLE justificante_evento_alumno (

@@ -58,15 +58,19 @@
                     <option value="ITI">ITI</option>
                     <option value="IET">IET</option>
                 </select>
-            </div>
+            </div> 
 
             <div>
-                <label>Período:</label>
-                <input type="text" name="peri" placeholder="Periodo">
+                <label for="Periodo">Período:</label>
+                <select name="peri" id="peri">
+                    <option value="" disabled selected>Selecciona el Período</option>
+                    <option value="Otoño 2025">Otoño 2025</option>
+                    <option value="Invierno 2025">Invierno 2025</option>
+                    <option value="Primavera 2025">Primavera 2025</option>
+                </select>
             </div>
 
             <?php
-           
             // Crear una nueva instancia y luego llamar al método
             $motivo = new Motivo($conexion);
             $motivos = $motivo->obtenerMotivos($conexion);

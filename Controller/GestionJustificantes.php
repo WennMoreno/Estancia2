@@ -5,6 +5,7 @@ include '../../Model/Evidencia.php';
 include '../../Model/Profesor.php';
 include '../../Model/Justi_Profe.php';
 include '../../Model/Alumno.php';
+include '../../Model/JustiEvento.php';
 
 class gestionJustificante {
     private $conexion;
@@ -230,42 +231,75 @@ class gestionJustificante {
         }
     } 
 
-    public function otrosJusti() {
+    public function JustiDAE() {
+        // Crear instancia del modelo JustificanteEvento
+        $justificanteEvento = new JustificanteEvento($this->conexion);
+    
         // Recoger datos del formulario
         $nombreEvento = $_POST['evento'];
-        $fechaEvento = $_POST['fecha'];
+        $duracion = $_POST['duracion'];
         
-        // Inserción en la tabla justificante_evento
-        $sqlEvento = "INSERT INTO justificante_evento (nombreEvento, fechaEvento) VALUES (?, ?)";
-        $stmtEvento = $this->conexion->prepare($sqlEvento);
-        $stmtEvento->bind_param("ss", $nombreEvento, $fechaEvento);
-        
-        if ($stmtEvento->execute()) {
-            $idJustiEvento = $stmtEvento->insert_id; // Obtener el ID del evento insertado
-
-            // Insertar los datos de los alumnos en justificante_evento_alumno
+        // Definir variables de fecha según la duración del evento
+        if ($duracion === 'si') {
+            // Si el evento duró varios días, obtener las fechas de inicio y fin
+            $fechaInicio = $_POST['fechaInicio'];
+            $fechaFin = $_POST['fechaFin'];
+        } else {
+            // Si el evento es de un solo día, usar solo `fechaInicio` y dejar `fechaFin` en null
+            $fechaInicio = $_POST['fecha'];
+            $fechaFin = "No aplica";
+        }
+    
+        // Insertar el evento en la base de datos y obtener el ID del evento
+        $idJustiEvento = $justificanteEvento->insertarEvento($nombreEvento, $fechaInicio, $fechaFin);
+    
+        if ($idJustiEvento) {
+            // Insertar los datos de los alumnos asociados al evento en la tabla justificante_evento_alumno
             if (!empty($_POST['nombreAlu'])) {
                 foreach ($_POST['nombreAlu'] as $index => $nombreAlu) {
                     $matricula = $_POST['matricula'][$index];
                     $grado = $_POST['grado'][$index];
                     $grupo = $_POST['grupo'][$index];
                     $carrera = $_POST['carrera'][$index];
-
-                    $sqlAlumno = "INSERT INTO justificante_evento_alumno (nombreAlumno, matricula, grado, grupo, carrera, idJustiEvento) 
-                                  VALUES (?, ?, ?, ?, ?, ?)";
-                    $stmtAlumno = $this->conexion->prepare($sqlAlumno);
-                    $stmtAlumno->bind_param("ssisss", $nombreAlu, $matricula, $grado, $grupo, $carrera, $idJustiEvento);
-                    $stmtAlumno->execute();
+    
+                    // Llamar al método para insertar el alumno en el evento
+                    $justificanteEvento->insertarAlumnoEnEvento($nombreAlu, $matricula, $grado, $grupo, $carrera, $idJustiEvento);
                 }
             }
-
+    
             echo "Justificante de evento generado exitosamente.";
         } else {
-            echo "Error al generar el justificante del evento: " . $stmtEvento->error;
+            echo "Error al generar el justificante del evento.";
         }
-
-        $stmtEvento->close();
     }
+    
+    public function mostrarJustificantesEventos() {
+        // Crear instancia del modelo JustificanteEvento
+        $justificanteEvento = new JustificanteEvento($this->conexion);
+    
+        // Obtener justificantes de eventos
+        $eventos = $justificanteEvento->obtenerJustificantesEventos();
+        return $eventos;
+    }
+    
+    public function editarEvento($eventoId, $nombreEvento, $fechaInicio, $fechaFin, $alumnos) {
+        $justificanteEvento = new JustificanteEvento($this->conexion); 
+
+        $justificanteEvento->editarEventoCompleto($eventoId, $nombreEvento, $fechaInicio, $fechaFin, $alumnos);
+
+
+    }
+
+    public function obtenerEventoPorId($eventoId) {
+        var_dump($eventoId); // Verifica que el ID esté llegando correctamente
+        $justificanteEvento = new JustificanteEvento($this->conexion);
+        $evento = $justificanteEvento->obtenerEvento($eventoId);
+        var_dump($evento); // Verifica el contenido de $evento antes de devolverlo
+        return $evento;
+    }
+    
+    
+
 
 }
 

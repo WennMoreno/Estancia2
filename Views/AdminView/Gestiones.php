@@ -31,18 +31,13 @@
                 --->
             </div>
             <div class="content">
-            <div class="opcion">
-                    <p><a href="" class="btn-action">Reportes</a></p>
-                </div>
                 <div class="opcion">
                     <p><a href="GestionAlum.php" class="btn-action">Alumnos</a></p> 
                 </div>
                 <div class="opcion">
                     <p><a href="GestionProf.php" class="btn-action">Profesores</a></p> 
                 </div>
-                <div class="opcion">
-                    <p><a href="" class="btn-action">Justificantes</a></p>
-                </div>
+                
                 <div class="opcion">
                     <p><a href="gestionMot.php" class="btn-action">Motivos</a></p>
                 </div>

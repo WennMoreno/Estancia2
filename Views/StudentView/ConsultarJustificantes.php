@@ -37,10 +37,11 @@
                     <div class="justificante-estado
                         <?php 
                             echo ($justificante['estado'] == 'pendiente') ? 'estado-pendiente' : 
-                                 (($justificante['estado'] == 'aprobado') ? 'estado-aprobado' : 'estado-rechazado'); 
+                                (($justificante['estado'] == 'aprobado') ? 'estado-aprobado' : 'estado-rechazado'); 
                         ?>">
                         <?php echo htmlspecialchars($justificante['estado']); ?>
                     </div>
+
                 </div>
             <?php endforeach; ?>
         <?php else: ?>

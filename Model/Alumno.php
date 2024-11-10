@@ -32,25 +32,26 @@ class Alumno {
     }
     
 
-    public function insertarAlumno($nombre, $apellido, $fechaNacimiento, $matricula, $contrasena, $confirmacionContrasena) {
-        $sql = "INSERT INTO alumno (nombreAlu, apellidoAlu, feNac, matricula, contrasena, confirmacionContra) 
-                VALUES (?, ?, ?, ?, ?, ?)";
+    public function insertarAlumno($nombre, $apellido, $fechaNacimiento, $matricula, $correoEle, $contrasena, $confirmacionContrasena) {
+        $sql = "INSERT INTO alumno (nombreAlu, apellidoAlu, feNac, matricula, correoE, contrasena, confirmacionContra) 
+                VALUES (?, ?, ?, ?, ?, ?, ?)";
         
         $stmt = $this->conexion->prepare($sql);
         
         if ($stmt === false) {
             die("Error en la preparación de la declaración: " . $this->conexion->error);
         }
-
+    
         // Encriptar la contraseña
         $contrasenaEncrip = md5($contrasena);
-
+    
         // Vincula los parámetros
-        $stmt->bind_param("ssssss", $nombre, $apellido, $fechaNacimiento, $matricula, $contrasena, $contrasenaEncrip);
-
+        $stmt->bind_param("sssssss", $nombre, $apellido, $fechaNacimiento, $matricula, $correoEle, $contrasenaEncrip, $contrasenaEncrip);
+    
         // Ejecuta la consulta
         return $stmt->execute();
     }
+    
 
     function obtenerIdAlumnoPorMatricula($conexion) {
         // Verifica si la matrícula está definida en la sesión
@@ -91,13 +92,18 @@ class Alumno {
     
     //para la busqueda de "otros justificantes".
     public function buscarAlumnos($busqueda) {
-        $query = "SELECT * FROM alumno WHERE CONCAT(nombreAlu, ' ', apellidoAlu) LIKE ?";
+        // Modificar la consulta para buscar por matrícula
+        $query = "SELECT * FROM alumno WHERE matricula LIKE ?";
         $stmt = $this->conexion->prepare($query);
-        $like = "%$busqueda%";
+        
+        // Usar LIKE con la matrícula
+        $like = "%$busqueda%"; 
         $stmt->bind_param("s", $like);
         $stmt->execute();
+        
         return $stmt->get_result();
     }
+    
 } 
 
 include_once __DIR__ . '/../Model/Conexion.php'; // Ajusta la ruta según la ubicación del archivo de conexión
