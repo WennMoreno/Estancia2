@@ -34,7 +34,7 @@ class JustificanteEvento {
             $stmt->close();
             return true;
         } else {
-            echo "Error al insertar el alumno en el evento: " . $stmt->error;
+            //echo "Error al insertar el alumno en el evento: " . $stmt->error;
             $stmt->close();
             return false;
         }
@@ -170,7 +170,7 @@ class JustificanteEvento {
         $stmt = $this->conexion->prepare($sql);
         $stmt->bind_param("i", $eventoId);
         if ($stmt->execute()) {
-            echo "Alumnos eliminados correctamente.<br>";
+           // echo "Alumnos eliminados correctamente.<br>";
         } else {
             echo "Error al eliminar alumnos: " . $stmt->error . "<br>";
         }
@@ -194,7 +194,7 @@ class JustificanteEvento {
                 $eventoId
             );
             if ($stmt->execute()) {
-                echo "Alumno insertado correctamente: " . $alumno['nombreAlumno'] . "<br>";
+                //echo "Alumno insertado correctamente: " . $alumno['nombreAlumno'] . "<br>";
             } else {
                 echo "Error al insertar alumno: " . $stmt->error . "<br>";
             }

@@ -1,100 +1,140 @@
-/* Estilos generales */
+/* styleConsuJustAlum.css */
+
+/* General styles */
 body {
     font-family: Arial, sans-serif;
-    background-color: #800080; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
     margin: 0;
-}
-
-.container {
-    width: 90%;
-    max-width: 600px;
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Estilo para cada tarjeta de justificante */
-.justificante-card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 16px;
-    margin-bottom: 16px;
-    background-color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Encabezado del justificante */
-.justificante-header {
+    padding: 0;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    margin-bottom: 8px;
-    font-weight: bold;
+    background-color: #f4f4f4;
 }
 
-.justificante-motivo {
-    font-size: 16px;
-    color: #333;
+/* Header styles */
+header {
+    width: 100%;
+    background-color: #800080;
+    color: #fff;
+    padding: 10px 0;
+    display: flex;  
+    align-items: center;
+    justify-content: space-between;
 }
 
-.justificante-fecha {
-    font-size: 14px;
-    color: #777;
+header .logo img {
+    height: 50px;
+    margin-left: 20px;
 }
 
-/* Estado del justificante con estilos para cada caso */
-.justificante-estado {
-    font-size: 14px;
-    font-weight: bold;
-    padding: 4px 8px;
-    border-radius: 5px;
-    text-align: center;
-    width: fit-content;
-}
-
-.estado-pendiente {
-    color: #d68e00;
-    background-color: #fff4d6;
-}
-
-.estado-aprobado {
-    color: white; /* Color del texto */
-    background-color: #28a745; /* Verde fuerte para "aprobado" */
-    border: 1px solid #218838; /* Borde verde oscuro */
-}
-
-.estado-rechazado {
-    color: white; /* Color del texto */
-    background-color: #dc3545; /* Rojo fuerte para "rechazado" */
-    border: 1px solid #c82333; /* Borde rojo oscuro */
-}
-
-/* Enlace de navegación */
-a {
-    display: inline-block;
-    margin-top: 20px;
-    color: #007bff;
+header nav a.cerrar {
+    color: #fff;
     text-decoration: none;
+    margin-right: 20px;
+    font-weight: bold;
 }
 
-a:hover {
+header nav a.cerrar:hover {
     text-decoration: underline;
 }
 
-/* Estilo para el mensaje de "No hay justificantes" */
-p {
-    text-align: center;
-    color: #555;
-    font-style: italic;
+/* Main container */
+.container {
+    display: flex;
+    width: 90%;
+    max-width: 1200px;
+    margin-top: 20px;
+    gap: 20px;
 }
 
-.justificante-card .estado-aprobado {
-    color: white;
+/* Sidebar */
+.sidebar {
+    flex: 1;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    max-width: 300px;
+}
+
+.sidebar h2 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    color: #003366;
+}
+
+.solicitud-item {
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    background-color: #e6f2ff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.solicitud-item:hover {
+    background-color: #cce6ff;
+}
+
+.solicitud-item.active {
+    background-color: #99ccff;
+}
+
+.solicitud-item strong {
+    display: block;
+    font-size: 1.1em;
+    color: #003366;
+}
+
+.solicitud-item small {
+    display: block;
+    color: #666;
+}
+
+.solicitud-item span {
+    display: inline-block;
+    margin-top: 5px;
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #003366;
+}
+
+/* Content section */
+.content {
+    flex: 2;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.content h2 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    color: #003366;
+}
+
+#detallesSolicitud {
+    font-size: 1em;
+    color: #333;
+}
+
+#detallesSolicitud p {
+    margin-bottom: 15px;
+}
+
+/* Button styles */
+button {
     background-color: #28a745;
-    border: 1px solid #218838;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #28a745;
 }

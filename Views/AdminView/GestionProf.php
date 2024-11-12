@@ -15,7 +15,7 @@ if (isset($_GET['delete_id'])) {
     }
 }
 ?>
-
+  
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,6 +37,7 @@ if (isset($_GET['delete_id'])) {
     </header>
 
     <button class="btn-agregar" onclick="location.href='Addprof.php'">Agregar Nuevo Profesor</button>
+    <button class="btn-descargar" onclick="location.href='../../Static/fpdf/ExcelProf.php'">Descargar Excel</button>
     <div class="table-container"> 
         <table>
             <tr>

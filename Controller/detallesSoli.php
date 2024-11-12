@@ -1,13 +1,18 @@
 <?php
 include('../Model/conexion.php');
+include('../Model/Justificante.php');
+include('../Model/Administrador.php');
 
 // Verificar si se proporcionó el ID de la solicitud
 if (!isset($_GET['id'])) {
     echo "<p>No se proporcionó el ID de la solicitud.</p>";
     exit();
 }
-
+session_start(); 
+//almacena el id de la solicitud
 $idSolicitud = intval($_GET['id']);
+//almacena el id del usuario 
+$idUser = $_SESSION['identificador'];
 
 // Verificar la conexión a la base de datos
 if (!$conexion) {
@@ -15,16 +20,9 @@ if (!$conexion) {
     exit();
 }
 
-// Consulta para obtener los detalles de la solicitud
-$query = "
-    SELECT justificante.*, alumno.nombreAlu AS nombre, alumno.matricula, justificante.carrera, evidencia.ruta
-    FROM justificante
-    JOIN alumno ON justificante.idAlumno = alumno.idAlumno
-    LEFT JOIN evidencia ON justificante.idEvi = evidencia.idEvi
-    WHERE justificante.idJusti = $idSolicitud
-";
-
-$result = mysqli_query($conexion, $query);
+//Instancio el modelo
+$modeloJustifi= new Justificante($conexion);
+$result=$modeloJustifi->showJusti($idSolicitud);
 
 // Verificar si la consulta fue exitosa
 if (!$result) {
@@ -55,22 +53,27 @@ if ($solicitud) {
 
     echo "<p><strong>Motivo:</strong> " . htmlspecialchars($solicitud['motivo']) . "</p>";
 
-    // Mostrar ruta del archivo
-    $pdfPath = $solicitud['ruta'];
-    $pdfPath = str_replace(' ', '%20', $pdfPath); // Reemplazar espacios por %20
-    echo "<p>Ruta desde la base de datos: " . htmlspecialchars($pdfPath) . "</p>"; 
-    echo "<p>URL del PDF: " . htmlspecialchars($pdfPath) . "</p>"; // Línea de depuración adicional
+//Instancio el modelo
+$modeloAdmin= new Administrador($conexion);
+$resultAdmin=$modeloAdmin->EsAdmin($idUser);
 
-    // Formulario para generar PDF o rechazar
-    ?>
-    <form action="../../Static/fpdf/JustAlumRegu.php" method="POST">
-        <input type="hidden" name="idJusti" value="<?php echo htmlspecialchars($solicitud['idJusti']); ?>">
-        <button type="submit">Aceptar y Generar PDF</button>
-    </form>
+// Si el usuario existe en la tabla administrador
+if ($resultAdmin) { 
+        $pdfPath = $solicitud['ruta'];
+        $pdfPath = str_replace(' ', '%20', $pdfPath); // Reemplazar espacios por %20
+        echo "<p>Ruta desde la base de datos: " . htmlspecialchars($pdfPath) . "</p>";
+        echo "<p>URL del PDF: " . htmlspecialchars($pdfPath) . "</p>";
 
-    <!-- Botón de rechazo -->
-    <button class="rechazar">Rechazar</button>
-    <?php
+        // Formulario para generar PDF o rechazar
+        ?>
+        <form action="../../Static/fpdf/JustAlumRegu.php" method="POST">
+            <input type="hidden" name="idJusti" value="<?php echo htmlspecialchars($solicitud['idJusti']); ?>">
+            <button type="submit">Aceptar y Generar PDF</button>
+        </form>
+        
+        <button class="rechazar">Rechazar</button>
+        <?php
+    }
 }
 
 // Cerrar la conexión a la base de datos

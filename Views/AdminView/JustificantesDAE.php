@@ -13,7 +13,7 @@
         <img src="../../Resources/img/logo.png" alt="Logo">
     </div>
     <h1>Justificantes de Eventos</h1>
-    <nav class="back">
+    <nav >
         <a href="InicioAdmin.php " class="cerrar">Regresar</a>
     </nav>
 </header>

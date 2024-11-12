@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Justificante de Evento</title>
-    <link rel="stylesheet" href="../../Resources/CSS/styleJustiDAE.css">
+    <link rel="stylesheet" href="/pruebasOfAllVerDul/Resources/CSS/styleUpDAE.css">
     <script src="../../Controller/Js/agregarAluJusti.js"></script>
 </head>
 <body>
@@ -18,7 +18,7 @@
         <a href="JustificantesDAE.php " class="cerrar">Regresar</a>
     </nav>
 </header>
-
+  
 <?php
     include '../../Controller/GestionJustificantes.php';
     include '../../Model/Conexion.php';
@@ -31,7 +31,7 @@
     $duracion = ($fechaFin && $fechaFin != '0000-00-00') ? 'si' : 'no'; // Determina si es "Sí" o "No" dependiendo de la fecha de fin
 ?>
 
-<div>
+<div class="container">
     <form method="POST" action="">
         <h3>Editar Evento</h3>
         <label for="nombreEvento">Nombre del Evento:</label>
@@ -95,7 +95,7 @@
         $alumnos = $_POST['alumnos'] ?? [];
 
         // Verificar si los datos de los alumnos están llegando correctamente
-        var_dump($alumnos);
+       // var_dump($alumnos);
 
         $gestionJustificante->editarEvento($eventoId, $nombreEvento, $fechaInicio, $fechaFin, $alumnos);
     }

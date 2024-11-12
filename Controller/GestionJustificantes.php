@@ -291,10 +291,10 @@ class gestionJustificante {
     }
 
     public function obtenerEventoPorId($eventoId) {
-        var_dump($eventoId); // Verifica que el ID esté llegando correctamente
+        //var_dump($eventoId); // Verifica que el ID esté llegando correctamente
         $justificanteEvento = new JustificanteEvento($this->conexion);
         $evento = $justificanteEvento->obtenerEvento($eventoId);
-        var_dump($evento); // Verifica el contenido de $evento antes de devolverlo
+        //var_dump($evento); // Verifica el contenido de $evento antes de devolverlo
         return $evento;
     }
     

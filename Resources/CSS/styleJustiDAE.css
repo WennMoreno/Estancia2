@@ -35,14 +35,20 @@ header .logo img {
     height: 50px;
 }
 
+header nav a {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 22px;
+    margin-left: 20px;
+}
+
 .container {
     display: flex;
     gap: 20px;
 } 
 
-header .back nav{
-    color: white; 
-}
+
 
 /* Sidebar (lista de eventos) */
 .sidebar {

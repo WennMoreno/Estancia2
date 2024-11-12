@@ -45,7 +45,29 @@ class Justificante {
         } else {
             return [];
         }
+    }  
+
+    public function showJusti($id){
+        $query = "
+            SELECT justificante.*, alumno.nombreAlu AS nombre, alumno.matricula, justificante.carrera, evidencia.ruta
+            FROM justificante
+            JOIN alumno ON justificante.idAlumno = alumno.idAlumno
+            LEFT JOIN evidencia ON justificante.idEvi = evidencia.idEvi
+            WHERE justificante.idJusti = $id
+        ";
+        $result = mysqli_query($this->conexion, $query);
+        return $result;
+
     }
    
+    public function justiPendiente(){
+        $query = "SELECT justificante.*, alumno.nombreAlu, alumno.apellidoAlu 
+          FROM justificante
+          JOIN alumno ON justificante.idAlumno = alumno.idAlumno
+          WHERE justificante.estado = 'Pendiente'"; 
+
+        $result = mysqli_query($this->conexion, $query);
+        return $result;
+    }
 }
 ?>

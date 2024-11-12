@@ -13,7 +13,7 @@ if (isset($_GET['delete_id'])) {
     } else {
         echo "Error al eliminar el motivo.";
     }
-}
+}  
 ?>
  
 <!DOCTYPE html>
@@ -37,7 +37,9 @@ if (isset($_GET['delete_id'])) {
     </header>
     
 
-    <button  class="btn-agregar" onclick="location.href='Addmot.php'">Agregar Nuevo Motivo</button>
+    <button class="btn-agregar" onclick="location.href='Addmot.php'">Agregar Nuevo Motivo</button>
+<button class="btn-descargar" onclick="location.href='../../Static/fpdf/ExportarExcel.php'">Descargar Excel</button>
+
     <div class="table-container"> 
         <table >
             <tr>

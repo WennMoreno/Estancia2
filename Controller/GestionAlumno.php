@@ -1,7 +1,7 @@
 <?php
     include '../../Model/Conexion.php';
     include '../../Model/Alumno.php';
-
+    
     class gestionAlumno {
         private $conexion;
 
@@ -24,7 +24,7 @@
                 $ape = validar($_POST['ape']);
                 $nac = validar($_POST['feNac']);
                 $usuario = validar($_POST['matricula']);
-                $correoE = $_POST['correo']; // Obtener el correo electrónico
+                $correoE = $_POST['correo']; 
                 $clave = validar($_POST['clave']);
                 $Rclave = validar($_POST['Rclave']);
         
@@ -109,24 +109,24 @@ class AlumnoController {
         return $this->alumnoModel->obtenerAlumnos(); // Llama al método del modelo para obtener todos los alumnos
     }
 
-    public function agregarAlumno($nombre, $apellido, $fechaNac, $matricula, $contrasena, $confirmacionContra) {
+    public function agregarAlumno($nombre, $apellido, $fechaNac, $matricula,$correo, $contrasena, $confirmacionContra) {
         // Verificar si la contraseña y su confirmación coinciden
         if ($contrasena !== $confirmacionContra) {
             return false; // O manejar el error de otra manera
         }
-        return $this->alumnoModel->agregarAlumno($nombre, $apellido, $fechaNac, $matricula, $contrasena);
+        return $this->alumnoModel->agregarAlumno($nombre, $apellido, $fechaNac, $matricula,$correo, $contrasena);
     }
 
     public function obtenerAlumnoPorId($idAlumno) {
         return $this->alumnoModel->obtenerAlumnoPorId($idAlumno); // Llama al método del modelo para obtener un alumno por ID
     }
 
-    public function modificarAlumno($idAlumno, $nombre, $apellido, $feNac, $matricula, $contrasena, $confirmacionContra) {
+    public function modificarAlumno($idAlumno, $nombre, $apellido, $feNac, $matricula,$correo, $contrasena, $confirmacionContra) {
         // Verificar si la contraseña y su confirmación coinciden
         if ($contrasena !== $confirmacionContra) {
             return false; // O manejar el error de otra manera
         }
-        return $this->alumnoModel->modificarAlumno($idAlumno, $nombre, $apellido, $feNac, $matricula, $contrasena); // Llama al método del modelo para modificar un alumno
+        return $this->alumnoModel->modificarAlumno($idAlumno, $nombre, $apellido, $feNac, $matricula,$correo, $contrasena); // Llama al método del modelo para modificar un alumno
     }
 
     public function eliminarAlumno($idAlumno) {

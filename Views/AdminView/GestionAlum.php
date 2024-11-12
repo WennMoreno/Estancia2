@@ -15,7 +15,7 @@ if (isset($_GET['delete_id'])) {
     }
 }
 ?>
-
+  
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,6 +42,7 @@ if (isset($_GET['delete_id'])) {
 </header>
 
 <button class="btn-agregar" onclick="location.href='Addalum.php'">Agregar Nuevo Alumno</button>
+<button class="btn-descargar" onclick="location.href='../../Static/fpdf/ExcelAlum.php'">Descargar Excel</button>
 <div class="table-container"> 
     <table>
         <tr>
@@ -49,7 +50,7 @@ if (isset($_GET['delete_id'])) {
             <th>Nombre</th>
             <th>Apellido</th>
             <th>Matrícula</th>
-            
+            <th>Correo</th>
             <th>Actualizar</th>
             <th>Eliminar</th>
         </tr>
@@ -59,6 +60,7 @@ if (isset($_GET['delete_id'])) {
                 <td><?php echo htmlspecialchars($alumno['nombreAlu']); ?></td>
                 <td><?php echo htmlspecialchars($alumno['apellidoAlu']); ?></td>
                 <td><?php echo htmlspecialchars($alumno['matricula']); ?></td>
+                <td><?php echo htmlspecialchars($alumno['correoE']); ?></td>
                 <td>
                     <button class="btn-editar" onclick="location.href='Uppalum.php?edit_id=<?php echo $alumno['idAlumno']; ?>'">Editar</button>
                 </td>
