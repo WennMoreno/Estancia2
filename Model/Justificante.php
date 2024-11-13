@@ -68,6 +68,48 @@ class Justificante {
 
         $result = mysqli_query($this->conexion, $query);
         return $result;
+    } 
+
+    public function obtenerTodosLosJustificantes() {
+        $query = "SELECT j.*, a.nombreAlu, a.apellidoAlu
+                  FROM justificante j
+                  JOIN alumno a ON j.idAlumno = a.idAlumno";
+        
+        $result = $this->conexion->query($query);
+    
+        $justificantes = [];
+        if ($result) {
+            while ($row = $result->fetch_assoc()) {
+                $justificantes[] = $row;
+            }
+        }
+        return $justificantes;
     }
+
+    public function eliminarJustificantePorId($idJusti) {
+        $query = "DELETE FROM justificante WHERE idJusti = ?";
+        
+        // Preparar la declaración
+        $stmt = $this->conexion->prepare($query);
+    
+        if ($stmt === false) {
+            // Error al preparar la declaración
+            return false;
+        }
+    
+        // Vincular el parámetro
+        $stmt->bind_param("i", $idJusti);
+    
+        // Ejecutar la declaración
+        $result = $stmt->execute();
+    
+        // Cerrar la declaración
+        $stmt->close();
+    
+        // Retornar el resultado de la ejecución
+        return $result;
+    }
+    
+    
 }
 ?>

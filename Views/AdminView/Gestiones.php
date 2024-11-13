@@ -46,7 +46,9 @@
                 <div class="opcion">
                     <p><a href="gestionMot.php" class="btn-action">Motivos</a></p>
                 </div>
-                
+                <div class="opcion">
+                    <p><a href="gestionJustiRegu.php" class="btn-action">Justificantes Regulares</a></p>
+                </div>
                 
             </div>
         </div>

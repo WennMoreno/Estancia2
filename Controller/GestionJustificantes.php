@@ -298,9 +298,73 @@ class gestionJustificante {
         return $evento;
     }
     
+    public function obtenerJustificantes() {
+        $modeloJustificante = new Justificante($this->conexion);
+        
+        return $result= $modeloJustificante->obtenerTodosLosJustificantes();
+    }
+
+    public function eliminarJustificante($id) {
+        $modeloJustificante = new Justificante($this->conexion);
+        return $result= $modeloJustificante->eliminarJustificantePorId($id);
+    }
+
+    public function obtenerJustificantePorId($id) {
+        $sql = "SELECT * FROM justificante WHERE idJusti = ?";
+        
+        // Preparar la consulta
+        $stmt = $this->conexion->prepare($sql);
+        
+        // Comprobar si la preparación fue exitosa
+        if ($stmt === false) {
+            die("Error en la preparación de la consulta: " . $this->conexion->error);
+        }
     
-
-
+        // Enlazar el parámetro ? al valor de $id
+        $stmt->bind_param("i", $id);
+        
+        // Ejecutar la consulta
+        $stmt->execute();
+    
+        // Obtener el resultado
+        $result = $stmt->get_result();
+        
+        // Obtener el resultado en forma de array asociativo
+        $justificante = $result->fetch_assoc();
+    
+        // Cerrar la consulta preparada
+        $stmt->close();
+    
+        return $justificante;
+    }
+    
+    public function modificarJustificante($cuatrimestre, $grupo, $carrera, $periodoEscolar, $motivo, $motivoExtra, $fecha, $horaInicio, $horaFin, $estado, $id) {
+        $sql = "UPDATE justificante 
+                SET cuatrimestre = ?, grupo = ?, carrera = ?, periodoEscolar = ?, motivo = ?, motivoExtra = ?, fecha = ?, horaInicio = ?, horaFin = ?, estado = ? 
+                WHERE idJusti = ?";
+    
+        $stmt = $this->conexion->prepare($sql);
+    
+        if ($stmt === false) {
+            die("Error en la preparación de la consulta: " . $this->conexion->error);
+        }
+    
+        $stmt->bind_param("ssssssssssi", $cuatrimestre, $grupo, $carrera, $periodoEscolar, $motivo, $motivoExtra, $fecha, $horaInicio, $horaFin, $estado, $id);
+    
+        $resultado = $stmt->execute();
+    
+        if ($resultado) {
+            $stmt->close();
+            return true;
+        } else {
+            $stmt->close();
+            return false;
+        }
+    }
+    
+    
+    
+    
 }
 
 ?>
