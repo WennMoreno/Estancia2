@@ -8,9 +8,9 @@ class Profesor {
 
     public function validarProfesor($usuario, $clave) {
         $sql = "
-            SELECT 'profesor' AS tipo_usuario, idProf AS identificador, nombreProf, apellidoProf, passwordProf AS contraseña
+            SELECT 'profesor' AS tipo_usuario, idProf, nombreProf, apellidoProf, passwordProf AS contraseña, correoElectronico  AS identificador
             FROM profesor
-            WHERE nombreProf = ? AND passwordProf = ?
+            WHERE correoElectronico = ? AND passwordProf = ?
         ";
         $stmt = $this->conexion->prepare($sql);
         $stmt->bind_param("ss", $usuario, $clave);
@@ -19,7 +19,7 @@ class Profesor {
     } 
 
     public function obtenerProfesores() {
-        $sql = "SELECT nombreProf, apellidoProf FROM profesor";
+        $sql = "SELECT idProf, nombreProf, apellidoProf FROM profesor";
         $result = mysqli_query($this->conexion, $sql);
         return $result;
     } 
@@ -137,6 +137,43 @@ class ProfesorModel {
         }
 
         return false;
+    } 
+
+    public function obtenerProfJustificante($idJusti) {
+        // Prepara la consulta SQL para obtener los profesores asociados al justificante
+        $sql = "
+            SELECT p.idProf, p.nombreProf, p.apellidoProf
+            FROM profesor p
+            INNER JOIN justificante_profesor jp ON p.idProf = jp.idProf
+            WHERE jp.idJusti = ?
+        ";
+        
+        // Prepara la consulta con parámetros
+        $stmt = $this->conexion->prepare($sql);
+        if (!$stmt) {
+            die("Error en la preparación de la consulta: " . $this->conexion->error);
+        }
+        
+        // Enlaza el parámetro
+        $stmt->bind_param("i", $idJusti);
+        
+        // Ejecuta la consulta
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        // Crea un array con los resultados
+        $profesores = [];
+        while ($profesor = $result->fetch_assoc()) {
+            $profesores[] = $profesor;
+        }
+        
+        // Cierra la declaración
+        $stmt->close();
+        
+        // Devuelve los resultados
+        return $profesores;
     }
+    
+    
 }
 ?>

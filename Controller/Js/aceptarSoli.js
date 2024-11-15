@@ -43,3 +43,40 @@ function aceptarSolicitud(idSolicitud) {
         });
     }
 }
+ 
+
+function cambiarEstado(idJusti, nuevoEstado) {
+    // Verificar el idJusti y el nuevoEstado recibidos
+    console.log("ID de la solicitud:", idJusti); // Aquí imprimes el ID de la solicitud
+    console.log("Nuevo estado:", nuevoEstado); // Aquí imprimes el nuevo estado
+
+    // Confirmar la acción con el usuario
+    if (confirm("¿Estás seguro de que deseas rechazar esta solicitud?")) {
+        // Crear los datos que se van a enviar
+        const data = new FormData();
+        data.append('idJusti', idJusti);
+        data.append('nuevoEstado', nuevoEstado);
+
+        // Enviar la solicitud AJAX
+        fetch('/pruebasOfAllVerDul/Controller/Rechazar.php', {
+            method: 'POST',
+            body: data,
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(data.message); // Mensaje de éxito
+                location.reload(); // Recarga la página para ver el cambio
+            } else {
+                alert(data.message); // Mensaje de error
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("Hubo un error al procesar la solicitud.");
+        });
+    }
+}
+
+
+

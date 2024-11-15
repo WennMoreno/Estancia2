@@ -8,9 +8,9 @@ class Administrador {
 
     public function validarAdmin($usuario, $clave) {
         $sql = "
-            SELECT 'administrador' AS tipo_usuario, idAdmin AS identificador, nombreAdmin, apellidoAdmin, passAd
+            SELECT 'administrador' AS tipo_usuario, idAdmin, nombreAdmin, apellidoAdmin,CorreoEle AS identificador, passAd
             FROM administrador 
-            WHERE nombreAdmin = ? AND passAd = ?
+            WHERE CorreoEle = ? AND passAd = ?
         ";
         $stmt = $this->conexion->prepare($sql);
         $stmt->bind_param("ss", $usuario, $clave);
@@ -23,7 +23,7 @@ class Administrador {
         $stmt = mysqli_prepare($this->conexion, $adminQuery);
     
         // Vincular el parámetro
-        mysqli_stmt_bind_param($stmt, 's', $usuario);
+        mysqli_stmt_bind_param($stmt, 'i', $usuario);
     
         // Ejecutar la consulta
         mysqli_stmt_execute($stmt);
@@ -34,12 +34,40 @@ class Administrador {
         // Verificar si hay resultados
         if (mysqli_stmt_num_rows($stmt) > 0) {
             // Si existe el administrador
-            return true;
+            return 1;
         } else {
             // Si no existe el administrador
-            return false;
+            return 0;
         }
     }
+
+    public function obtenerIdAd($correo) {
+        // Consulta para obtener el ID del administrador basado en el correo
+        $sql = "
+            SELECT idAdmin FROM administrador WHERE CorreoEle = ? 
+        ";
+        
+        // Prepara la consulta
+        $stmt = $this->conexion->prepare($sql);
+        
+        // Vincula el correo como parámetro
+        $stmt->bind_param("s", $correo);
+        
+        // Ejecuta la consulta
+        $stmt->execute();
+        
+        // Obtén el resultado
+        $result = $stmt->get_result();
+        
+        // Si se encontró un registro, obtén el ID como entero
+        if ($row = $result->fetch_assoc()) {
+            return (int) $row['idAdmin']; // Retorna el ID como un entero
+        }
+        
+        // Si no se encontró el administrador con ese correo, retorna null
+        return null;
+    }
+    
     
 }   
 
@@ -66,12 +94,12 @@ class AdministradorModel {
     }
 
     // Función para agregar un administrador
-    public function agregarAdministrador($nombreAdmin, $apellidoAdmin, $passAd) {
-        $query = "INSERT INTO administrador (nombreAdmin, apellidoAdmin, passAd) VALUES (?, ?, ?)";
+    public function agregarAdministrador($nombreAdmin, $apellidoAdmin, $passAd,$correo) {
+        $query = "INSERT INTO administrador (nombreAdmin, apellidoAdmin, passAd, CorreoEle) VALUES (?, ?, ?, ?)";
         $stmt = $this->conexion->prepare($query);
 
         if ($stmt) {
-            $stmt->bind_param('sss', $nombreAdmin, $apellidoAdmin, $passAd);
+            $stmt->bind_param('ssss', $nombreAdmin, $apellidoAdmin, $passAd, $correo);
             $resultado = $stmt->execute();
             $stmt->close();
             return $resultado;
@@ -98,12 +126,12 @@ class AdministradorModel {
     }
 
     // Función para modificar un administrador
-    public function modificarAdministrador($idAdmin, $nombreAdmin, $apellidoAdmin, $passAd) {
-        $query = "UPDATE administrador SET nombreAdmin = ?, apellidoAdmin = ?, passAd = ? WHERE idAdmin = ?";
+    public function modificarAdministrador($idAdmin, $nombreAdmin, $apellidoAdmin, $passAd, $correo) {
+        $query = "UPDATE administrador SET nombreAdmin = ?, apellidoAdmin = ?, passAd = ?, CorreoEle = ? WHERE idAdmin = ?";
         $stmt = $this->conexion->prepare($query);
 
         if ($stmt) {
-            $stmt->bind_param('sssi', $nombreAdmin, $apellidoAdmin, $passAd, $idAdmin);
+            $stmt->bind_param('ssssi', $nombreAdmin, $apellidoAdmin, $passAd, $correo, $idAdmin);
             $resultado = $stmt->execute();
             $stmt->close();
             return $resultado;

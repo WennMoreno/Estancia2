@@ -23,12 +23,7 @@ if (isset($_GET['delete_id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Administradores</title>
     <link rel="stylesheet" href="../../Resources/CSS/styleMotivo.css">
-    <script src="../../Controller/Js/Adminvali.js"></script> <!-- Incluir el archivo JS para validación -->
-
-    <!-- Pasar datos de PHP a JavaScript -->
-    <script>
-        var administradores = <?php echo json_encode($administradores); ?>;
-    </script>
+   
 </head>
 <body>
 <header>
@@ -50,6 +45,7 @@ if (isset($_GET['delete_id'])) {
             <th>ID</th>
             <th>Nombre</th>
             <th>Apellido</th>
+            <th>Correo</th>
             <th>Actualizar</th>
             <th>Eliminar</th>
         </tr>
@@ -58,6 +54,7 @@ if (isset($_GET['delete_id'])) {
                 <td><?php echo htmlspecialchars($administrador['idAdmin']); ?></td>
                 <td><?php echo htmlspecialchars($administrador['nombreAdmin']); ?></td>
                 <td><?php echo htmlspecialchars($administrador['apellidoAdmin']); ?></td>
+                <td><?php echo htmlspecialchars($administrador['CorreoEle']); ?></td>
                 <td>
                     <button class="btn-editar" onclick="location.href='UpAdmin.php?edit_id=<?php echo $administrador['idAdmin']; ?>'">Editar</button>
                 </td>
@@ -68,7 +65,12 @@ if (isset($_GET['delete_id'])) {
         <?php endforeach; ?>
     </table>
 </div>
+<script src="../../Controller/Js/AdVali.js"></script> <!-- Incluir el archivo JS para validación -->
 
+<!-- Pasar datos de PHP a JavaScript -->
+<script>
+    var administradores = <?php echo json_encode($administradores); ?>;
+</script>
 
 
 </body>

@@ -14,8 +14,8 @@ class AdministradorController {
     }
 
     // Método para agregar un administrador
-    public function agregarAdministrador($nombreAdmin, $apellidoAdmin, $passAd) {
-        return $this->administradorModel->agregarAdministrador($nombreAdmin, $apellidoAdmin, $passAd); // Llama al método para agregar un administrador
+    public function agregarAdministrador($nombreAdmin, $apellidoAdmin, $passAd, $correoEle) {
+        return $this->administradorModel->agregarAdministrador($nombreAdmin, $apellidoAdmin, $passAd, $correoEle, ); // Llama al método para agregar un administrador
     }
 
     // Método para obtener un administrador por ID
@@ -24,8 +24,8 @@ class AdministradorController {
     }
 
     // Método para modificar un administrador
-    public function modificarAdministrador($idAdmin, $nombreAdmin, $apellidoAdmin, $passAd) {
-        return $this->administradorModel->modificarAdministrador($idAdmin, $nombreAdmin, $apellidoAdmin, $passAd); // Llama al método para modificar un administrador
+    public function modificarAdministrador($idAdmin, $nombreAdmin, $apellidoAdmin, $passAd, $correo) {
+        return $this->administradorModel->modificarAdministrador($idAdmin, $nombreAdmin, $apellidoAdmin, $passAd, $correo); // Llama al método para modificar un administrador
     }
 
     // Método para eliminar un administrador

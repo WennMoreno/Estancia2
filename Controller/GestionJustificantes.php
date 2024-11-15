@@ -362,6 +362,23 @@ class gestionJustificante {
         }
     }
     
+    public function rechazarJustificante($idJustificante) {
+        // Instanciar el modelo de justificante
+        $modeloJustificante = new Justificante($this->conexion);
+
+        // Actualizar el estado del justificante a "rechazado"
+        $estado = 'rechazado';
+        
+        // Realizar la actualización en la base de datos
+        $stmt = $this->conexion->prepare("UPDATE justificante SET estado = ? WHERE idJusti = ?");
+        $stmt->bind_param("si", $estado, $idJustificante);
+        
+        if ($stmt->execute()) {
+            echo "Justificante rechazado correctamente.";
+        } else {
+            echo "Error al rechazar el justificante: " . $this->conexion->error;
+        }
+    }
     
     
     

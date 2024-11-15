@@ -7,7 +7,8 @@ CREATE TABLE `administrador` (
   `idAdmin` int(4) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `nombreAdmin` varchar(25) NOT NULL,
   `apellidoAdmin` varchar(30) NOT NULL,
-  `passAd` varchar(25) NOT NULL
+  `passAd` varchar(25) NOT NULL,
+  `CorreoEle` varchar(50) NOT NULL
 )AUTO_INCREMENT = 1000;
 
 CREATE TABLE `alumno` (
@@ -109,8 +110,8 @@ INSERT INTO `profesor` (`nombreProf`, `apellidoProf`, `passwordProf`, `correoEle
 ('Sandra Elizabeth', 'León Sosa', '1245', 'lsandra@upemor.edu.mx'),
 ('Deny Lizbeth', 'Hernández Rabadán', '7845', 'dhernandezr@upemor.edu.mx');
 
-INSERT INTO `administrador` (`nombreAdmin`, `apellidoAdmin`, `passAd`) VALUES
-('María Guadalupe', 'Ruiz Soto', '7845');
+INSERT INTO `administrador` (`nombreAdmin`, `apellidoAdmin`, `passAd`, `CorreoEle`) VALUES
+('María Guadalupe', 'Ruiz Soto', '7845', 'proyectos.iet.iif@upemor.edu.mx');
 
 INSERT INTO `motivo` (`idMotivo`, `tipo`, `descripcion`, `docSolicitado`) VALUES
 (1, 'Causa de fuerza mayor', 'Situaciones fuera del control del alumno como eventos imprevistos.', 'Fotografías tomadas al momento en un archivo PDF o documento que avale la falta (Todo en formato PDF).'),
@@ -120,6 +121,8 @@ INSERT INTO `motivo` (`idMotivo`, `tipo`, `descripcion`, `docSolicitado`) VALUES
 (5, 'Trámite de carácter urgente', 'Trámite legal, gubernamental o personal, que el alumno no puede posponer', 'Documento proporcionado por la institución, fotografía de que asistió en el momento o documento de la cita (Todo en formato PDF).');
 
 select * from alumno; 
+select * from motivo; 
 
+select * from administrador; 
 select * from justificante;
 select * from justificante_profesor;

@@ -8,8 +8,8 @@ $administradores = $controller->obtenerAdministradores(); // Asegúrate de tener
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre = $_POST['nombreAdmin'];
     $apellido = $_POST['apellidoAdmin'];
+    $correo = $_POST['correoE'];
     $password = $_POST['passAd'];
-    $confirmacionPassword = $_POST['confirmacionPassAd'];
 
     // Verificación de duplicados antes de agregar
     $duplicado = false;
@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (!$duplicado) {
-        if ($controller->agregarAdministrador($nombre, $apellido, $password, $confirmacionPassword)) {
+        if ($controller->agregarAdministrador($nombre, $apellido, $password,  $correo)) {
             header("Location: GestionAdmin.php?mensaje=Administrador agregado exitosamente");
             exit();
         } else {
@@ -54,13 +54,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label for="apellidoAdmin">Apellido:</label>
             <input type="text" id="apellidoAdmin" name="apellidoAdmin" required>
 
+            
+            <label for="passAd">Correo Electrónico:</label>
+            <input type="email" id="correoE" name="correoE" placeholder="Correo Electrónico" required>
+
+
             <label for="passAd">Contraseña:</label>
             <input type="password" id="passAd" name="passAd" placeholder="Contraseña" required>
 
-
-
-            <label for="confirmacionPassAd">Confirmar Contraseña:</label>
-            <input type="password" id="confirmarPassAd" name="confirmarPassAd" placeholder="Confirmar Contraseña" required>
 
             <button type="submit">Agregar</button>
             <button type="button" onclick="location.href='GestionAdmin.php'">Cancelar</button>
@@ -68,9 +69,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </div>
 </body>
-<script src="../../Controller/Js/Adminvali.js" defer></script> <!-- Asegúrate de poner la ruta correcta -->
+<script src="../../Controller/Js/AdVali.js"></script> <!-- Incluir el archivo JS para validación -->
+
+<!-- Pasar datos de PHP a JavaScript -->
 <script>
-    // Cargar administradores en una variable para validaciones
     var administradores = <?php echo json_encode($administradores); ?>;
+    console.log(administradores); // Verifica en la consola si los datos se pasaron correctamente
 </script>
 </html>

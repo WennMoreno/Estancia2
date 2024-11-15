@@ -110,6 +110,20 @@ class Justificante {
         return $result;
     }
     
-    
+    // Método para cambiar el estado de un justificante
+    public function actualizarEstado($idJusti, $nuevoEstado) {
+        // Preparar la consulta SQL para actualizar el estado del justificante
+        $sql = "UPDATE justificante SET estado = ? WHERE idJusti = ?";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bind_param("si", $nuevoEstado, $idJusti);
+
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+
+        $stmt->close();
+    }
 }
 ?>

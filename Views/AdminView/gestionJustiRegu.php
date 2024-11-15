@@ -1,9 +1,14 @@
 <?php
 include_once '../../Controller/GestionJustificantes.php';
+include_once '../../Controller/GestionJustiProfe.php';
 include '../../Model/Conexion.php';
 
 $controller = new gestionJustificante($conexion);
 $justificantes = $controller->obtenerJustificantes(); 
+
+
+$controllerPro = new gestionJustiProfe($conexion);
+$justificantesPro = $controllerPro->mostrarJustificantesProfesores(); 
 
 // Manejar la eliminación de justificantes
 if (isset($_GET['delete_id'])) {
@@ -39,6 +44,7 @@ if (isset($_GET['delete_id'])) {
 
 <button class="btn-descargar" onclick="location.href='../../Static/fpdf/ExportarExcelJustificantes.php'">Descargar Excel</button>
 
+<h1 align="center">Listado de Justificantes</h1>
 <div class="table-container">
     <table>
         <tr>
@@ -51,6 +57,7 @@ if (isset($_GET['delete_id'])) {
             <th>Motivo</th>
             <th>Motivo Extra</th>
             <th>Fecha</th>
+            <th>¿Se ausentó todo el día?</th>
             <th>Hora Inicio</th>
             <th>Hora Fin</th>
             <th>Estado</th>
@@ -68,6 +75,7 @@ if (isset($_GET['delete_id'])) {
                 <td><?php echo htmlspecialchars($justificante['motivo']); ?></td>
                 <td><?php echo htmlspecialchars($justificante['motivoExtra']); ?></td>
                 <td><?php echo htmlspecialchars($justificante['fecha']); ?></td>
+                <td><?php echo htmlspecialchars($justificante['ausenteTodoDia']); ?></td>
                 <td><?php echo htmlspecialchars($justificante['horaInicio']); ?></td>
                 <td><?php echo htmlspecialchars($justificante['horaFin']); ?></td>
                 <td><?php echo htmlspecialchars($justificante['estado']); ?></td>
@@ -82,6 +90,25 @@ if (isset($_GET['delete_id'])) {
     </table>
 </div>
 
+<h1 align="center">Listado de Justificantes por Profesor</h1>
+    <table border="1" align="center">
+        <thead>
+            <tr>
+                <th>ID Justificante</th>
+                <th>Motivo Justificante</th>
+                <th>Nombre Profesor</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($justificantesPro as $item): ?>
+                <tr>
+                    <td><?= htmlspecialchars($item['idJusti']) ?></td>
+                    <td><?= htmlspecialchars($item['motivo']) ?></td>
+                    <td><?= htmlspecialchars($item['nombreProf'] . ' ' . $item['apellidoProf']) ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
 
 <script src="../../Controller/Js/ValidarJ.js"></script>
 </body>

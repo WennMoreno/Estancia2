@@ -1,18 +1,26 @@
 <?php
-include('../Model/conexion.php');
-include('../Model/Justificante.php');
-include('../Model/Administrador.php');
 
-// Verificar si se proporcionó el ID de la solicitud
-if (!isset($_GET['id'])) {
+include_once $_SERVER['DOCUMENT_ROOT'] . '/pruebasOfAllVerDul/Model/conexion.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/pruebasOfAllVerDul/Model/Justificante.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/pruebasOfAllVerDul/Model/Administrador.php';
+
+
+if (isset($_GET['id'])) {
+    echo "<p>ID recibido: " . htmlspecialchars($_GET['id']) . "</p>";
+} else {
     echo "<p>No se proporcionó el ID de la solicitud.</p>";
     exit();
 }
-session_start(); 
+session_start();
+ 
 //almacena el id de la solicitud
 $idSolicitud = intval($_GET['id']);
+
 //almacena el id del usuario 
-$idUser = $_SESSION['identificador'];
+$correo = $_SESSION['identificador'];
+//Instancio el modelo para obtener el id del admin
+$modeloAd= new Administrador($conexion);
+$idUser=$modeloAd->obtenerIdAd($correo);
 
 // Verificar la conexión a la base de datos
 if (!$conexion) {
@@ -52,13 +60,13 @@ if ($solicitud) {
     }
 
     echo "<p><strong>Motivo:</strong> " . htmlspecialchars($solicitud['motivo']) . "</p>";
-
+    
 //Instancio el modelo
 $modeloAdmin= new Administrador($conexion);
 $resultAdmin=$modeloAdmin->EsAdmin($idUser);
 
 // Si el usuario existe en la tabla administrador
-if ($resultAdmin) { 
+if ($resultAdmin===1) { 
         $pdfPath = $solicitud['ruta'];
         $pdfPath = str_replace(' ', '%20', $pdfPath); // Reemplazar espacios por %20
         echo "<p>Ruta desde la base de datos: " . htmlspecialchars($pdfPath) . "</p>";
@@ -71,9 +79,12 @@ if ($resultAdmin) {
             <button type="submit">Aceptar y Generar PDF</button>
         </form>
         
-        <button class="rechazar">Rechazar</button>
+        <!-- Formulario para rechazar la solicitud -->
+        <button class="btn btn-success" onclick="cambiarEstado(<?= $solicitud['idJusti'] ?>, 'Rechazada')">Rechazar</button>
         <?php
     }
+}else{
+    
 }
 
 // Cerrar la conexión a la base de datos

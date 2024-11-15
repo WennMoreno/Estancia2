@@ -7,9 +7,13 @@ include_once '../../Controller/GestionJustiProfe.php';
 include '../../Model/Conexion.php';
 
 if (isset($_SESSION['identificador'])) {
-    $idProf = $_SESSION['identificador'];
-    echo $idProf; 
+    $user = $_SESSION['identificador'];
+    echo $user; 
 
+    $modelJustiProfe = new JustificanteProfesor($conexion);
+    $idProf = $modelJustiProfe->obtenerIdJusPro($user);
+
+    echo $idProf; 
     $gestionJustiProfe = new gestionJustiProfe($conexion); // Instancia del controlador
     // Obtén los justificantes relacionados con el profesor
     $justificantes = $gestionJustiProfe->mostrarJustificantesPorProfesor($idProf);

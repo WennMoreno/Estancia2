@@ -1,7 +1,7 @@
 <?php
 // Incluir el archivo de conexión
 include '../../Model/Conexion.php';
-include '../../Model/Justi_Profe.php';
+require_once '../../Model/Justi_Profe.php';
 
 class gestionJustiProfe {
     private $conexion;
@@ -67,5 +67,10 @@ class gestionJustiProfe {
     
     }
     
+    public function mostrarJustificantesProfesores() {
+        $modelo = new JustificanteProfesor($this->conexion);$justificantesProfesores=$modelo->obtenerJustificantesProfesores();
+        return $justificantesProfesores;
+        
+    }
 }
 ?>

@@ -23,27 +23,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idJusti'])) {
     $horaInicio = $_POST['horaInicio'];
     $horaFin = $_POST['horaFin'];
     $estado = $_POST['estado'];
+    $profesoresSeleccionados = isset($_POST['profesores']) ? $_POST['profesores'] : [];
 
-    // Validar duplicados antes de actualizar
-    $duplicado = false;
-    foreach ($justificantes as $justificante) {
-        // Excluye el justificante actual de la verificación de duplicados
-        if ($justificante['cuatrimestre'] === $cuatrimestre && $justificante['grupo'] === $grupo && $justificante['idJusti'] != $id) {
-            $duplicado = true;
-            break;
-        }
-    }
+     /* Validar duplicados antes de actualizar
+     $duplicado = false;
+     foreach ($justificantes as $justificante) {
+         // Excluye el justificante actual de la verificación de duplicados
+         if ($justificante['cuatrimestre'] === $cuatrimestre && $justificante['grupo'] === $grupo && $justificante['idJusti'] != $id) {
+             $duplicado = true;
+             break;
+         }
+     }*/
 
-    if (!$duplicado) {
+    /*if (!$duplicado) {*/
         if ($controller->modificarJustificante ($cuatrimestre, $grupo, $carrera, $periodoEscolar, $motivo, $motivoExtra, $fecha, $horaInicio, $horaFin, $estado,$id)) {
+             // Actualizar los profesores asociados al justificante
+             $controllerJustPro = new JustificanteProfesor($conexion);
+             $controllerJustPro->actualizarProfesoresJustificante($id, $profesoresSeleccionados);
+             
             header("Location: gestionJustiRegu.php?mensaje=Justificante actualizado exitosamente");
             exit();
         } else {
             echo "Error al actualizar el justificante.";
         }
-    } else {
+   /* } else {
         echo "Ya existe un justificante con el mismo cuatrimestre y grupo. Por favor, elige uno diferente.";
-    }
+    }*/
 }
 ?>
 
@@ -93,15 +98,55 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idJusti'])) {
             <label for="edit_horaFin">Hora Fin:</label>
             <input type="time" id="edit_horaFin" name="horaFin" value="<?php echo $justificanteEditar['horaFin']; ?>" required>
 
-            <label for="edit_estado">Estado:</label>
-            <input type="text" id="edit_estado" name="estado" value="<?php echo $justificanteEditar['estado']; ?>" required>
+            <label for="edit_estado">¿Se ausento todo el día?:</label>
+            <input type="text" id="edit_estado" name="estado" value="<?php echo $justificanteEditar['ausenteTodoDia']; ?>" required>
 
-            <button type="submit">Actualizar</button>
-            <button type="button" onclick="location.href='gestionJustiRegu.php'">Cancelar</button>
-        </form>
-    <?php endif; ?>
+            <?php
+            if($justificanteEditar['ausenteTodoDia'] === 1) {
+                // Obtener los profesores seleccionados previamente para este justificante
+                
+                $controllerJustPro= new JustificanteProfesor($conexion);
+                
+                $profesores = $controllerJustPro->obtenerTodosLosProfesores($id);
 
-    </div>
+                
+                ?>
+                
+                <h3>Por favor, selecciona los profesores con los que tuviste clase:</h3>
+
+                <div>
+                <?php if (!empty($profesores)) : ?>
+                    <label for="profesores">Selecciona Profesores:</label>
+                    <select name="profesores[]" id="profesores" multiple size="5"> 
+                        <?php foreach ($profesores as $profesor) : ?>
+                            <?php
+                                // Crear el nombre completo del profesor
+                                $nombreCompleto = $profesor['nombreProf'] . " " . $profesor['apellidoProf']; 
+                                
+                                // Verificar si este profesor está asociado al justificante
+                                $isSelected = $profesor['asociado'] == 1 ? 'selected' : ''; // Si está asociado, marcar como seleccionado
+                            ?>
+                            <option value="<?php echo $profesor['idProf']; ?>" <?php echo $isSelected; ?>>
+                                <?php echo $nombreCompleto; ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                <?php else : ?>
+                    <p>No se encontraron profesores.</p>
+                <?php endif; ?>
+            </div>
+                    <?php } ?>
+
+
+                        <label for="edit_estado">Estado:</label>
+                        <input type="text" id="edit_estado" name="estado" value="<?php echo $justificanteEditar['estado']; ?>" required>
+
+                        <button type="submit">Actualizar</button>
+                        <button type="button" onclick="location.href='gestionJustiRegu.php'">Cancelar</button>
+                    </form>
+                <?php endif; ?>
+
+                </div>
 </div>
 
 <script src="../../Controller/Js/ValidarJ.js"></script> <!-- Asegúrate de poner la ruta correcta -->

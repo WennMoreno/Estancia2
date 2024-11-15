@@ -2,7 +2,7 @@
     include '../../Model/Motivo.php';
     include '../../Controller/GestionJustificantes.php'; 
 
-    session_start();
+    session_unset();
     // obtenerl el id del alumno mediante la selección del alumno en el perfil del administrador
     $idAlumno = $_GET['idAlumno']; 
 ?>
