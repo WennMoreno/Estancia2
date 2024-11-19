@@ -83,7 +83,7 @@ class Alumno {
             $mail->SMTPSecure = 'tls';
             $mail->Port = 587;
     
-            $mail->setFrom('no-reply@tu-dominio.com', 'Tu Nombre o Empresa');
+            $mail->setFrom('no-reply@tu-dominio.com', 'Dirección Académica ITI-IET');
             $mail->addAddress($correoE);
     
             $mail->isHTML(true);

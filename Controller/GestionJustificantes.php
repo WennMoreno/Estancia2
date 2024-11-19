@@ -20,12 +20,12 @@ class gestionJustificante {
     }
 
     public function procesarJusti(){
-        /*Mostrar los datos enviados y los archivos subidos*/
+        /*Mostrar los datos enviados y los archivos subidos
         echo "Controlador";
         echo '<pre>';
         print_r($_POST); // Ver todos los datos del formulario
         print_r($_FILES); // Ver la información del archivo subido
-        echo '</pre>';
+        echo '</pre>';*/
 
         // Procesar datos del formulario
         $cuatrimestre = $_POST['Cuatri'];
@@ -37,7 +37,24 @@ class gestionJustificante {
         $fecha = $ausenteTodoDia ? $_POST['fecha'] : $_POST['fecha2'];
         $horaInicio = $_POST['hora'];
         $horaFin = $_POST['horaFinal'];
-        $motivoExtra = "No aplica";
+        $motivoExtra = "No aplica"; 
+
+        if ($motivo===NULL) {
+            die("Error: Debes seleccionar un motivo.");
+        }
+
+        // Validar la fecha del justificante
+        $fechaJustificante = new DateTime($fecha); // Fecha del justificante
+        $fechaActual = new DateTime();            // Fecha actual
+        $fechaTresDiasAntes = (clone $fechaActual)->modify('-3 days'); // Tres días antes de hoy
+
+        if ($fechaJustificante > $fechaActual) {
+            die("Error: La fecha del justificante no puede ser mayor a la fecha actual.");
+        }
+
+        if ($fechaJustificante < $fechaTresDiasAntes) {
+            die("Error: La fecha del justificante no puede tener más de tres días de antigüedad.");
+        }
 
         $modeloAlumno= new Alumno($this->conexion);
         $idAlumno = $modeloAlumno->obtenerIdAlumnoPorMatricula($this->conexion);
