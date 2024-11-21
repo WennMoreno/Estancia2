@@ -20,7 +20,6 @@ class Justificante {
             die("Error en la preparación de la declaración: " . $this->conexion->error);
         }
     
-        // La cadena de tipos debe tener 12 elementos para coincidir con los valores en el bind_param
         $stmt->bind_param("isssssssissi", $cuatrimestre, $grupo, $carrera, $periodo, $motivo, $fecha, $horaInicio, $horaFin, $ausenteTodoDia, $motivoExtra, $idEvi, $idAlumno);
     
         // Ejecutar la declaración
@@ -46,7 +45,85 @@ class Justificante {
         } else {
             return [];
         }
+    }  
+
+    public function showJusti($id){
+        $query = "
+            SELECT justificante.*, alumno.nombreAlu AS nombre, alumno.matricula, justificante.carrera, evidencia.ruta
+            FROM justificante
+            JOIN alumno ON justificante.idAlumno = alumno.idAlumno
+            LEFT JOIN evidencia ON justificante.idEvi = evidencia.idEvi
+            WHERE justificante.idJusti = $id
+        ";
+        $result = mysqli_query($this->conexion, $query);
+        return $result;
+
     }
    
+    public function justiPendiente(){
+        $query = "SELECT justificante.*, alumno.nombreAlu, alumno.apellidoAlu 
+          FROM justificante
+          JOIN alumno ON justificante.idAlumno = alumno.idAlumno
+          WHERE justificante.estado = 'Pendiente'"; 
+
+        $result = mysqli_query($this->conexion, $query);
+        return $result;
+    } 
+
+    public function obtenerTodosLosJustificantes() {
+        $query = "SELECT j.*, a.nombreAlu, a.apellidoAlu
+                  FROM justificante j
+                  JOIN alumno a ON j.idAlumno = a.idAlumno";
+        
+        $result = $this->conexion->query($query);
+    
+        $justificantes = [];
+        if ($result) {
+            while ($row = $result->fetch_assoc()) {
+                $justificantes[] = $row;
+            }
+        }
+        return $justificantes;
+    }
+
+    public function eliminarJustificantePorId($idJusti) {
+        $query = "DELETE FROM justificante WHERE idJusti = ?";
+        
+        // Preparar la declaración
+        $stmt = $this->conexion->prepare($query);
+    
+        if ($stmt === false) {
+            // Error al preparar la declaración
+            return false;
+        }
+    
+        // Vincular el parámetro
+        $stmt->bind_param("i", $idJusti);
+    
+        // Ejecutar la declaración
+        $result = $stmt->execute();
+    
+        // Cerrar la declaración
+        $stmt->close();
+    
+        // Retornar el resultado de la ejecución
+        return $result;
+    }
+    
+    // Método para cambiar el estado de un justificante
+    public function actualizarEstado($idJusti, $nuevoEstado) {
+        // Preparar la consulta SQL para actualizar el estado del justificante
+        $sql = "UPDATE justificante SET estado = ? WHERE idJusti = ?";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bind_param("si", $nuevoEstado, $idJusti);
+
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+
+        $stmt->close();
+    }
 }
 ?>

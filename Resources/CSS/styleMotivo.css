@@ -45,6 +45,23 @@ header nav a {
     margin-bottom: 20px;
 }
 
+/* Estilo para el botón de descargar */
+.btn-descargar {
+    padding: 12px 20px; /* Aumentar el tamaño del botón */
+    border-radius: 8px; /* Bordes redondeados */
+    font-size: 16px; /* Aumentar el tamaño del texto */
+    cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
+    border: none; /* Sin borde */
+    background-color: #4CAF50; /* Color verde */
+    color: white;
+    margin-left: 10px;
+    text-decoration: none;
+}
+
+.btn-descargar:hover {
+    background-color: #45a049; /* Cambiar a un verde más oscuro cuando se pasa el cursor */
+}
+
 .btn-editar {
     background-color: darkorange;
     color: white;

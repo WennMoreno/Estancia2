@@ -10,6 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $apellido = $_POST['apellido'];
     $fechaNac = $_POST['fechaNac'];
     $matricula = $_POST['matricula'];
+    $correo = $_POST['correo']; // Obtener el correo electrónico
     $contrasena = $_POST['contrasena'];
     $confirmacionContra=$_POST['confirmacionContra'];
     // Verificación de duplicados antes de agregar
@@ -19,10 +20,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $duplicado = true;
             break;
         }
-    }
+    }  
 
     if (!$duplicado) {
-        if ($controller->agregarAlumno($nombre, $apellido, $fechaNac, $matricula, $contrasena,$confirmacionContra)) {
+        if ($controller->agregarAlumno($nombre, $apellido, $fechaNac, $matricula, $correo, $contrasena,$confirmacionContra)) {
             header("Location: GestionAlum.php?mensaje=Alumno agregado exitosamente");
             exit();
         } else {
@@ -61,6 +62,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <label for="matricula">Matrícula:</label>
             <input type="text" id="matricula" name="matricula" required>
+
+            <label for="correo">Correo:</label>
+            <input type="email" id="correo" name="correo" required>
 
             <label for="contrasena">Contraseña:</label>
             <input type="password" id="contrasena" name="contrasena" required>

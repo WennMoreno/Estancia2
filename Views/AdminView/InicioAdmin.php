@@ -33,18 +33,27 @@
             </div>
             <div class="content">
                 <div class="opcion">
-                    <p><a href="SoliAluRegu.php" class="btn-action">SOLICITUD DE JUSTIFICANTES</a></p> 
-                </div>
-                <div class="opcion">
-                    <p><a href="soliOtroJusti" class="btn-action">GENERAR JUSTIFICANTE DE DAE</a></p> 
+                    <p><a href="SoliAluRegu.php" class="btn-actionSoli">SOLICITUD DE JUSTIFICANTES REGULARES</a></p> 
                 </div>
                 <div class="opcion">
                     <p><a href="SoliOtros.php" class="btn-action">GENERAR OTRO TIPO DE JUSTIFICANTES</a></p>
                 </div>
                 <div class="opcion">
+                    <p><a href="soliOtroJusti" class="btn-action">GENERAR JUSTIFICANTE DE DAE</a></p> 
+                </div>
+                <div class="opcion">
+                    <p><a href="JustificantesDAE" class="btn-actionSoli">SOLICITUD DE JUSTIFICANTES DE DAE</a></p>
+                </div>
+                <div class="opcion">
                     <p><a href="Gestiones.php" class="btn-action">GESTIONES</a></p>
                 </div>
-                
+                <div class="opcion">
+                    <p><a href="" class="btn-action">REPORTES</a></p>
+                </div>
+                <div class="opcion">
+                    <p><a href="" class="btn-actionRes">RESPALDO DE LA BASE DE DATOS</a></p>
+                </div>
+
             </div>
         </div>
     <?php

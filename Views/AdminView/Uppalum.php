@@ -16,9 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idAlumno'])) {
     $apellido = $_POST['apellidoAlu'];
     $fechaNac = $_POST['feNac'];
     $matricula = $_POST['matricula'];
+    $correo = $_POST['correo']; // Obtener el correo electrónico
     $contrasena = $_POST['contrasena'];
     $confirmacionContra = $_POST['confirmacionContra'];
-
+  
     // Validar si las contraseñas coinciden
     if ($contrasena !== $confirmacionContra) {
         echo "Las contraseñas no coinciden. Por favor, intenta de nuevo.";
@@ -34,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idAlumno'])) {
         }
 
         if (!$duplicado) {
-            if ($controller->modificarAlumno($id, $nombre, $apellido, $fechaNac, $matricula, $contrasena, $confirmacionContra)) {
+            if ($controller->modificarAlumno($id, $nombre, $apellido, $fechaNac, $matricula,$correo, $contrasena, $confirmacionContra)) {
                 header("Location: GestionAlum.php?mensaje=Alumno actualizado exitosamente");
                 exit();
             } else {
@@ -79,6 +80,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idAlumno'])) {
                     <label for="edit_matricula">Matrícula:</label>
                     <input type="text" id="edit_matricula" name="matricula" value="<?php echo htmlspecialchars($alumnoEditar['matricula']); ?>" required>
                     
+                    <label for="edit_correo">Correo:</label>
+                    <input type="email" id="edit_correo" name="correo" value="<?php echo htmlspecialchars($alumnoEditar['correo'] ?? ''); ?>" required>
+
+
                     <label for="edit_contrasena">Contraseña:</label>
                     <input type="password" id="edit_contrasena" name="contrasena" required>
                     

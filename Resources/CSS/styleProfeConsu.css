@@ -1,0 +1,211 @@
+/* Ajustes generales */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+}
+
+/* Panel de resumen (similar al panel de la bandeja de entrada) */
+.summary-panel {
+    width: 35%;
+    background-color: #ffffff;
+    border-right: 1px solid #ccc;
+    overflow-y: auto;
+}
+
+.summary-panel h2 {
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+    font-size: 1.5em;
+    color: #333;
+    background-color:  #ffa500; 
+}
+
+.summary-panel ul {
+    list-style-type: none;
+}
+
+.summary-panel li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.summary-panel li:hover {
+    background-color: #f1f1f1;
+}
+
+.summary-panel span {
+    display: inline-block;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.summary-panel button {
+    background-color: #800080;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    font-size: 0.9em;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: background-color 0.3s;
+}
+
+.summary-panel button:hover {
+    background-color: #800080;
+}
+
+/* Panel de detalles (similar a la vista de contenido de un correo electrónico) */
+.details-panel {
+    width: 65%;
+    padding: 20px;
+    overflow-y: auto;
+    background-color: #fff;
+}
+
+.details-panel h2 {
+    font-size: 1.8em;
+    color: red;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+
+}
+
+.details-panel h3 {
+    font-size: 1.2em;
+    color: red;
+    margin-bottom: 15px;
+}
+
+.details-panel p {
+    font-size: 1em;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.details-panel a {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 15px;
+    background-color: #800080;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1em;
+    border-radius: 3px;
+    transition: background-color 0.3s;
+}
+
+.details-panel a:hover {
+    background-color: darkorange;
+}
+
+/* Estilos para el enlace de Cerrar Sesión */
+.btn-cerrar-sesion {
+    display: inline-block; /* Para que se comporte como un botón */
+    background-color: #FF6347; /* Color de fondo */
+    color: white; /* Color del texto */
+    font-size: 16px; /* Tamaño de la fuente */
+    padding: 10px 20px; /* Espaciado interno */
+    text-align: center; /* Centrar el texto */
+    border-radius: 5px; /* Bordes redondeados */
+    text-decoration: none; /* Eliminar el subrayado */
+    cursor: pointer; /* Cambio de cursor al pasar sobre el botón */
+    transition: background-color 0.3s ease; /* Transición suave para el color */
+}
+
+/* Efecto de hover (cuando el usuario pasa el cursor sobre el botón) */
+.btn-cerrar-sesion:hover {
+    background-color: #FF4500; /* Cambio de color cuando pasa el mouse */
+}
+
+/* Opcional: Estilizar el contenedor del botón */
+.header {
+    margin-top: 10px;
+    text-align: right;
+}
+
+
+
+
+
+/* Estilos generales para pantallas grandes (desktops) */
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.summary-panel {
+    float: left;
+    width: 45%;
+    padding: 20px;
+}
+
+.details-panel {
+    float: right;
+    width: 45%;
+    padding: 20px;
+}
+
+/* Responsivo para pantallas medianas (tabletas) */
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+    }
+
+    .summary-panel,
+    .details-panel {
+        float: none;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}
+
+/* Responsivo para pantallas pequeñas (móviles) */
+@media (max-width: 480px) {
+    body {
+        font-size: 14px;
+    }
+
+    .container {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .summary-panel,
+    .details-panel {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    .summary-panel h2,
+    .details-panel h2 {
+        font-size: 18px;
+    }
+
+    .summary-panel ul {
+        padding-left: 20px;
+    }
+}

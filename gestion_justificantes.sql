@@ -7,18 +7,20 @@ CREATE TABLE `administrador` (
   `idAdmin` int(4) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `nombreAdmin` varchar(25) NOT NULL,
   `apellidoAdmin` varchar(30) NOT NULL,
-  `passAd` varchar(25) NOT NULL
-);
+  `passAd` varchar(25) NOT NULL,
+  `CorreoEle` varchar(50) NOT NULL
+)AUTO_INCREMENT = 1000;
 
 CREATE TABLE `alumno` (
   `idAlumno` int(4) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `nombreAlu` varchar(25) NOT NULL,
   `apellidoAlu` varchar(30) NOT NULL,
   `feNac` date NOT NULL,
-  `matricula` varchar(25) NOT NULL,
+  `matricula` varchar(25) NOT NULL, 
+  `correoE` varchar(70) NOT NULL,
   `contrasena` varchar(15) NOT NULL,
   `confirmacionContra` varchar(15) NOT NULL
-);  
+)AUTO_INCREMENT = 1;  
 
 CREATE TABLE `profesor` (
   `idProf` int(2) NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -26,7 +28,7 @@ CREATE TABLE `profesor` (
   `apellidoProf` varchar(30) NOT NULL,
   `passwordProf` varchar(25) NOT NULL,
   `correoElectronico` varchar(50) NOT NULL
-);
+)AUTO_INCREMENT = 1050;
 
 CREATE TABLE `evidencia` (
   `idEvi` INT PRIMARY KEY AUTO_INCREMENT,
@@ -81,7 +83,8 @@ CREATE TABLE pdf_generado (
 CREATE TABLE justificante_evento (
     idJustiEvento INT AUTO_INCREMENT PRIMARY KEY,
     nombreEvento VARCHAR(100) NOT NULL,
-    fechaEvento DATE NOT NULL
+    fechaInicio DATE NOT NULL,
+    fechaFin DATE
 );
 
 CREATE TABLE justificante_evento_alumno (
@@ -107,8 +110,8 @@ INSERT INTO `profesor` (`nombreProf`, `apellidoProf`, `passwordProf`, `correoEle
 ('Sandra Elizabeth', 'León Sosa', '1245', 'lsandra@upemor.edu.mx'),
 ('Deny Lizbeth', 'Hernández Rabadán', '7845', 'dhernandezr@upemor.edu.mx');
 
-INSERT INTO `administrador` (`nombreAdmin`, `apellidoAdmin`, `passAd`) VALUES
-('María Guadalupe', 'Ruiz Soto', '7845');
+INSERT INTO `administrador` (`nombreAdmin`, `apellidoAdmin`, `passAd`, `CorreoEle`) VALUES
+('María Guadalupe', 'Ruiz Soto', '7845', 'proyectos.iet.iif@upemor.edu.mx');
 
 INSERT INTO `motivo` (`idMotivo`, `tipo`, `descripcion`, `docSolicitado`) VALUES
 (1, 'Causa de fuerza mayor', 'Situaciones fuera del control del alumno como eventos imprevistos.', 'Fotografías tomadas al momento en un archivo PDF o documento que avale la falta (Todo en formato PDF).'),
@@ -116,3 +119,10 @@ INSERT INTO `motivo` (`idMotivo`, `tipo`, `descripcion`, `docSolicitado`) VALUES
 (3, 'Problemas de Salud', 'El alumno tiene citas médicas o cita para análisis.', 'Recetas médicas, constancia, carnet, registro de cita y/o resultados de análisis (Todo en formato PDF).'),
 (4, 'Accidente', 'Aplica para lesiones o daños que limitan temporalmente la capacidad del alumno de cumplir con las actividades o responsabilidades académicas.', 'Fotografías tomadas al momento, receta, constancia del IMSS o ISSTE en (Todo en archivo PDF).'),
 (5, 'Trámite de carácter urgente', 'Trámite legal, gubernamental o personal, que el alumno no puede posponer', 'Documento proporcionado por la institución, fotografía de que asistió en el momento o documento de la cita (Todo en formato PDF).');
+
+select * from alumno; 
+select * from motivo; 
+
+select * from administrador; 
+select * from justificante;
+select * from justificante_profesor;

@@ -5,6 +5,7 @@ include '../../Model/Evidencia.php';
 include '../../Model/Profesor.php';
 include '../../Model/Justi_Profe.php';
 include '../../Model/Alumno.php';
+include '../../Model/JustiEvento.php';
 
 class gestionJustificante {
     private $conexion;
@@ -19,7 +20,8 @@ class gestionJustificante {
     }
 
     public function procesarJusti(){
-        /* Mostrar los datos enviados y los archivos subidos
+        /*Mostrar los datos enviados y los archivos subidos
+        echo "Controlador";
         echo '<pre>';
         print_r($_POST); // Ver todos los datos del formulario
         print_r($_FILES); // Ver la información del archivo subido
@@ -35,7 +37,24 @@ class gestionJustificante {
         $fecha = $ausenteTodoDia ? $_POST['fecha'] : $_POST['fecha2'];
         $horaInicio = $_POST['hora'];
         $horaFin = $_POST['horaFinal'];
-        $motivoExtra = "No aplica";
+        $motivoExtra = "No aplica"; 
+
+        if ($motivo===NULL) {
+            die("Error: Debes seleccionar un motivo.");
+        }
+
+        // Validar la fecha del justificante
+        $fechaJustificante = new DateTime($fecha); // Fecha del justificante
+        $fechaActual = new DateTime();            // Fecha actual
+        $fechaTresDiasAntes = (clone $fechaActual)->modify('-3 days'); // Tres días antes de hoy
+
+        if ($fechaJustificante > $fechaActual) {
+            die("Error: La fecha del justificante no puede ser mayor a la fecha actual.");
+        }
+
+        if ($fechaJustificante < $fechaTresDiasAntes) {
+            die("Error: La fecha del justificante no puede tener más de tres días de antigüedad.");
+        }
 
         $modeloAlumno= new Alumno($this->conexion);
         $idAlumno = $modeloAlumno->obtenerIdAlumnoPorMatricula($this->conexion);
@@ -45,7 +64,7 @@ class gestionJustificante {
             echo "No se encontró un alumno con la matrícula proporcionada.";
         }
 
-        $rutaEstatica = "C:/wamp64/www/pruebasOfAll/proyEstancia2"; 
+        $rutaEstatica = "C:/wamp64/www/pruebasOfAllVerDul/proyEstancia2"; 
 
         if (isset($_FILES['evidencia']) && $_FILES['evidencia']['error'] == UPLOAD_ERR_OK) {
             // Manejar la subida de la evidencia
@@ -124,11 +143,12 @@ class gestionJustificante {
     }
 
     public function procesarOtroJusti(){
-        /* Mostrar los datos enviados y los archivos subidos
-        echo '<pre>';
-        print_r($_POST); // Ver todos los datos del formulario
-        print_r($_FILES); // Ver la información del archivo subido
-        echo '</pre>';*/
+       /*Mostrar los datos enviados y los archivos subidos*/
+       echo "Controlador";
+       echo '<pre>';
+       print_r($_POST); // Ver todos los datos del formulario
+       print_r($_FILES); // Ver la información del archivo subido
+       echo '</pre>';
 
         // Procesar datos del formulario
         $cuatrimestre = $_POST['Cuatri'];
@@ -150,9 +170,7 @@ class gestionJustificante {
             echo "No se encontró un alumno con el nombre proporcionado.";
         }
 
-       
-
-        $rutaEstatica = "C:/wamp64/www/pruebasOfAll/proyEstancia2"; 
+        $rutaEstatica = "C:/wamp64/www/pruebasOfAllVerDul/proyEstancia2"; 
 
         if (isset($_FILES['evidencia']) && $_FILES['evidencia']['error'] == UPLOAD_ERR_OK) {
             // Manejar la subida de la evidencia
@@ -230,43 +248,157 @@ class gestionJustificante {
         }
     } 
 
-    public function otrosJusti() {
+    public function JustiDAE() {
+        // Crear instancia del modelo JustificanteEvento
+        $justificanteEvento = new JustificanteEvento($this->conexion);
+    
         // Recoger datos del formulario
         $nombreEvento = $_POST['evento'];
-        $fechaEvento = $_POST['fecha'];
+        $duracion = $_POST['duracion'];
         
-        // Inserción en la tabla justificante_evento
-        $sqlEvento = "INSERT INTO justificante_evento (nombreEvento, fechaEvento) VALUES (?, ?)";
-        $stmtEvento = $this->conexion->prepare($sqlEvento);
-        $stmtEvento->bind_param("ss", $nombreEvento, $fechaEvento);
-        
-        if ($stmtEvento->execute()) {
-            $idJustiEvento = $stmtEvento->insert_id; // Obtener el ID del evento insertado
-
-            // Insertar los datos de los alumnos en justificante_evento_alumno
+        // Definir variables de fecha según la duración del evento
+        if ($duracion === 'si') {
+            // Si el evento duró varios días, obtener las fechas de inicio y fin
+            $fechaInicio = $_POST['fechaInicio'];
+            $fechaFin = $_POST['fechaFin'];
+        } else {
+            // Si el evento es de un solo día, usar solo `fechaInicio` y dejar `fechaFin` en null
+            $fechaInicio = $_POST['fecha'];
+            $fechaFin = "No aplica";
+        }
+    
+        // Insertar el evento en la base de datos y obtener el ID del evento
+        $idJustiEvento = $justificanteEvento->insertarEvento($nombreEvento, $fechaInicio, $fechaFin);
+    
+        if ($idJustiEvento) {
+            // Insertar los datos de los alumnos asociados al evento en la tabla justificante_evento_alumno
             if (!empty($_POST['nombreAlu'])) {
                 foreach ($_POST['nombreAlu'] as $index => $nombreAlu) {
                     $matricula = $_POST['matricula'][$index];
                     $grado = $_POST['grado'][$index];
                     $grupo = $_POST['grupo'][$index];
                     $carrera = $_POST['carrera'][$index];
-
-                    $sqlAlumno = "INSERT INTO justificante_evento_alumno (nombreAlumno, matricula, grado, grupo, carrera, idJustiEvento) 
-                                  VALUES (?, ?, ?, ?, ?, ?)";
-                    $stmtAlumno = $this->conexion->prepare($sqlAlumno);
-                    $stmtAlumno->bind_param("ssisss", $nombreAlu, $matricula, $grado, $grupo, $carrera, $idJustiEvento);
-                    $stmtAlumno->execute();
+    
+                    // Llamar al método para insertar el alumno en el evento
+                    $justificanteEvento->insertarAlumnoEnEvento($nombreAlu, $matricula, $grado, $grupo, $carrera, $idJustiEvento);
                 }
             }
-
+    
             echo "Justificante de evento generado exitosamente.";
         } else {
-            echo "Error al generar el justificante del evento: " . $stmtEvento->error;
+            echo "Error al generar el justificante del evento.";
         }
+    }
+    
+    public function mostrarJustificantesEventos() {
+        // Crear instancia del modelo JustificanteEvento
+        $justificanteEvento = new JustificanteEvento($this->conexion);
+    
+        // Obtener justificantes de eventos
+        $eventos = $justificanteEvento->obtenerJustificantesEventos();
+        return $eventos;
+    }
+    
+    public function editarEvento($eventoId, $nombreEvento, $fechaInicio, $fechaFin, $alumnos) {
+        $justificanteEvento = new JustificanteEvento($this->conexion); 
 
-        $stmtEvento->close();
+        $justificanteEvento->editarEventoCompleto($eventoId, $nombreEvento, $fechaInicio, $fechaFin, $alumnos);
+
+
     }
 
+    public function obtenerEventoPorId($eventoId) {
+        //var_dump($eventoId); // Verifica que el ID esté llegando correctamente
+        $justificanteEvento = new JustificanteEvento($this->conexion);
+        $evento = $justificanteEvento->obtenerEvento($eventoId);
+        //var_dump($evento); // Verifica el contenido de $evento antes de devolverlo
+        return $evento;
+    }
+    
+    public function obtenerJustificantes() {
+        $modeloJustificante = new Justificante($this->conexion);
+        
+        return $result= $modeloJustificante->obtenerTodosLosJustificantes();
+    }
+
+    public function eliminarJustificante($id) {
+        $modeloJustificante = new Justificante($this->conexion);
+        return $result= $modeloJustificante->eliminarJustificantePorId($id);
+    }
+
+    public function obtenerJustificantePorId($id) {
+        $sql = "SELECT * FROM justificante WHERE idJusti = ?";
+        
+        // Preparar la consulta
+        $stmt = $this->conexion->prepare($sql);
+        
+        // Comprobar si la preparación fue exitosa
+        if ($stmt === false) {
+            die("Error en la preparación de la consulta: " . $this->conexion->error);
+        }
+    
+        // Enlazar el parámetro ? al valor de $id
+        $stmt->bind_param("i", $id);
+        
+        // Ejecutar la consulta
+        $stmt->execute();
+    
+        // Obtener el resultado
+        $result = $stmt->get_result();
+        
+        // Obtener el resultado en forma de array asociativo
+        $justificante = $result->fetch_assoc();
+    
+        // Cerrar la consulta preparada
+        $stmt->close();
+    
+        return $justificante;
+    }
+    
+    public function modificarJustificante($cuatrimestre, $grupo, $carrera, $periodoEscolar, $motivo, $motivoExtra, $fecha, $horaInicio, $horaFin, $estado, $id) {
+        $sql = "UPDATE justificante 
+                SET cuatrimestre = ?, grupo = ?, carrera = ?, periodoEscolar = ?, motivo = ?, motivoExtra = ?, fecha = ?, horaInicio = ?, horaFin = ?, estado = ? 
+                WHERE idJusti = ?";
+    
+        $stmt = $this->conexion->prepare($sql);
+    
+        if ($stmt === false) {
+            die("Error en la preparación de la consulta: " . $this->conexion->error);
+        }
+    
+        $stmt->bind_param("ssssssssssi", $cuatrimestre, $grupo, $carrera, $periodoEscolar, $motivo, $motivoExtra, $fecha, $horaInicio, $horaFin, $estado, $id);
+    
+        $resultado = $stmt->execute();
+    
+        if ($resultado) {
+            $stmt->close();
+            return true;
+        } else {
+            $stmt->close();
+            return false;
+        }
+    }
+    
+    public function rechazarJustificante($idJustificante) {
+        // Instanciar el modelo de justificante
+        $modeloJustificante = new Justificante($this->conexion);
+
+        // Actualizar el estado del justificante a "rechazado"
+        $estado = 'rechazado';
+        
+        // Realizar la actualización en la base de datos
+        $stmt = $this->conexion->prepare("UPDATE justificante SET estado = ? WHERE idJusti = ?");
+        $stmt->bind_param("si", $estado, $idJustificante);
+        
+        if ($stmt->execute()) {
+            echo "Justificante rechazado correctamente.";
+        } else {
+            echo "Error al rechazar el justificante: " . $this->conexion->error;
+        }
+    }
+    
+    
+    
 }
 
 ?>

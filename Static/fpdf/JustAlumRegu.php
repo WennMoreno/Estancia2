@@ -3,7 +3,7 @@
 error_reporting(E_ERROR | E_PARSE);
 
 // Incluir FPDF
-require_once('fpdf.php'); // Asegúrate de que esta ruta sea correcta
+require_once('fpdf.php');
 require_once('consultas.php'); // Incluir el archivo de consultas
 
 // Llamar a las consultas y obtener los datos
@@ -17,13 +17,18 @@ if ($data) {
 
     // Definir el nombre y la ruta del archivo
     $matricula = $solicitud['matricula'];
-    $nombrePdf = "UPEMOR_IIF-ITI_{$secuencia}_{$matricula}.pdf";
-    $directorio = "C:\Users\moren\OneDrive\Desktop\Justificantes/2025";
+    $nombrePdf = "UPEMOR_IIF-ITI_{$idSolicitud}_{$matricula}.pdf";
+    $directorio = "C:\Users\Enrique\Desktop\Justificantes\\2025";
     
     if (!file_exists($directorio)) {
         mkdir($directorio, 0777, true);
     }
     $rutaPdf = "$directorio\\$nombrePdf";
+
+
+
+    // Asegurarse de que la ruta del archivo sea correcta
+    $rutaPdf = "$directorio/$nombrePdf";
 
     // Clase para el PDF
     class PDF extends FPDF
@@ -40,7 +45,7 @@ if ($data) {
         {
             $formatter = new IntlDateFormatter('es_ES', IntlDateFormatter::LONG, IntlDateFormatter::NONE);
             $fechaActual = $formatter->format(time());
-            
+
             $this->Image('UPE.jpg', 90, 7, 50);
             $this->SetFont('Arial', 'B', 19);
             $this->Cell(45);
@@ -61,24 +66,41 @@ if ($data) {
             $this->Ln(15);
             $this->Cell(10);
             $this->SetFont('Arial', '', 10);
-            $this->Cell(59, 10, utf8_decode("Por este medio hago de su conocimiento que el alumno(a): {$this->solicitud['nombre']}"), 0, 0);
+            $this->Cell(59, 10, utf8_decode("Por medio de la presente, se notifica que el/la alumno(a) {$this->solicitud['nombre']} {$this->solicitud['ape']},"), 0, 0);
             $this->Ln(5);
             $this->Cell(10);
             $this->SetFont('Arial', '', 10);
-            $this->Cell(85, 10, utf8_decode("{$this->solicitud['ape']}, {$this->solicitud['cuatrimestre']} {$this->solicitud['grupo']}, {$this->solicitud['carrera']} con MATRICULA: {$this->solicitud['matricula']} por motivo de {$this->solicitud['motivo']}."), 0, 0);
+            $this->Cell(85, 10, utf8_decode("inscrito(a) en el grupo {$this->solicitud['cuatrimestre']} {$this->solicitud['grupo']}, de la carrera {$this->solicitud['carrera']} con MATRICULA: {$this->solicitud['matricula']} no se presentó en el horario "), 0, 0);
+            $this->Ln(5);
+            $this->Cell(10);
+            $this->SetFont('Arial', '', 10);
+            $this->Cell(85, 10, utf8_decode("y día que se detallan a continuación, debido a la siguiente causa: {$this->solicitud['motivoFinal']}."), 0, 0);
             $this->Ln(25);
             $this->Cell(10);
             $this->SetFont('Arial', '', 10);
 
             $fecha = $this->solicitud['fecha'];
+            $ausenteTodoDia = $this->solicitud['ausenteTodoDia'];
             $timestamp = strtotime($fecha);
             $mesYDia = $formatter->format($timestamp);
 
-            $this->Cell(85, 10, utf8_decode("Fechas: $mesYDia"), 0, 0);
-            $this->Ln(5);
-            $this->Cell(10);
-            $this->SetFont('Arial', '', 10);
-            $this->Cell(85, 10, utf8_decode("Horario: {$this->solicitud['horaInicio']} a {$this->solicitud['horaFin']}."), 0, 0);
+            if ($ausenteTodoDia == 1) {
+                // Imprimir solo la fecha
+                $this->Cell(85, 10, utf8_decode("Fecha: $mesYDia"), 0, 0);
+                $this->Ln(5);
+                $this->Cell(10);
+                $this->SetFont('Arial', '', 10);
+                $this->Cell(85, 10, utf8_decode("Se Ausento Todo el día"), 0, 0);
+           
+            } else {
+                // Imprimir la fecha y el horario
+                $this->Cell(85, 10, utf8_decode("Fecha: $mesYDia"), 0, 0);
+                $this->Ln(5);
+                $this->Cell(10);
+                $this->SetFont('Arial', '', 10);
+                $this->Cell(85, 10, utf8_decode("Horario: {$this->solicitud['horaInicio']} a {$this->solicitud['horaFin']}."), 0, 0);
+            }
+
             $this->Ln(25);
             $this->Cell(10);
             $this->SetFont('Arial', '', 10);
@@ -104,7 +126,13 @@ if ($data) {
             $this->Ln(0.5);
             $this->SetFont('Arial', '', 10);
             $this->Cell(0, 10, utf8_decode("DRA. MARIA FERNANDA DIAZ AYALA"), 0, 1, 'C');
-            $this->Cell(0, 10, utf8_decode("DIRECTORA ACADÉMICA IET"), 0, 1, 'C');
+            $this->Cell(0, 10, utf8_decode("DIRECTORA ACADÉMICA ITI-IET"), 0, 1, 'C');
+        }
+
+        function Footer(){
+            $this->SetY(-15);
+            $this->SetFont('Arial', 'I', 8);
+            $this->Cell(0, 10, utf8_decode('Boulevard. Cuauhnáhuac No. 566 Col. Lomas del Texcal, C.P. 62550 Tel: (777) 2 29 04 68 Ext. 2106 ') . $this->PageNo(), 0, 0, 'C');
         }
     }
 

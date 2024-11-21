@@ -19,6 +19,7 @@ mysqli_set_charset($conexion, "utf8");
 mysqli_query($conexion, "SET lc_time_names = 'es_ES'");
 
 // Verificar si se ha recibido el ID de la solicitud
+// Verificar si se ha recibido el ID de la solicitud
 if (isset($_POST['idJusti'])) {
     $idSolicitud = intval($_POST['idJusti']);
 
@@ -27,7 +28,9 @@ if (isset($_POST['idJusti'])) {
     if (mysqli_query($conexion, $query)) {
         // Obtener detalles de la solicitud
         $queryDetalles = "SELECT justificante.*, alumno.nombreAlu AS nombre, alumno.apellidoAlu AS ape, 
-                                 alumno.matricula, justificante.carrera
+                                 alumno.matricula, justificante.carrera,
+                                 IF(justificante.motivo = 'No aplica', justificante.motivoExtra, 
+                                    IF(justificante.motivoExtra = 'No aplica', justificante.motivo, justificante.motivoExtra)) AS motivoFinal
                           FROM justificante
                           JOIN alumno ON justificante.idAlumno = alumno.idAlumno
                           WHERE justificante.idJusti = $idSolicitud";

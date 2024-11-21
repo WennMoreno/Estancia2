@@ -1,4 +1,15 @@
 <?php
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
 class Alumno {
     private $conexion;
 
@@ -17,6 +28,7 @@ class Alumno {
         $stmt->execute();
         return $stmt->get_result();
     } 
+    
     //registros nuevos
     public function validarAlumnoRe($usuario) {
         $sql = "
@@ -31,24 +43,66 @@ class Alumno {
     }
     
 
-    public function insertarAlumno($nombre, $apellido, $fechaNacimiento, $matricula, $contrasena, $confirmacionContrasena) {
-        $sql = "INSERT INTO alumno (nombreAlu, apellidoAlu, feNac, matricula, contrasena, confirmacionContra) 
-                VALUES (?, ?, ?, ?, ?, ?)";
+    public function insertarAlumno($nombre, $apellido, $fechaNacimiento, $matricula, $correoEle, $contrasena, $confirmacionContrasena) {
+        $sql = "INSERT INTO alumno (nombreAlu, apellidoAlu, feNac, matricula, correoE, contrasena, confirmacionContra) 
+                VALUES (?, ?, ?, ?, ?, ?, ?)";
         
         $stmt = $this->conexion->prepare($sql);
         
         if ($stmt === false) {
             die("Error en la preparación de la declaración: " . $this->conexion->error);
+        } 
+
+        if ($stmt) {
+            // Vincula los parámetros
+            $stmt->bind_param("sssssss", $nombre, $apellido, $fechaNacimiento, $matricula, $correoEle, $contrasena, $confirmacionContrasena);
+            // Encriptar la contraseña
+            $confirmacionContrasena = md5($contrasena);
+
+            // Envía el correo si la inserción es exitosa
+            $this->enviarCorreo($correoEle, $matricula, $contrasena);
+
+            // Ejecuta la consulta
+            return $stmt->execute();
+        }else{
+            echo "Error al crear la cuenta: " . $this->conexion->error;
         }
-
-        // Encriptar la contraseña
-        $contrasenaEncrip = md5($contrasena);
-
-        // Vincula los parámetros
-        $stmt->bind_param("ssssss", $nombre, $apellido, $fechaNacimiento, $matricula, $contrasena, $contrasenaEncrip);
-
-        // Ejecuta la consulta
-        return $stmt->execute();
+        
+    }
+    
+    private function enviarCorreo($correoE, $usuario, $contra) {
+        // Configuración del correo (igual que en tu código original)
+        $mail = new PHPMailer(true);
+        try {
+            $mail->isSMTP();
+            $mail->CharSet = 'UTF-8';
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = $_ENV['SMTP_USERNAME'];
+            $mail->Password = $_ENV['SMTP_PASSWORD'];
+            $mail->SMTPSecure = 'tls';
+            $mail->Port = 587;
+    
+            $mail->setFrom('no-reply@tu-dominio.com', 'Dirección Académica ITI-IET');
+            $mail->addAddress($correoE);
+    
+            $mail->isHTML(true);
+            $mail->Subject = "Confirmación de creación de cuenta";
+            $mail->Body    = "
+                <h1>¡Hola, $usuario!</h1>
+                <p>Tu cuenta ha sido creada exitosamente. Aquí tienes tus credenciales de inicio de sesión:</p>
+                <p><strong>Nombre de usuario:</strong> $usuario</p>
+                <p><strong>Contraseña:</strong> $contra</p>
+                <p>Por favor, guarda esta información de manera segura.</p>
+            ";
+    
+            $mail->AltBody = "Hola $usuario, tu cuenta ha sido creada exitosamente. Aquí tienes tus credenciales de inicio de sesión:\nNombre de usuario: $usuario\nContraseña: $contra\nPor favor, guarda esta información de manera segura.";
+    
+            $mail->send();
+            echo "<p class='parrafo'>Registro exitoso, se te ha enviado un correo electrónico con las credenciales ingresadas.</p>";
+        } catch (Exception $e) {
+            echo "Error al enviar el correo: {$mail->ErrorInfo}";
+        }
     }
 
     function obtenerIdAlumnoPorMatricula($conexion) {
@@ -90,13 +144,18 @@ class Alumno {
     
     //para la busqueda de "otros justificantes".
     public function buscarAlumnos($busqueda) {
-        $query = "SELECT * FROM alumno WHERE CONCAT(nombreAlu, ' ', apellidoAlu) LIKE ?";
+        // Modificar la consulta para buscar por matrícula
+        $query = "SELECT * FROM alumno WHERE matricula LIKE ?";
         $stmt = $this->conexion->prepare($query);
-        $like = "%$busqueda%";
+        
+        // Usar LIKE con la matrícula
+        $like = "%$busqueda%"; 
         $stmt->bind_param("s", $like);
         $stmt->execute();
+        
         return $stmt->get_result();
     }
+    
 } 
 
 include_once __DIR__ . '/../Model/Conexion.php'; // Ajusta la ruta según la ubicación del archivo de conexión
@@ -122,15 +181,15 @@ class AlumnoModel {
     }
 
     // Agregar un nuevo alumno
-    public function agregarAlumno($nombreAlu, $apellidoAlu, $feNac, $matricula, $contrasena) {
+    public function agregarAlumno($nombreAlu, $apellidoAlu, $feNac, $matricula,$correo, $contrasena) {
         // Hash de la contraseña
         $hashContrasena = password_hash($contrasena, PASSWORD_DEFAULT);
         
-        $query = "INSERT INTO alumno (nombreAlu, apellidoAlu, feNac, matricula, contrasena) VALUES (?, ?, ?, ?, ?)";
+        $query = "INSERT INTO alumno (nombreAlu, apellidoAlu, feNac, matricula,correoE, contrasena) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $this->conexion->prepare($query);
 
         if ($stmt) {
-            $stmt->bind_param('sssss', $nombreAlu, $apellidoAlu, $feNac, $matricula, $hashContrasena);
+            $stmt->bind_param('ssssss', $nombreAlu, $apellidoAlu, $feNac, $matricula,$correo, $contrasena);
             $resultado = $stmt->execute();
             $stmt->close();
             return $resultado;
@@ -157,13 +216,13 @@ class AlumnoModel {
     }
 
     // Modificar un alumno
-    public function modificarAlumno($idAlumno, $nombreAlu, $apellidoAlu, $feNac, $matricula, $contrasena) {
-        $hashContrasena = password_hash($contrasena, PASSWORD_DEFAULT);
-        $query = "UPDATE alumno SET nombreAlu = ?, apellidoAlu = ?, feNac = ?, matricula = ?, contrasena = ? WHERE idAlumno = ?";
+    public function modificarAlumno($idAlumno, $nombreAlu, $apellidoAlu, $feNac, $matricula,$correo, $contrasena) {
+       // $hashContrasena = password_hash($contrasena, PASSWORD_DEFAULT);
+        $query = "UPDATE alumno SET nombreAlu = ?, apellidoAlu = ?, feNac = ?, matricula = ?,correoE= ?, contrasena = ? WHERE idAlumno = ?";
         $stmt = $this->conexion->prepare($query);
 
         if ($stmt) {
-            $stmt->bind_param('sssssi', $nombreAlu, $apellidoAlu, $feNac, $matricula, $hashContrasena, $idAlumno);
+            $stmt->bind_param('ssssssi', $nombreAlu, $apellidoAlu, $feNac, $matricula,$correo, $contrasena, $idAlumno);
             $resultado = $stmt->execute();
             $stmt->close();
             return $resultado;

@@ -2,7 +2,7 @@
     include '../../Model/Motivo.php';
     include '../../Controller/GestionJustificantes.php'; 
 
-    session_start();
+    session_unset();
     // obtenerl el id del alumno mediante la selección del alumno en el perfil del administrador
     $idAlumno = $_GET['idAlumno']; 
 ?>
@@ -28,7 +28,7 @@
     <div class="container">
         <header>
             <img src="../../Resources/img/logo.png" alt="Logo" class="logo">
-            <h1>Solicitar Justificante</h1>
+            <h1>Generar Justificante</h1>
         </header>
 
         <form class="formulario" action="" method="POST" enctype="multipart/form-data">
@@ -64,8 +64,13 @@
             </div>
 
             <div>
-                <label>Período:</label>
-                <input type="text" name="peri" placeholder="Periodo">
+                <label for="Periodo">Período:</label>
+                <select name="peri" id="peri">
+                    <option value="" disabled selected>Selecciona el Período</option>
+                    <option value="Otoño 2025">Otoño 2025</option>
+                    <option value="Invierno 2025">Invierno 2025</option>
+                    <option value="Primavera 2025">Primavera 2025</option>
+                </select>
             </div>
 
             <div>
@@ -73,7 +78,7 @@
                 <input type="text" id="otroMotivo" name="otroMotivo" placeholder="Ingrese el motivo aquí">
             </div>
 
-            <label>¿Te ausentaste todo el día?</label><br>
+            <label>¿El alumno de ausento todo el día?</label><br>
             <input type="radio" id="si" name="info" value="si" onclick="mostrarPreguntas()">
             <label for="si">Sí</label><br>
 
@@ -82,7 +87,7 @@
 
             <!-- Preguntas adicionales si selecciona "Sí" -->
             <div id="preguntasAdicionales" class="hidden">
-                <h3>Por favor, selecciona la fecha y los profesores con los que tuviste clase:</h3>
+                <h3>Por favor, selecciona la fecha y los profesores con los que el alumno tuvo clase:</h3>
                 <label for="fecha">Fecha:</label>
                 <input type="date" name="fecha" id="fecha">
 
@@ -123,7 +128,7 @@
 
             <div class="botones">
                 <button type="submit" class="btn-solicitar">Solicitar</button>
-                <button type="button" class="btn-regresar"><a href="InicioAlumno.php">Regresar</button>
+                <button type="button" class="btn-regresar"><a href="InicioAdmin.php">Regresar</button>
             </div>
 
         </form>
@@ -133,6 +138,12 @@
                     
             //si se mando el formulario, se manda a llamar la función que incerta los justificantes
             if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+                 //Muestra todo el contenido de $_POST para verificar los datos enviados
+                echo "vista";
+                echo "<pre>";
+                print_r($_POST);
+                echo "</pre>";
                 $gestionJustificante->procesarOtroJusti(); // Llama a la función 
             }
         ?>

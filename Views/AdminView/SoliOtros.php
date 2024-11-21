@@ -32,7 +32,7 @@
 
     <!-- Formulario de búsqueda -->
     <form method="POST" action="">
-        <label for="busqueda">Ingrese el nombre o apellido del alumno:</label>
+        <label for="busqueda">Ingrese la matrícula del alumno:</label>
         <input type="text" name="busqueda" id="busqueda" placeholder="Buscar alumno..." value="<?php echo htmlspecialchars($busqueda); ?>">
         <button type="submit">Buscar</button>
     </form> 
@@ -42,6 +42,7 @@
         <thead>
             <tr>
                 <th>Nombre</th>
+                <th>Matrícula</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -49,6 +50,7 @@
             <?php while ($row = mysqli_fetch_assoc($result)): ?>
                 <tr>
                     <td><?php echo htmlspecialchars($row['nombreAlu']) . ' ' . htmlspecialchars($row['apellidoAlu']); ?></td>
+                    <td><?php echo htmlspecialchars($row['matricula']) ?></td>
                     <td>
                         <a href="crear_justificante.php?idAlumno=<?php echo $row['idAlumno']; ?>">Crear Justificante</a>
                     </td>
