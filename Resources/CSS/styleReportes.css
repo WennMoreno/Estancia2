@@ -1,0 +1,199 @@
+/* Sidebar */
+.sidebar {
+    height: 100%; /* Altura completa */
+    width: 250px; /* Ancho */
+    position: fixed; /* Fijo en la pantalla */
+    top: 0;
+    left: 0; /* Mostrar al lado izquierdo */
+    background-color: #800080; /* Púrpura */
+    color: white;
+    padding-top: 20px;
+    overflow-x: hidden;
+}
+
+.sidebar h2 {
+    color: white;
+    padding-left: 20px;
+}
+
+.sidebar a {
+    padding: 15px 20px;
+    text-decoration: none;
+    font-size: 18px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    background-color: #ff9147; /* Naranja al pasar el cursor */
+}
+
+.sidebar .btn-action {
+    background-color: #4CAF50; /* Verde */
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    border-radius: 5px;
+    display: block;
+    margin: 10px;
+}
+
+.sidebar .btn-action:hover {
+    background-color: #45a049; /* Verde más oscuro al pasar el cursor */
+}
+
+/* Contenido principal */
+.main-content {
+    margin-left: 250px; /* Ajustar contenido principal al ancho del menú */
+    padding: 20px;
+}
+
+.main-content h1 {
+    text-align: center;
+    font-size: 24px;
+    margin-top: 20px;
+}
+
+/* Tabla */
+.table-container table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table-container table th,
+.table-container table td {
+    padding: 12px 5px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.table-container table th {
+    background-color: #800080; /* Púrpura */
+    color: white;
+}
+
+.table-container table tr:nth-child(even) {
+    background-color: #f9f9f9; /* Fondo suave para filas pares */
+}
+
+.table-container table tr:hover {
+    background-color: #ff9147; /* Naranja al pasar el cursor sobre las filas */
+}
+
+/* Botones de acción */
+.btn-editar, .btn-eliminar {
+    background-color: #4CAF50; /* Verde */
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn-editar:hover {
+    background-color: #45a049; /* Verde más oscuro al pasar el cursor */
+}
+
+.btn-eliminar {
+    background-color: #f44336; /* Rojo */
+}
+
+.btn-eliminar:hover {
+    background-color: #d32f2f; /* Rojo más oscuro */
+}
+
+/* Contenedor del ComboBox */
+.combo-box-container {
+    display: none;
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f8f8f8; /* Color de fondo más suave */
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Transición suave */
+}
+
+.combo-box-container:hover {
+    transform: translateY(-5px); /* Efecto de elevación al pasar el mouse */
+    opacity: 0.95; /* Reducir ligeramente la opacidad */
+}
+
+.combo-box-container select,
+.combo-box-container button {
+    margin-top: 15px;
+    padding: 12px 20px; /* Aumentar el tamaño de los controles */
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%; /* Hacer los controles de selección y botón más anchos */
+    box-sizing: border-box; /* Incluir el padding dentro del ancho */
+}
+
+/* Estilo para el select */
+.combo-box-container select {
+    background-color: #ffffff; /* Fondo blanco */
+    color: #333; /* Color de texto oscuro */
+    font-weight: bold; /* Negrita para el texto */
+}
+
+.combo-box-container button {
+    background-color: #4CAF50; /* Color verde */
+    color: white;
+    cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
+    border: none;
+    margin-top: 15px; /* Espacio entre el botón y el combo */
+    transition: background-color 0.3s ease; /* Transición de color al pasar el mouse */
+}
+
+.combo-box-container button:hover {
+    background-color: #45a049; /* Cambiar a un verde más oscuro cuando se pasa el cursor */
+}
+
+/* Efecto de transiciones en el contenedor */
+.combo-box-container.show {
+    display: block; /* Asegurarse de que se muestre al hacer clic */
+    animation: fadeIn 0.5s ease-out; /* Animación de aparición */
+}
+
+/* Campo de búsqueda */
+.search-container {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f9f9f9; /* Fondo suave */
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    display: flex;
+    flex-direction: column; /* Alinear los elementos en columna */
+    gap: 15px; /* Espaciado entre los elementos */
+}
+
+.search-container label {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.search-container input {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+}
+
+.search-container button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.search-container button:hover {
+    background-color: #45a049;
+}

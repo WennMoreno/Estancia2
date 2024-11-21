@@ -1,0 +1,216 @@
+/* Sidebar */
+.sidebar {
+    height: 100%; /* Altura completa */
+    width: 250px; /* Ancho */
+    position: fixed; /* Fijo en la pantalla */
+    top: 0;
+    left: 0; /* Mostrar al lado izquierdo */
+    background-color: #800080; /* Púrpura */
+    color: white;
+    padding-top: 20px;
+    overflow-x: hidden;
+}
+
+.sidebar a {
+    padding: 15px 20px;
+    text-decoration: none;
+    font-size: 18px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    background-color: #ff9147; /* Verde al pasar el cursor */
+}
+
+.main-content {
+    margin-left: 250px; /* Ajustar contenido principal al ancho del menú */
+    padding: 20px;
+}
+
+/* Estilo para el contenedor del ComboBox (consulta) */
+.combo-box-container {
+    display: none;
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f8f8f8; /* Color de fondo más suave */
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Transición suave */
+}
+
+.combo-box-container:hover {
+    transform: translateY(-5px); /* Efecto de elevación al pasar el mouse */
+    opacity: 0.95; /* Reducir ligeramente la opacidad */
+}
+
+.combo-box-container select,
+.combo-box-container button {
+    margin-top: 15px;
+    padding: 12px 20px; /* Aumentar el tamaño de los controles */
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%; /* Hacer los controles de selección y botón más anchos */
+    box-sizing: border-box; /* Incluir el padding dentro del ancho */
+}
+
+/* Estilo para el select */
+.combo-box-container select {
+    background-color: #ffffff; /* Fondo blanco */
+    color: #333; /* Color de texto oscuro */
+    font-weight: bold; /* Negrita para el texto */
+}
+
+.combo-box-container button {
+    background-color: #4CAF50; /* Color verde */
+    color: white;
+    cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
+    border: none;
+    margin-top: 15px; /* Espacio entre el botón y el combo */
+    transition: background-color 0.3s ease; /* Transición de color al pasar el mouse */
+}
+
+.combo-box-container button:hover {
+    background-color: #45a049; /* Cambiar a un verde más oscuro cuando se pasa el cursor */
+}
+
+/* Efecto de transiciones en el contenedor */
+.combo-box-container.show {
+    display: block; /* Asegurarse de que se muestre al hacer clic */
+    animation: fadeIn 0.5s ease-out; /* Animación de aparición */
+}
+/* Campo de búsqueda */
+.search-container {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f9f9f9; /* Fondo suave */
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    display: flex;
+    flex-direction: column; /* Alinear los elementos en columna */
+    gap: 15px; /* Espaciado entre los elementos */
+}
+
+.search-container label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333; /* Texto oscuro */
+}
+
+.search-container input {
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #fff; /* Fondo blanco */
+    color: #333;
+}
+
+.search-container input::placeholder {
+    color: #999; /* Color de marcador de posición */
+}
+
+.search-container button {
+    margin-top: 10px;
+    padding: 12px 20px;
+    font-size: 16px;
+    background-color: #45a049; /* Azul para el botón */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%; /* Botón del mismo ancho que el input */
+}
+
+.search-container button:hover {
+    background-color: #45a049; /* Azul más oscuro al pasar el cursor */
+}
+
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Estilos responsivos */
+
+/* Para pantallas pequeñas (móviles) */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%; /* Sidebar ocupa toda la pantalla */
+        height: auto; /* Ajustar altura automáticamente */
+        position: relative; /* Posicionarse de manera relativa */
+    }
+
+    .sidebar a {
+        text-align: center; /* Centrar texto */
+        padding: 10px; /* Reducir el padding */
+    }
+
+    .main-content {
+        margin-left: 0; /* Quitar margen izquierdo */
+        padding: 10px; /* Reducir el padding */
+    }
+
+    header {
+        text-align: center; /* Centrar el encabezado */
+    }
+
+    .table-container table {
+        font-size: 14px; /* Reducir tamaño de fuente */
+        width: 100%; /* Hacer tabla completamente ancha */
+    }
+
+    .table-container table th,
+    .table-container table td {
+        padding: 8px; /* Reducir espacio entre celdas */
+    }
+
+    .search-container {
+        flex-direction: column; /* Elementos apilados */
+    }
+}
+
+/* Para tablets (pantallas medianas) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .sidebar {
+        width: 200px; /* Reducir ancho del sidebar */
+    }
+
+    .main-content {
+        margin-left: 200px; /* Ajustar margen izquierdo */
+    }
+
+    .table-container table {
+        font-size: 16px; /* Tamaño de fuente ligeramente reducido */
+    }
+}
+
+/* General */
+.table-container table {
+    border-collapse: collapse; /* Mejorar diseño de tablas */
+}
+
+.table-container table th,
+.table-container table td {
+    word-wrap: break-word; /* Ajustar contenido largo */
+    text-align: center; /* Centrar contenido */
+}
+
+.sidebar img {
+    max-width: 100%; /* Asegurar que las imágenes sean responsivas */
+    height: auto; /* Ajustar altura automáticamente */
+}
