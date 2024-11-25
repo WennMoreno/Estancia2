@@ -118,17 +118,16 @@
                 $profesores = $profesor->obtenerProfesores($conexion);
                 ?>
                 <div>
-                    <?php if (!empty($profesores)) : ?>
-                        <label for="profesores">Selecciona Profesores:</label>
-                        <select name="profesores[]" id="profesores" multiple size="5" required> 
-                            <?php foreach ($profesores as $profesor) : ?>
-                                <?php $nombreCompleto = $profesor['nombreProf'] . " " . $profesor['apellidoProf']; ?>
-                                <option value="<?php echo $nombreCompleto; ?>"><?php echo $nombreCompleto; ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    <?php else : ?>
-                        <p>No se encontraron profesores.</p>
-                    <?php endif; ?>
+                <?php
+                    if (!empty($profesores)) {
+                        foreach ($profesores as $profesor) {
+                            $nombreCompleto = $profesor['nombreProf'] . " " . $profesor['apellidoProf'];
+                            echo "<input type='checkbox' name='profesores[]' value='$nombreCompleto'> $nombreCompleto <br>";
+                        }
+                    } else {
+                        echo "No se encontraron profesores.";
+                    }
+                    ?>
                 </div>
                 <p class="alert alert-danger" id="errorProfesores" style="display:none;">Selecciona los profesores.</p>
             </div>

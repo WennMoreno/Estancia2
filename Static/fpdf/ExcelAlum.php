@@ -10,12 +10,20 @@ if (!$conexion) {
     die("Error en la conexión a la base de datos.");
 }
 
+// Obtener el filtro de búsqueda desde el formulario
+$filtro = isset($_POST['filtro']) ? $_POST['filtro'] : '';
+
 // Configuración de cabeceras para la descarga en formato Excel
 header('Content-Type: application/vnd.ms-excel; charset=UTF-8');
 header('Content-Disposition: attachment; filename="Alumnos.xls"');
 
-// Consulta a la base de datos
-$query = "SELECT idAlumno, nombreAlu, apellidoAlu, feNac, matricula,correoE FROM alumno";
+// Construir la consulta SQL con el filtro (si existe)
+if ($filtro) {
+    $query = "SELECT idAlumno, nombreAlu, apellidoAlu, feNac, matricula, correoE FROM alumno WHERE matricula LIKE '%$filtro%' OR apellidoAlu LIKE '%$filtro%'";
+} else {
+    $query = "SELECT idAlumno, nombreAlu, apellidoAlu, feNac, matricula, correoE FROM alumno";
+}
+
 $result = mysqli_query($conexion, $query);
 
 // Verificar si la consulta fue exitosa

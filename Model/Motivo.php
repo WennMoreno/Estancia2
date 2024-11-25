@@ -38,7 +38,7 @@ class MotivoModel {
 
     // Función para agregar un motivo
     public function agregarMotivo($tipo, $descripcion, $docSolicitado) {
-        $query = "INSERT INTO motivo (tipo, descripcion, docSolicitado) VALUES (?, ?, ?)";
+        $query = "INSERT INTO motivo (tipo, descripcion, docSolicitado) VALUES (UPPER(?), UPPER(?), UPPER(?))";
         $stmt = $this->conexion->prepare($query);
 
         if ($stmt) {

@@ -46,12 +46,12 @@
             <!-- Información del estudiante -->
             <div>
                 <label>Cuatrimestre (Número):</label>
-                <input type="number" name="Cuatri" placeholder="Cuatrimestre">
+                <input type="number" name="Cuatri" placeholder="Cuatrimestre" required>
             </div>
 
             <div>
                 <label>Grupo:</label>
-                <input type="text" name="Grupo" placeholder="Grupo">
+                <input type="text" name="Grupo" placeholder="Grupo" required>
             </div>
 
             <div>
@@ -107,11 +107,11 @@
                         echo "No se encontraron profesores.";
                     }
                     ?>
-                </div>
+                    </div>
             </div>
 
-            <!-- Campos para fecha y hora si selecciona "No" -->
-            <div id="calendarioHora" class="hidden">
+           <!-- Campos para fecha y hora si selecciona "No" -->
+           <div id="calendarioHora" class="hidden">
                 <h3>Por favor, selecciona la fecha y hora:</h3>
                 <label for="fecha2">Fecha:</label>
                 <input type="date" id="fecha2" name="fecha2"><br>

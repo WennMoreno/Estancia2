@@ -45,7 +45,7 @@ class Alumno {
 
     public function insertarAlumno($nombre, $apellido, $fechaNacimiento, $matricula, $correoEle, $contrasena, $confirmacionContrasena) {
         $sql = "INSERT INTO alumno (nombreAlu, apellidoAlu, feNac, matricula, correoE, contrasena, confirmacionContra) 
-                VALUES (?, ?, ?, ?, ?, ?, ?)";
+                VALUES (UPPER(?), UPPER(?), ?, UPPER(?), UPPER(?), ?, ?)";
         
         $stmt = $this->conexion->prepare($sql);
         
@@ -71,7 +71,7 @@ class Alumno {
     }
     
     private function enviarCorreo($correoE, $usuario, $contra) {
-        // Configuración del correo (igual que en tu código original)
+        // Configuración del correo 
         $mail = new PHPMailer(true);
         try {
             $mail->isSMTP();
@@ -88,15 +88,19 @@ class Alumno {
     
             $mail->isHTML(true);
             $mail->Subject = "Confirmación de creación de cuenta";
-            $mail->Body    = "
-                <h1>¡Hola, $usuario!</h1>
+            
+            $usuarioMayus = strtoupper($usuario); // Convierte a mayúsculas el nombre de usuario.
+
+            $mail->Body = "
+                <h1>¡Hola, $usuarioMayus!</h1>
                 <p>Tu cuenta ha sido creada exitosamente. Aquí tienes tus credenciales de inicio de sesión:</p>
-                <p><strong>Nombre de usuario:</strong> $usuario</p>
+                <p><strong>Nombre de usuario:</strong> $usuarioMayus</p>
                 <p><strong>Contraseña:</strong> $contra</p>
                 <p>Por favor, guarda esta información de manera segura.</p>
             ";
-    
-            $mail->AltBody = "Hola $usuario, tu cuenta ha sido creada exitosamente. Aquí tienes tus credenciales de inicio de sesión:\nNombre de usuario: $usuario\nContraseña: $contra\nPor favor, guarda esta información de manera segura.";
+
+            $mail->AltBody = "Hola $usuarioMayus, tu cuenta ha sido creada exitosamente. Aquí tienes tus credenciales de inicio de sesión:\nNombre de usuario: $usuarioMayus\nContraseña: $contra\nPor favor, guarda esta información de manera segura.";
+
     
             $mail->send();
             echo "<p class='parrafo'>Registro exitoso, se te ha enviado un correo electrónico con las credenciales ingresadas.</p>";
@@ -185,7 +189,7 @@ class AlumnoModel {
         // Hash de la contraseña
         $hashContrasena = password_hash($contrasena, PASSWORD_DEFAULT);
         
-        $query = "INSERT INTO alumno (nombreAlu, apellidoAlu, feNac, matricula,correoE, contrasena) VALUES (?, ?, ?, ?, ?, ?)";
+        $query = "INSERT INTO alumno (nombreAlu, apellidoAlu, feNac, matricula,correoE, contrasena) VALUES (UPPER(?), UPPER(?), ?, UPPER(?), UPPER(?), ?)";
         $stmt = $this->conexion->prepare($query);
 
         if ($stmt) {
@@ -218,7 +222,7 @@ class AlumnoModel {
     // Modificar un alumno
     public function modificarAlumno($idAlumno, $nombreAlu, $apellidoAlu, $feNac, $matricula,$correo, $contrasena) {
        // $hashContrasena = password_hash($contrasena, PASSWORD_DEFAULT);
-        $query = "UPDATE alumno SET nombreAlu = ?, apellidoAlu = ?, feNac = ?, matricula = ?,correoE= ?, contrasena = ? WHERE idAlumno = ?";
+        $query = "UPDATE alumno SET nombreAlu = UPPER(?), apellidoAlu = UPPER(?), feNac = ?, matricula = UPPER(?),correoE= UPPER(?), contrasena = ? WHERE idAlumno = ?";
         $stmt = $this->conexion->prepare($query);
 
         if ($stmt) {

@@ -23,22 +23,43 @@ if (isset($_GET['delete_id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Motivos</title>
     <link rel="stylesheet" href="../../Resources/CSS/styleMotivo.css">
-    
+    <link rel="stylesheet" href="../../Resources/CSS/style.css">
+
 </head>
 <body>
-<header>
+<div class="sidebar">
+        <h2 style="color: white; padding-left: 20px;">GESTIONES</h2>
+        <a href="Addmot.php">Agregar Motivo</a>
+        <a href="#" onclick="toggleConsulta()">Consulta</a>
+        <a href="Gestiones.php">Regresar</a>
+    <hr>
+    <a href="GestionAlum.php" >Alumnos</a>
+    <a href="GestionAdmin.php">Administradores</a>
+    <a href="GestionProf.php" >Profesores</a>
+    <a href="ListaPDF.php">Oficios</a>
+    <a href="gestionJustiRegu.php" class="btn-action">Justificantes Regulares</a>
+    
+</div>
+
+    
+<!-- Contenido Principal -->
+<div class="main-content">
+    <header>
         <div class="logo">
             <img src="../../Resources/img/logo.png" alt="Logo">
         </div>
-        <h1>Gestión de Motivos</h1>
-        <nav>
-            <a href="Gestiones.php " class="cerrar">Regresar</a>
-        </nav>
+        <h1>Sistema para la gestión de Justificantes</h1>
     </header>
+
     
 
-    <button class="btn-agregar" onclick="location.href='Addmot.php'">Agregar Nuevo Motivo</button>
-<button class="btn-descargar" onclick="location.href='../../Static/fpdf/ExportarExcel.php'">Descargar Excel</button>
+    <!-- Campo de búsqueda -->
+    <div id="consultaBox" class="search-container" style="display: none;">
+        <label for="searchInput">Buscar por Documento Solicitado:</label>
+        <input type="text" id="searchInput" placeholder="Escribe aquí (PDF, Foto, etc.)">
+        <button onclick="generarExcel()">Descargar Excel Filtrado</button>
+    </div>
+
 
     <div class="table-container"> 
         <table >
@@ -66,6 +87,47 @@ if (isset($_GET['delete_id'])) {
             <?php endforeach; ?>
         </table>
     </div>
+    <script>
+        // Filtrar resultados en la tabla según la búsqueda
+        document.getElementById('searchInput').addEventListener('input', function () {
+            const filter = this.value.toLowerCase();
+            const rows = document.querySelectorAll('#motivosTable tbody tr');
+            rows.forEach(row => {
+                const docSolicitado = row.cells[3].textContent.toLowerCase();
+                row.style.display = docSolicitado.includes(filter) ? '' : 'none';
+            });
+        });
+
+        // Generar Excel Filtrado
+        function generarExcel() {
+            const filtro = document.getElementById('searchInput').value;
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '../../Static/fpdf/ExportarExcel.php';
+
+            const inputFiltro = document.createElement('input');
+            inputFiltro.type = 'hidden';
+            inputFiltro.name = 'filtro';
+            inputFiltro.value = filtro;
+
+            form.appendChild(inputFiltro);
+            document.body.appendChild(form);
+            form.submit();
+        }
+        function toggleConsulta() {
+            const consultaBox = document.getElementById("consultaBox");
+            const searchBox = document.getElementById("searchBox");
+
+            // Alternar la visibilidad de ambos contenedores
+            if (consultaBox.style.display === "none") {
+                consultaBox.style.display = "block";
+                searchBox.style.display = "block";
+            } else {
+                consultaBox.style.display = "none";
+                searchBox.style.display = "none";
+            }
+        }
+        </script>
     <script src="../../Controller/Js/ValidarM.js"></script> <!-- Incluir el archivo JS aquí -->
 
     <!-- Pasar datos de PHP a JavaScript -->

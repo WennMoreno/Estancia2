@@ -14,6 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idProfesor'])) {
     $id = $_POST['idProfesor'];
     $nombreProf = $_POST['nombreProf'];
     $apellidoProf = $_POST['apellidoProf'];
+    $puesto = $_POST['puesto'];
     $passwordProf = $_POST['passwordProf'];
     $correoElectronico = $_POST['correoElectronico'];
 
@@ -28,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idProfesor'])) {
     }
 
     if (!$duplicado) {
-        if ($controller->modificarProfesor($id, $nombreProf, $apellidoProf, $passwordProf, $correoElectronico)) {
+        if ($controller->modificarProfesor($id, $nombreProf, $apellidoProf, $puesto, $passwordProf, $correoElectronico)) {
             header("Location: GestionProf.php?mensaje=Profesor actualizado exitosamente");
             exit();
         } else {
@@ -66,6 +67,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idProfesor'])) {
                 <label for="edit_apellidoProf">Apellido:</label>
                 <input type="text" id="edit_apellidoProf" name="apellidoProf" value="<?php echo htmlspecialchars($profesorEditar['apellidoProf']); ?>" required>
                 
+                <label for="puesto">Puesto/Cargo:</label>
+                <input type="text" id="puesto" name="puesto" value="<?php echo htmlspecialchars($profesorEditar['puesto']); ?>" required>
+
                 <label for="edit_passwordProf">Contraseña:</label>
                 <input type="text" id="edit_passwordProf" name="passwordProf" value="<?php echo htmlspecialchars($profesorEditar['passwordProf']); ?>" required>
                 

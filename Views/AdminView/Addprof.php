@@ -5,8 +5,10 @@ $controller = new ProfesorController();
 $profesores = $controller->obtenerProfesores();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    //recuperarme la info del formulario
     $nombreProf = $_POST['nombreProf'];
     $apellidoProf = $_POST['apellidoProf'];
+    $puesto = $_POST['puesto'];
     $passwordProf = $_POST['passwordProf'];
     $correoElectronico = $_POST['correoElectronico'];
 
@@ -19,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (!$duplicado) {
-        if ($controller->agregarProfesor($nombreProf, $apellidoProf, $passwordProf, $correoElectronico)) {
+        if ($controller->agregarProfesor($nombreProf, $apellidoProf, $puesto, $passwordProf, $correoElectronico)) {
             header("Location: GestionProf.php?mensaje=Profesor agregado exitosamente");
             exit();
         }
@@ -48,6 +50,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             <label for="apellidoProf">Apellido:</label>
             <input type="text" id="apellidoProf" name="apellidoProf" required>
+            
+            <label for="puesto">Puesto/Cargo:</label>
+            <input type="text" id="puesto" name="puesto" required>
             
             <label for="passwordProf">Contraseña:</label>
             <input type="password" id="passwordProf" name="passwordProf" required>

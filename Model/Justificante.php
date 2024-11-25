@@ -10,9 +10,13 @@ class Justificante {
     }
 
     public function insertarJustificante($cuatrimestre, $grupo, $carrera, $periodo, $motivo, $fecha, $horaInicio, $horaFin, $ausenteTodoDia, $motivoExtra, $idEvi, $idAlumno) {
-        $sql = "INSERT INTO justificante (cuatrimestre, grupo, carrera, periodoEscolar, motivo, fecha, horaInicio, horaFin, ausenteTodoDia, motivoExtra, estado, idEvi, idAlumno)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Pendiente', ?, ?)";
-    
+        $sql = "INSERT INTO justificante (
+            cuatrimestre, grupo, carrera, periodoEscolar, motivo, fecha, horaInicio, horaFin, ausenteTodoDia, motivoExtra, estado, idEvi, idAlumno
+        )
+        VALUES (
+            ?, UPPER(?), UPPER(?), UPPER(?), UPPER(?), ?, ?, ?, ?, UPPER(?), 'PENDIENTE', ?, ?
+        )";
+
         $stmt = $this->conexion->prepare($sql);
     
         // Verifica si la preparación de la declaración fue exitosa
@@ -87,7 +91,8 @@ class Justificante {
     }
 
     public function eliminarJustificantePorId($idJusti) {
-        $query = "DELETE FROM justificante WHERE idJusti = ?";
+        // Modificar la consulta para verificar el estado (pendiente o rechazado)
+        $query = "DELETE FROM justificante WHERE idJusti = ? AND (estado = 'PENDIENTE' OR estado = 'RECHAZADO')";
         
         // Preparar la declaración
         $stmt = $this->conexion->prepare($query);
@@ -109,6 +114,7 @@ class Justificante {
         // Retornar el resultado de la ejecución
         return $result;
     }
+    
     
     // Método para cambiar el estado de un justificante
     public function actualizarEstado($idJusti, $nuevoEstado) {

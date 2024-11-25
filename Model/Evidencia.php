@@ -7,7 +7,7 @@ class Evidencia {
     }
 
     public function insertarEvidencia($nombreArchivo, $rutaArchivo) {
-        $stmt = $this->conexion->prepare("INSERT INTO evidencia (nomenclatura, ruta) VALUES (?, ?)");
+        $stmt = $this->conexion->prepare("INSERT INTO evidencia (nomenclatura, ruta) VALUES (UPPER(?), UPPER(?))");
         if (!$stmt) {
             die("Error al preparar la declaración: " . $this->conexion->error);
         }

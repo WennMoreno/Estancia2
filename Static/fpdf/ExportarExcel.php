@@ -10,18 +10,30 @@ if (!$conexion) {
     die("Error en la conexión a la base de datos.");
 }
 
-// Configuración de cabeceras para la descarga en formato Excel
-header('Content-Type: application/vnd.ms-excel; charset=UTF-8');
-header('Content-Disposition: attachment; filename="Motivos.xls"');
+// Capturar el filtro enviado desde el formulario
+$filtro = $_POST['filtro'] ?? '';
 
-// Consulta a la base de datos
+// Escapar el filtro para evitar inyección de SQL
+$filtro = mysqli_real_escape_string($conexion, $filtro);
+
+// Construir la consulta con el filtro si se proporciona
 $query = "SELECT idMotivo, tipo, descripcion, docSolicitado FROM motivo";
+if (!empty($filtro)) {
+    $query .= " WHERE docSolicitado LIKE '%$filtro%'";
+}
+
+// Ejecutar la consulta
 $result = mysqli_query($conexion, $query);
 
 // Verificar si la consulta fue exitosa
 if (!$result) {
     die("Error en la consulta: " . mysqli_error($conexion));
 }
+
+// Configuración de cabeceras para la descarga en formato Excel
+header('Content-Type: application/vnd.ms-excel; charset=UTF-8');
+header('Content-Disposition: attachment; filename="Motivos.xls"');
+
 ?>
 
 <h1>Listado de Motivos</h1>

@@ -11,6 +11,7 @@ if (isset($_GET['id'])) {
     echo "<p>No se proporcionó el ID de la solicitud.</p>";
     exit();
 }
+
 session_start();
  
 //almacena el id de la solicitud
@@ -18,6 +19,7 @@ $idSolicitud = intval($_GET['id']);
 
 //almacena el id del usuario 
 $correo = $_SESSION['identificador'];
+
 //Instancio el modelo para obtener el id del admin
 $modeloAd= new Administrador($conexion);
 $idUser=$modeloAd->obtenerIdAd($correo);
@@ -59,7 +61,11 @@ if ($solicitud) {
         echo "<p><strong>Hora Fin:</strong> " . htmlspecialchars($solicitud['horaFin']) . "</p>";
     }
 
-    echo "<p><strong>Motivo:</strong> " . htmlspecialchars($solicitud['motivo']) . "</p>";
+    if ($solicitud['motivo'] === "NO APLICA"){
+        echo "<p><strong>Motivo:</strong> " . htmlspecialchars($solicitud['motivoExtra']) . "</p>";
+    }else{
+        echo "<p><strong>Motivo:</strong> " . htmlspecialchars($solicitud['motivo']) . "</p>";
+    }
     
 //Instancio el modelo
 $modeloAdmin= new Administrador($conexion);
@@ -67,7 +73,7 @@ $resultAdmin=$modeloAdmin->EsAdmin($idUser);
 
 // Si el usuario existe en la tabla administrador
 if ($resultAdmin===1) { 
-        $pdfPath = $solicitud['ruta'];
+        /*$pdfPath = $solicitud['ruta'];
         $pdfPath = str_replace(' ', '%20', $pdfPath); // Reemplazar espacios por %20
         echo "<p>Ruta desde la base de datos: " . htmlspecialchars($pdfPath) . "</p>";
         echo "<p>URL del PDF: " . htmlspecialchars($pdfPath) . "</p>";
@@ -81,10 +87,114 @@ if ($resultAdmin===1) {
         
         <!-- Formulario para rechazar la solicitud -->
         <button class="btn btn-success" onclick="cambiarEstado(<?= $solicitud['idJusti'] ?>, 'Rechazada')">Rechazar</button>
-        <?php
+        <?php*/
+
+        $pdfPath = $solicitud['ruta'];
+
+        // Normalizar las rutas
+        $documentRoot = rtrim(str_replace('\\', '/', $_SERVER['DOCUMENT_ROOT']), '/');
+        $pdfPath = str_replace('\\', '/', $pdfPath); // Convertir a barras diagonales hacia adelante
+
+        // Verificar si la ruta desde la base de datos ya es absoluta
+        if (stripos($pdfPath, $documentRoot) === 0) {
+            // Si la ruta ya contiene DOCUMENT_ROOT, no hagas nada
+            $fullPath = $pdfPath;
+        } else {
+            // Si la ruta no contiene DOCUMENT_ROOT, ajustarla
+            $fullPath = $documentRoot . '/' . ltrim($pdfPath, '/');
+        }
+
+        // Depuración
+        //echo "<p>DOCUMENT_ROOT: " . htmlspecialchars($documentRoot) . "</p>";
+        //echo "<p>Ruta desde BD: " . htmlspecialchars($solicitud['ruta']) . "</p>";
+        //echo "<p>Ruta procesada: " . htmlspecialchars($pdfPath) . "</p>";
+        //echo "<p>Ruta completa resuelta: " . htmlspecialchars($fullPath) . "</p>";
+
+        // Verificar si el archivo existe
+       // var_dump(file_exists($fullPath));
+
+        
+        // Verificar si el archivo existe
+        if ($fullPath && file_exists($fullPath)) {
+            //echo "<p>Evidencia encontrada.</p>";
+         $relativeUrl = str_replace($_SERVER['DOCUMENT_ROOT'], '', $fullPath);
+         echo "<a href='" . htmlspecialchars($relativeUrl) . "' target='_blank' style='
+         display: inline-block;
+         padding: 10px 15px;
+         margin: 5px;
+         background-color: #007bff;
+         color: white;
+         text-decoration: none;
+         border-radius: 5px;
+         font-size: 14px;
+         font-family: Arial, sans-serif;
+         text-align: center;
+     '>Ver Evidencia</a>";
+     
+     echo "<a href='" . htmlspecialchars($relativeUrl) . "' download style='
+         display: inline-block;
+         padding: 10px 15px;
+         margin: 5px;
+         background-color: #28a745;
+         color: white;
+         text-decoration: none;
+         border-radius: 5px;
+         font-size: 14px;
+         font-family: Arial, sans-serif;
+         text-align: center;
+     '>Descargar Evidencia</a>";
+        
+        } else {
+            echo "<p>El archivo de la evidencia no se encontró en el servidor.</p>";
+            if (!file_exists($fullPath)) {
+                echo "<p>El archivo realmente no existe en: " . htmlspecialchars($fullPath) . "</p>";
+            }
+        }      
+        
+
+        // Formulario para generar PDF
+        ?>
+        <style>
+
+        .button {
+            display: inline-block;
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: #28a745; /* Color verde para aceptar */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #218838; /* Verde más oscuro para hover */
+        }
+
+        .button-red {
+            background-color: #dc3545; /* Color rojo para rechazar */
+        }
+
+        .button-red:hover {
+            background-color: #c82333; /* Rojo más oscuro para hover */
+        }
+        </style>
+
+        <form action="../../Static/fpdf/JustAlumRegu.php" method="POST">
+            <input type="hidden" name="idJusti" value="<?php echo htmlspecialchars($solicitud['idJusti']); ?>">
+            <button type="submit" class="button">Aceptar y Generar PDF</button>
+        </form>
+
+        <!-- Botón para rechazar la solicitud -->
+        <button class="button button-red" onclick="cambiarEstado(<?= $solicitud['idJusti'] ?>, 'RECHAZADO')">Rechazar</button>
+                <?php
     }
 }else{
-    
+    echo "<p>No se encontraron datos para la solicitud.</p>";
 }
 
 // Cerrar la conexión a la base de datos

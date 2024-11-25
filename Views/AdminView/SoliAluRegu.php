@@ -36,7 +36,13 @@ include '../../Model/Justificante.php';
             echo '<div class="solicitud-item" data-id="' . $row['idJusti'] . '">';
             echo '<strong>' . $row['nombreAlu'] . ' ' . $row['apellidoAlu'] . '</strong><br>';
             echo '<small>' . $row['fecha'] . ' | ' . $row['horaInicio'] . '</small><br>';
-            echo '<span>' . $row['motivo'] . '</span>';
+
+            if ($row['motivo'] === "NO APLICA"){
+                echo '<span>' . $row['motivoExtra'] . '</span>';
+            }else{
+                echo '<span>' . $row['motivo'] . '</span>';
+            }
+
             echo '</div>';
         }
         ?>

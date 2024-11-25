@@ -78,10 +78,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idJusti'])) {
             <input type="text" id="edit_grupo" name="grupo" value="<?php echo $justificanteEditar['grupo']; ?>" required>
 
             <label for="edit_carrera">Carrera:</label>
-            <input type="text" id="edit_carrera" name="carrera" value="<?php echo $justificanteEditar['carrera']; ?>" required>
+            <select id="edit_carrera" name="carrera" required>
+                <option value="ITI" <?php echo ($justificanteEditar['carrera'] == 'ITI') ? 'selected' : ''; ?>>ITI</option>
+                <option value="IET" <?php echo ($justificanteEditar['carrera'] == 'IET') ? 'selected' : ''; ?>>IET</option>
+            </select>
+
 
             <label for="edit_periodoEscolar">Período Escolar:</label>
-            <input type="text" id="edit_periodoEscolar" name="periodoEscolar" value="<?php echo $justificanteEditar['periodoEscolar']; ?>" required>
+            <select id="edit_periodoEscolar" name="periodoEscolar" required>
+                <option value="Otoño 2025" <?php echo ($justificanteEditar['periodoEscolar'] == 'Otoño 2025') ? 'selected' : ''; ?>>Otoño 2025</option>
+                <option value="Primavera 2025" <?php echo ($justificanteEditar['periodoEscolar'] == 'Primavera 2025') ? 'selected' : ''; ?>>Primavera 2025</option>
+                <option value="Invierno 2025" <?php echo ($justificanteEditar['periodoEscolar'] == 'Invierno 2025') ? 'selected' : ''; ?>>Invierno 2025</option>
+            </select>
+
 
             <label for="edit_motivo">Motivo:</label>
             <input type="text" id="edit_motivo" name="motivo" value="<?php echo $justificanteEditar['motivo']; ?>" required>
@@ -138,8 +147,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idJusti'])) {
                     <?php } ?>
 
 
-                        <label for="edit_estado">Estado:</label>
-                        <input type="text" id="edit_estado" name="estado" value="<?php echo $justificanteEditar['estado']; ?>" required>
+                    <label for="edit_estado">Estado:</label>
+                    <select id="edit_estado" name="estado" required>
+                        <option value="Aceptado" <?php echo ($justificanteEditar['estado'] == 'Aceptado') ? 'selected' : ''; ?>>Aceptado</option>
+                        <option value="Rechazado" <?php echo ($justificanteEditar['estado'] == 'Rechazado') ? 'selected' : ''; ?>>Rechazado</option>
+                        <option value="Pendiente" <?php echo ($justificanteEditar['estado'] == 'Pendiente') ? 'selected' : ''; ?>>Pendiente</option>
+                    </select>
+
 
                         <button type="submit">Actualizar</button>
                         <button type="button" onclick="location.href='gestionJustiRegu.php'">Cancelar</button>

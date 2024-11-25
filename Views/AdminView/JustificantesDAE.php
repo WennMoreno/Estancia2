@@ -74,6 +74,9 @@ $eventoSeleccionado = isset($_GET['evento']) ? $_GET['evento'] : null;
 
                 <!-- Botón de edición -->
                 <a href="UpEvento.php?evento=<?php echo $eventoSeleccionado; ?>" class="btn-editar">Editar Justificante del Evento</a>
+                 <!-- Botón de creación del justificante -->
+                 <a href="../../Static/fpdf/DAE.php?evento=<?php echo $eventoSeleccionado; ?>" class="btn-editar">Generar Justificante</a>
+                 </div>
             </div>
         <?php else: ?>
             <p>Selecciona un evento para ver los detalles.</p>

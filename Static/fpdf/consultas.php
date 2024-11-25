@@ -19,12 +19,11 @@ mysqli_set_charset($conexion, "utf8");
 mysqli_query($conexion, "SET lc_time_names = 'es_ES'");
 
 // Verificar si se ha recibido el ID de la solicitud
-// Verificar si se ha recibido el ID de la solicitud
 if (isset($_POST['idJusti'])) {
     $idSolicitud = intval($_POST['idJusti']);
 
     // Actualizar el estado de la solicitud
-    $query = "UPDATE justificante SET estado = 'Aceptada' WHERE idJusti = $idSolicitud";
+    $query = "UPDATE justificante SET estado = 'ACEPTADA' WHERE idJusti = $idSolicitud";
     if (mysqli_query($conexion, $query)) {
         // Obtener detalles de la solicitud
         $queryDetalles = "SELECT justificante.*, alumno.nombreAlu AS nombre, alumno.apellidoAlu AS ape, 
@@ -51,6 +50,5 @@ if (isset($_POST['idJusti'])) {
     echo "ID de la solicitud no recibido.";
 }
 
-// Cerrar la conexión
-mysqli_close($conexion);
+
 ?>

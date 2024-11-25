@@ -59,7 +59,7 @@ class gestionJustificante {
         $modeloAlumno= new Alumno($this->conexion);
         $idAlumno = $modeloAlumno->obtenerIdAlumnoPorMatricula($this->conexion);
         if ($idAlumno !== null) {
-            echo "El ID del alumno en sesión es: " . $idAlumno;
+           /* echo "El ID del alumno en sesión es: " . $idAlumno;*/
         } else {
             echo "No se encontró un alumno con la matrícula proporcionada.";
         }
@@ -104,6 +104,7 @@ class gestionJustificante {
                 $stmtEvidencia= $modeloEvidencia->insertarEvidencia($nombreArchivo, $rutaArchivo);
                 $stmtEvidencia->bind_param("ss", $nombreArchivo, $rutaArchivo);
                 $stmtEvidencia->execute();
+                
                 $idEvi = $this->conexion->insert_id; // Obtener el ID de la evidencia insertada
 
 
@@ -111,7 +112,7 @@ class gestionJustificante {
                 $idJusti =$modeloJustificante->insertarJustificante($cuatrimestre, $grupo, $carrera, $periodo, $motivo, $fecha, $horaInicio, $horaFin, $ausenteTodoDia, $motivoExtra, $idEvi, $idAlumno);  
 
                 if ($idJusti) {
-                    echo "Justificante solicitado exitosamente con ID: $idJusti";
+                    /*echo "Justificante solicitado exitosamente con ID: $idJusti";*/
                 } else {
                     echo "Hubo un problema al solicitar el justificante.";
                 }
@@ -165,7 +166,7 @@ class gestionJustificante {
         // obtenerl el id del alumno mediante la selección del alumno en el perfil del administrador
         $idAlumno = $_GET['idAlumno']; 
         if ($idAlumno !== null) {
-            echo "El ID del alumno seleccionado es: " . $idAlumno;
+           /* echo "El ID del alumno seleccionado es: " . $idAlumno;*/
         } else {
             echo "No se encontró un alumno con el nombre proporcionado.";
         }
@@ -217,7 +218,7 @@ class gestionJustificante {
                 $idJusti =$modeloJustificante->insertarJustificante($cuatrimestre, $grupo, $carrera, $periodo, $motivo, $fecha, $horaInicio, $horaFin, $ausenteTodoDia, $motivoExtra, $idEvi, $idAlumno);  
 
                 if ($idJusti) {
-                    echo "Justificante solicitado exitosamente con ID: $idJusti";
+                    /*echo "Justificante solicitado exitosamente con ID: $idJusti";*/
                 } else {
                     echo "Hubo un problema al solicitar el justificante.";
                 }
@@ -323,7 +324,7 @@ class gestionJustificante {
 
     public function eliminarJustificante($id) {
         $modeloJustificante = new Justificante($this->conexion);
-        return $result= $modeloJustificante->eliminarJustificantePorId($id);
+        return $result= $modeloJustificante->eliminarJustificantePorId($id,$estado);
     }
 
     public function obtenerJustificantePorId($id) {
@@ -357,7 +358,7 @@ class gestionJustificante {
     
     public function modificarJustificante($cuatrimestre, $grupo, $carrera, $periodoEscolar, $motivo, $motivoExtra, $fecha, $horaInicio, $horaFin, $estado, $id) {
         $sql = "UPDATE justificante 
-                SET cuatrimestre = ?, grupo = ?, carrera = ?, periodoEscolar = ?, motivo = ?, motivoExtra = ?, fecha = ?, horaInicio = ?, horaFin = ?, estado = ? 
+                SET cuatrimestre = ?, grupo = UPPER(?), carrera = UPPER(?), periodoEscolar = UPPER(?), motivo = UPPER(?), motivoExtra = UPPER(?), fecha = ?, horaInicio = ?, horaFin = ?, estado = UPPER(?) 
                 WHERE idJusti = ?";
     
         $stmt = $this->conexion->prepare($sql);
@@ -384,7 +385,7 @@ class gestionJustificante {
         $modeloJustificante = new Justificante($this->conexion);
 
         // Actualizar el estado del justificante a "rechazado"
-        $estado = 'rechazado';
+        $estado = 'RECHAZADO';
         
         // Realizar la actualización en la base de datos
         $stmt = $this->conexion->prepare("UPDATE justificante SET estado = ? WHERE idJusti = ?");

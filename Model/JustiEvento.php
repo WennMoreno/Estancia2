@@ -8,7 +8,7 @@ class JustificanteEvento {
 
     public function insertarEvento($nombreEvento, $fechaInicio, $fechaFin) {
         // Consulta para insertar un nuevo evento con rango de fechas
-        $sql = "INSERT INTO justificante_evento (nombreEvento, fechaInicio, fechaFin) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO justificante_evento (nombreEvento, fechaInicio, fechaFin) VALUES (UPPER(?), ?, ?)";
         $stmt = $this->conexion->prepare($sql);
         $stmt->bind_param("sss", $nombreEvento, $fechaInicio, $fechaFin);
 
@@ -26,7 +26,7 @@ class JustificanteEvento {
     public function insertarAlumnoEnEvento($nombreAlumno, $matricula, $grado, $grupo, $carrera, $idJustiEvento) {
         // Consulta para insertar un alumno relacionado con el evento
         $sql = "INSERT INTO justificante_evento_alumno (nombreAlumno, matricula, grado, grupo, carrera, idJustiEvento) 
-                VALUES (?, ?, ?, ?, ?, ?)";
+                VALUES (UPPER(?), UPPER(?), ?, UPPER(?), UPPER(?), ?)";
         $stmt = $this->conexion->prepare($sql);
         $stmt->bind_param("ssissi", $nombreAlumno, $matricula, $grado, $grupo, $carrera, $idJustiEvento);
 
@@ -180,7 +180,7 @@ class JustificanteEvento {
 
     // Función para insertar los alumnos asociados a un evento desde la edición
     public function insertarAlumnos($alumnos, $eventoId) {
-        $sql = "INSERT INTO justificante_evento_alumno (nombreAlumno, matricula, grado, grupo, carrera, idJustiEvento) VALUES (?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO justificante_evento_alumno (nombreAlumno, matricula, grado, grupo, carrera, idJustiEvento) VALUES (UPPER(?), UPPER(?), ?, UPPER(?), UPPER(?), ?)";
         $stmt = $this->conexion->prepare($sql);
         
         foreach ($alumnos as $alumno) {

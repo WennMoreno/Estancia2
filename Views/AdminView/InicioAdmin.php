@@ -48,10 +48,10 @@
                     <p><a href="Gestiones.php" class="btn-action">GESTIONES</a></p>
                 </div>
                 <div class="opcion">
-                    <p><a href="" class="btn-action">REPORTES</a></p>
+                    <a href="gestionJustiRegu.php" class="btn-action">REPORTES</a>
                 </div>
                 <div class="opcion">
-                    <p><a href="" class="btn-actionRes">RESPALDO DE LA BASE DE DATOS</a></p>
+                    <p><a href="../../respaldos/bd.php" class="btn-actionRes">RESPALDO DE LA BASE DE DATOS</a></p>
                 </div>
 
             </div>

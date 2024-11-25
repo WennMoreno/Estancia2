@@ -81,14 +81,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idAlumno'])) {
                     <input type="text" id="edit_matricula" name="matricula" value="<?php echo htmlspecialchars($alumnoEditar['matricula']); ?>" required>
                     
                     <label for="edit_correo">Correo:</label>
-                    <input type="email" id="edit_correo" name="correo" value="<?php echo htmlspecialchars($alumnoEditar['correo'] ?? ''); ?>" required>
-
+                    <input type="email" id="edit_correo" name="correo" value="<?php echo htmlspecialchars($alumnoEditar['correoE']); ?>" required>
 
                     <label for="edit_contrasena">Contraseña:</label>
-                    <input type="password" id="edit_contrasena" name="contrasena" required>
+                    <input type="password" id="edit_contrasena" name="contrasena" value="<?php echo htmlspecialchars($alumnoEditar['contrasena']); ?>" required>
                     
-                    <label for="edit_confirmacionContra">Confirmación de Contraseña:</label>
-                    <input type="password" id="edit_confirmacionContra" name="confirmacionContra" required>
+                   <label for="edit_confirmacionContra">Confirmación de Contraseña:</label>
+                    <input type="password" id="edit_confirmacionContra" name="confirmacionContra" value="<?php echo htmlspecialchars($alumnoEditar['confirmacionContra']); ?>" required>
                     
                     <button type="submit">Actualizar</button>
                     <button type="button" onclick="location.href='GestionAlum.php'">Cancelar</button>

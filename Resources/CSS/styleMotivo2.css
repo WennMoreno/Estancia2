@@ -1,0 +1,173 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5dc; /* Color beige */
+    margin: 0;
+    padding: 20px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #800080; /* Púrpura */
+    padding: 10px 20px;
+    border-bottom: 2px solid #800080; /* Añadido para definir el borde */
+    color: #ffffff;
+}
+
+header .logo img {
+    width: 60px;
+    height: 60px;
+}
+
+header nav a {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 22px;
+    margin-left: 20px;
+}
+
+.btn-agregar,
+.btn-editar,
+.btn-eliminar {
+    padding: 12px 20px; /* Aumentar el tamaño del botón */
+    border-radius: 8px; /* Bordes redondeados */
+    font-size: 16px; /* Aumentar el tamaño del texto */
+    cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
+    border: none; /* Sin borde */
+}
+
+.btn-agregar {
+    margin-top: 40px;
+    background-color: purple;
+    color: white;
+    margin-bottom: 20px;
+}
+
+/* Estilo para el botón de descargar */
+.btn-descargar {
+    padding: 12px 20px; /* Aumentar el tamaño del botón */
+    border-radius: 8px; /* Bordes redondeados */
+    font-size: 16px; /* Aumentar el tamaño del texto */
+    cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
+    border: none; /* Sin borde */
+    background-color: #4CAF50; /* Color verde */
+    color: white;
+    margin-left: 10px;
+    text-decoration: none;
+}
+
+.btn-descargar:hover {
+    background-color: #45a049; /* Cambiar a un verde más oscuro cuando se pasa el cursor */
+}
+
+.btn-editar {
+    background-color: darkorange;
+    color: white;
+}
+
+.btn-eliminar {
+    background-color: red;
+    color: white;
+}
+
+.table-container {
+    display: flex;
+    justify-content: center; /* Centrar horizontalmente */
+    margin: 20px 0; /* Espacio vertical alrededor de la tabla */
+    
+}
+
+table {
+    width: 100%; /* Ajustar el ancho de la tabla */
+    max-width: 1200px; /* Limitar el ancho máximo de la tabla */
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 2px solid purple;
+}
+
+th {
+    background-color: #e9c3d3;
+    color: black;
+    padding: 10px;
+}
+
+td {
+    padding: 5px;
+    background-color: white;
+    word-wrap: break-word; /* Ajustar el contenido que se desborda */
+}
+/* Estilo general para el formulario */
+form {
+    width: 40%; /* Reducir el ancho a 40% */
+    margin: 20px auto;
+    padding: 20px; /* Aumentar el padding interno del formulario */
+    background-color: #f4f4f9;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Títulos */
+h1 {
+    text-align: center;
+    color: #f4f0f0;
+    font-size: 22px; /* Reducir el tamaño del título */
+    margin-bottom: 20px; /* Espacio debajo del título */
+}
+
+/* Estilo de los campos de texto */
+label {
+    display: block;
+    font-size: 14px; /* Reducir el tamaño de la fuente */
+    color: #555;
+    margin-bottom: 8px; /* Espacio entre la etiqueta y el input */
+}
+
+/* Estilo de los inputs y select */
+input[type="text"],
+input[type="date"],
+select {
+    width: 100%;
+    padding: 10px; /* Añadir padding interno para mayor comodidad */
+    margin-bottom: 15px; /* Espacio entre los campos */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px; /* Reducir el tamaño de la fuente */
+    background-color: #fff;
+    box-sizing: border-box; /* Asegura que el padding no afecte el ancho */
+}
+
+/* Estilo del botón de envío */
+button {
+    width: 100%;
+    padding: 12px; /* Añadir padding al botón */
+    background-color: #4CAF50; /* Verde */
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px; /* Reducir el tamaño de la fuente */
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Cambio de color al pasar el ratón sobre el botón */
+button:hover {
+    background-color: #45a049;
+}
+
+/* Asegurarse de que los elementos del formulario se alineen bien */
+form input,
+form select,
+form button {
+    margin-top: 10px; /* Margen superior para separación */
+}
+
+/* Responsividad para pantallas más pequeñas */
+@media (max-width: 768px) {
+    form {
+        width: 80%; /* Ajustar el tamaño del formulario en pantallas pequeñas */
+    }
+}

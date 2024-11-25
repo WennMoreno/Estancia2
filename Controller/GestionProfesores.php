@@ -12,16 +12,16 @@ class ProfesorController {
         return $this->profesorModel->obtenerProfesores(); // Llama al método del modelo para obtener todos los profesores
     }
 
-    public function agregarProfesor($nombre, $apellido, $password, $correoElectronico) {
-        return $this->profesorModel->agregarProfesor($nombre, $apellido, $password, $correoElectronico); // Llama al método para agregar un profesor
+    public function agregarProfesor($nombre, $apellido,$puesto, $password, $correoElectronico) {
+        return $this->profesorModel->agregarProfesor($nombre, $apellido,$puesto, $password, $correoElectronico); // Llama al método para agregar un profesor
     }
 
     public function obtenerProfesorPorId($idProf) {
         return $this->profesorModel->obtenerProfesorPorId($idProf); // Llama al método para obtener un profesor por ID
     }
 
-    public function modificarProfesor($idProf, $nombre, $apellido, $password, $correoElectronico) {
-        return $this->profesorModel->modificarProfesor($idProf, $nombre, $apellido, $password, $correoElectronico); // Llama al método para modificar un profesor
+    public function modificarProfesor($idProf, $nombre, $apellido,$puesto, $password, $correoElectronico) {
+        return $this->profesorModel->modificarProfesor($idProf, $nombre, $apellido,$puesto, $password, $correoElectronico); // Llama al método para modificar un profesor
     }
 
     public function eliminarProfesor($idProf) {

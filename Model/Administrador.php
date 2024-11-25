@@ -95,7 +95,7 @@ class AdministradorModel {
 
     // Función para agregar un administrador
     public function agregarAdministrador($nombreAdmin, $apellidoAdmin, $passAd,$correo) {
-        $query = "INSERT INTO administrador (nombreAdmin, apellidoAdmin, passAd, CorreoEle) VALUES (?, ?, ?, ?)";
+        $query = "INSERT INTO administrador (nombreAdmin, apellidoAdmin, passAd, CorreoEle) VALUES (UPPER(?), UPPER(?), ?, UPPER(?))";
         $stmt = $this->conexion->prepare($query);
 
         if ($stmt) {

@@ -77,12 +77,12 @@ class ProfesorModel {
     }
 
     // Función para agregar un profesor
-    public function agregarProfesor($nombreProf, $apellidoProf, $passwordProf, $correoElectronico) {
-        $query = "INSERT INTO profesor (nombreProf, apellidoProf, passwordProf, correoElectronico) VALUES (?, ?, ?, ?)";
+    public function agregarProfesor($nombreProf, $apellidoProf,$puesto, $passwordProf, $correoElectronico) {
+        $query = "INSERT INTO profesor (nombreProf, apellidoProf,puesto, passwordProf, correoElectronico) VALUES (UPPER(?), UPPER(?),UPPER(?), ?, UPPER(?))";
         $stmt = $this->conexion->prepare($query);
 
         if ($stmt) {
-            $stmt->bind_param('ssss', $nombreProf, $apellidoProf, $passwordProf, $correoElectronico);
+            $stmt->bind_param('sssss', $nombreProf, $apellidoProf,$puesto, $passwordProf, $correoElectronico);
             $resultado = $stmt->execute();
             $stmt->close();
             return $resultado;
@@ -109,12 +109,12 @@ class ProfesorModel {
     }
 
     // Función para modificar un profesor
-    public function modificarProfesor($idProf, $nombreProf, $apellidoProf, $passwordProf, $correoElectronico) {
-        $query = "UPDATE profesor SET nombreProf = ?, apellidoProf = ?, passwordProf = ?, correoElectronico = ? WHERE idProf = ?";
+    public function modificarProfesor($idProf, $nombreProf, $apellidoProf,$puesto, $passwordProf, $correoElectronico) {
+        $query = "UPDATE profesor SET nombreProf = UPPER(?), apellidoProf = UPPER(?),puesto = UPPER(?), passwordProf = ?, correoElectronico = UPPER(?) WHERE idProf = ?";
         $stmt = $this->conexion->prepare($query);
 
         if ($stmt) {
-            $stmt->bind_param('ssssi', $nombreProf, $apellidoProf, $passwordProf, $correoElectronico, $idProf);
+            $stmt->bind_param('sssssi', $nombreProf, $apellidoProf,$puesto, $passwordProf, $correoElectronico, $idProf);
             $resultado = $stmt->execute();
             $stmt->close();
             return $resultado;

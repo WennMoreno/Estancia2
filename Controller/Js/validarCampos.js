@@ -1,3 +1,145 @@
+// Funciones de validación individuales
+function validarNombre() {
+    const nombreInput = document.querySelector('input[name="nombre"]');
+    const nombreRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$/;
+    if (!nombreInput.value) {
+        return "El nombre es obligatorio.";
+    }
+    if (!nombreRegex.test(nombreInput.value)) {
+        return "El nombre solo puede contener letras y espacios.";
+    }
+    return null;
+}
+
+function validarApellido() {
+    const apellidoInput = document.querySelector('input[name="ape"]');
+    const apellidoRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$/;
+    if (!apellidoInput.value) {
+        return "El apellido es obligatorio.";
+    }
+    if (!apellidoRegex.test(apellidoInput.value)) {
+        return "El apellido solo puede contener letras y espacios.";
+    }
+    return null;
+}
+
+function validarFechaNacimiento() {
+    const fechaInput = document.querySelector('input[name="feNac"]');
+    const fechaActual = new Date().toISOString().split("T")[0];
+    if (!fechaInput.value) {
+        return "La fecha de nacimiento es obligatoria.";
+    }
+    if (fechaInput.value > fechaActual) {
+        return "La fecha de nacimiento no puede ser en el futuro.";
+    }
+    return null;
+}
+
+function validarMatricula() {
+    const matriculaInput = document.querySelector('input[name="matricula"]');
+    const matriculaRegex = /^\w{5,20}$/;
+    if (!matriculaInput.value) {
+        return "La matrícula es obligatoria.";
+    }
+    if (!matriculaRegex.test(matriculaInput.value)) {
+        return "La matrícula debe tener entre 5 y 20 caracteres alfanuméricos.";
+    }
+    return null;
+}
+
+function validarCorreo() {
+    const correoInput = document.querySelector('input[name="correo"]');
+    const correoRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!correoInput.value) {
+        return "El correo electrónico es obligatorio.";
+    }
+    if (!correoRegex.test(correoInput.value)) {
+        return "El correo electrónico no es válido.";
+    }
+    return null;
+}
+
+function validarContrasenas() {
+    const contrasenaInput = document.querySelector('input[name="clave"]');
+    const confirmarContrasenaInput = document.querySelector('input[name="Rclave"]');
+    if (!contrasenaInput.value) {
+        return "La contraseña es obligatoria.";
+    }
+    if (contrasenaInput.value.length < 8) {
+        return "La contraseña debe tener al menos 8 caracteres.";
+    }
+    if (contrasenaInput.value !== confirmarContrasenaInput.value) {
+        return "Las contraseñas no coinciden.";
+    }
+    return null;
+}
+
+
+function validarFormulario() {
+    // Validar Nombre
+    const nombreError = validarNombre();
+    if (nombreError) {
+        document.getElementById("errornombre").textContent = nombreError;
+        document.getElementById("errornombre").style.display = "block";
+        return false;
+    } else {
+        document.getElementById("errornombre").style.display = "none";
+    }
+
+    // Validar Apellido
+    const apellidoError = validarApellido();
+    if (apellidoError) {
+        document.getElementById("errorape").textContent = apellidoError;
+        document.getElementById("errorape").style.display = "block";
+        return false;
+    } else {
+        document.getElementById("errorape").style.display = "none";
+    }
+
+    // Validar Fecha de Nacimiento
+    const fechaError = validarFechaNacimiento();
+    if (fechaError) {
+        document.getElementById("errorFeNaci").textContent = fechaError;
+        document.getElementById("errorFeNaci").style.display = "block";
+        return false;
+    } else {
+        document.getElementById("errorFeNaci").style.display = "none";
+    }
+
+    // Validar Matrícula
+    const matriculaError = validarMatricula();
+    if (matriculaError) {
+        document.getElementById("errormatricula").textContent = matriculaError;
+        document.getElementById("errormatricula").style.display = "block";
+        return false;
+    } else {
+        document.getElementById("errormatricula").style.display = "none";
+    }
+
+    // Validar Correo Electrónico
+    const correoError = validarCorreo();
+    if (correoError) {
+        document.getElementById("erroremail").textContent = correoError;
+        document.getElementById("erroremail").style.display = "block";
+        return false;
+    } else {
+        document.getElementById("erroremail").style.display = "none";
+    }
+
+    // Validar Contraseñas
+    const contrasenaError = validarContrasenas();
+    if (contrasenaError) {
+        alert(contrasenaError);
+        return false;
+    }
+
+    // Si todas las validaciones pasan
+    return true;
+}
+
+
+
+
 function validarCuatrimestre() {
     const cuatri = document.querySelector('input[name="Cuatri"]');
     if (!cuatri.value || cuatri.value < 1 || cuatri.value > 10) {

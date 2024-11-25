@@ -1,0 +1,84 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5dc; /* Color beige */
+    margin: 0;
+    padding: 20px;
+    text-align: center; /* Center all content */
+}
+
+.boton {
+    display: inline-block;
+    background-color: #800080; /* Púrpura */
+    color: white;
+    font-size: 18px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+.boton:hover {
+    background-color: #6a006a; /* Púrpura más oscuro */
+}
+
+.formulario {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.formulario label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #800080; /* Púrpura */
+    margin-bottom: 10px;
+    display: block;
+}
+
+.formulario select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #800080;
+    border-radius: 8px;
+    background-color: #f5f5dc; /* Color beige */
+    color: #333;
+    margin-bottom: 20px;
+    appearance: none; /* Elimina el estilo predeterminado del select */
+}
+
+.formulario button {
+    width: 100%;
+    background-color: #800080; /* Púrpura */
+    color: white;
+    font-size: 18px;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.formulario button:hover {
+    background-color: #6a006a; /* Púrpura más oscuro */
+}
+
+option {
+    padding: 10px;
+    font-size: 16px;
+}
+
+/* Added styles for the two buttons above the form */
+.buttons-container {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.buttons-container a {
+    margin-right: 20px; /* Space between buttons */
+}
